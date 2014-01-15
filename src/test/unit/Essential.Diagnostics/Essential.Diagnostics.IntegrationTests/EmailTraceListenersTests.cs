@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NUnit.Framework;
+//using NUnit.Framework; - Switched to MSTest framwork to match larger test lib Essential.Diagnostics.Tests
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Essential.Diagnostics;
 //using Rnwood.SmtpServer;
 using System.Diagnostics;
@@ -17,8 +18,8 @@ using System.Diagnostics;
 
 namespace EssentialDiagnosticsIntegrationTests
 {
-    [TestFixture]
-    [Description("Test with a local SMTP server that may handle domain example.com.")]
+    [TestClass]
+    //[Description("Test with a local SMTP server that may handle domain example.com.")]
     public class EmailTraceListenersTests
     {
         public EmailTraceListenersTests()
@@ -117,8 +118,8 @@ namespace EssentialDiagnosticsIntegrationTests
        // }
 
 
-        [Test]
-        [Description("EmailTraceListener defined in config should be working and sending Email messages out.")]
+        //[TestMethod]
+        //[Description("EmailTraceListener defined in config should be working and sending Email messages out.")]
         public void TestEmailTraceListener()
         {
             Trace.TraceWarning("Anything. More detail go here.");
@@ -129,8 +130,8 @@ namespace EssentialDiagnosticsIntegrationTests
             System.Threading.Thread.Sleep(5000);//need to wait, otherwise the test host is terminated resulting in thread abort.
         }
 
-        [Test]
-        [Description("Expect an error trace.")]
+        //[TestMethod]
+        //[Description("Expect an error trace.")]
         public void TestAnErrorBufferTraceListenerWithoutDefinedIn()
         {
             Trace.TraceWarning("Anything. More detail go here.");

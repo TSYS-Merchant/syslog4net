@@ -148,17 +148,9 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <PropertyGroup>
-    <TFSBaseBuildYear>2013</TFSBaseBuildYear>
-  </PropertyGroup>
-  <Import Project="..\TFSBuildNumber.targets" />
-  <Target Name="BeforeBuild" DependsOnTargets="GetMajorMinorFromCSharpAssemblyInfoFile;&#xD;&#xA;					  WriteProjectTextAssemblyVersionFile;UpdateCSharpAssemblyInfoFile">
-  </Target>
-  <Target Name="AfterBuild" DependsOnTargets="ResetCSharpAssemblyInfoFile">
-  </Target>
-  <PropertyGroup>
+  <!--PropertyGroup>
     <PostBuildEvent>robocopy "$(TargetDir)\" "$(SolutionDir)Packaging\$(ConfigurationName)\lib" $(TargetName).dll $(TargetName).xml
 robocopy "$(SolutionDir)\" "$(SolutionDir)Packaging\$(ConfigurationName)" ReadMe.txt License.txt
 exit 0</PostBuildEvent>
-  </PropertyGroup>
+  </PropertyGroup-->
 </Project>
