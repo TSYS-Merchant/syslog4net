@@ -40,7 +40,8 @@
 
   <!-- Projects to Build -->
   <ItemGroup>
-    <ProjectFiles Include="$(MSBuildProjectDirectory)\**\*.sln">
+    <!--ProjectFiles Include="$(MSBuildProjectDirectory)\**\*.sln"-->
+    <ProjectFiles Include="$(MSBuildProjectDirectory)\MerchantWarehouse.Diagnostics.sln">
       <Properties>Configuration=$(BuildConfiguration);GenerateAssemblyInfo=true</Properties>
     </ProjectFiles>
   </ItemGroup>
