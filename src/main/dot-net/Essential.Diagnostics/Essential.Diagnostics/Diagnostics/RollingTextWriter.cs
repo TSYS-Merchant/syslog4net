@@ -120,7 +120,7 @@ namespace Essential.Diagnostics
         private string GetCurrentFilePath(TraceEventCache eventCache)
         {
             var result = StringTemplate.Format(CultureInfo.CurrentCulture, FilePathTemplate,
-                delegate(string name, out object value)
+                delegate(string name, out object value, string outputTemplate)
                 {
                     switch (name.ToUpperInvariant())
                     {
@@ -129,10 +129,19 @@ namespace Essential.Diagnostics
                             break;
                         case "DATETIME":
                         case "UTCDATETIME":
-                            value = TraceFormatter.FormatUniversalTime(eventCache);
+                            //value = TraceFormatter.FormatUniversalTime(eventCache);
+
+                            DateTimeOffset utc = TraceFormatter.FormatUniversalTime(eventCache);
+
+                            // TODO: Cultural settings too?
+                            value = string.IsNullOrEmpty(outputTemplate) ? utc.ToString() : utc.ToString(outputTemplate);
                             break;
                         case "LOCALDATETIME":
-                            value = TraceFormatter.FormatLocalTime(eventCache);
+                            //value = TraceFormatter.FormatLocalTime(eventCache);
+                            DateTimeOffset localTime = TraceFormatter.FormatLocalTime(eventCache);
+
+                            // TODO: Cultural settings too?
+                            value = string.IsNullOrEmpty(outputTemplate) ? localTime.ToString() : localTime.ToString(outputTemplate);
                             break;
                         case "MACHINENAME":
                             value = Environment.MachineName;

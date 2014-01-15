@@ -47,6 +47,7 @@ namespace Essential.Diagnostics.Tests
         //
         #endregion
 
+        /*  - All these tests work using commented out versions of the Format method that are not used anywhere within essential.diagnostics
         [TestMethod()]
         public void FormatAtStart()
         {
@@ -189,8 +190,7 @@ namespace Essential.Diagnostics.Tests
             var actual = StringTemplate.Format(template, (IDictionary<string,object>)null);
 
             Assert.Fail("Should have thrown exception.");
-        }
-
+        }*/
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void NullDelegateException()

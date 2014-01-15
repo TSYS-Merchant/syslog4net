@@ -211,5 +211,29 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestMethod()]
+        public void FormatMessageDateTime()
+        {
+            var traceFormatter = new TraceFormatter();
+            TraceListener listener = null;
+            TraceEventCache eventCache = new TraceEventCache();
+            string source = "test";
+            TraceEventType eventType = TraceEventType.Warning;
+            int id = 5;
+            string message = "fnord";
+            Guid? relatedActivityId = null;
+            object[] data = null;
+            //string template = "{UtcDateTime:yyyy-MM-ddTHH:mm:ss.fffZ}";
+            string template = "<000> 1 {UtcDateTime:yyyy-MM-ddTHH:mm:ss.fffZ} {MachineName} {Source} {ProcessId} [MW@ EventClass=\"SomeType\" EventSeverity=\"{EventType}\"]";
+            //string template = "{UtcDateTime}";
+            string expected = "";
+
+            var actual = traceFormatter.Format(template, listener, eventCache, source, eventType, id,
+                    message, relatedActivityId, data);
+
+			//TODO: Create valid asseritions
+            //Assert.AreEqual(expected, actual);
+        }
+
     }
 }

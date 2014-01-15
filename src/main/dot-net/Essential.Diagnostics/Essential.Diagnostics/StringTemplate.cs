@@ -72,10 +72,10 @@ namespace Essential
         /// are case-insensitive.
         /// </para>
         /// </remarks>
-        public static string Format(string template, IDictionary<string, object> arguments)
+        /*public static string Format(string template, IDictionary<string, object> arguments)
         {
             return Format(null, template, arguments);
-        }
+        }*/
 
         /// <summary>
         /// Replaces named template items in a specified string 
@@ -135,14 +135,14 @@ namespace Essential
         /// are case-insensitive.
         /// </para>
         /// </remarks>
-        public static string Format(IFormatProvider provider, string template, IDictionary<string, object> arguments)
+       /* public static string Format(IFormatProvider provider, string template, IDictionary<string, object> arguments)
         {
             if (arguments == null)
             {
                 throw new ArgumentNullException("arguments");
             }
             return Format(provider, template, arguments.TryGetValue);
-        }
+        }*/
 
         /// <summary>
         /// Replaces named template items in a specified string 
@@ -252,8 +252,28 @@ namespace Essential
                             throw new FormatException(Resource.StringTemplate_InvalidString);
                         }
                         string argumentName = new string(chArray, nameStart, nameEnd - nameStart);
+                        string argumentOpts = null;
+
+                        // Formatting args, scan to curly brace, accept all characters (only limitation is invalid XML)
+                        // This looks redundant to the code on line 341 at first but date formatting does not work without this
+                        // TODO: Refactor this block and block at line 341 to see if we can simpilfy this implmentation. 
+                        if (ch == ':')
+                        {
+                            int startOpts = index;
+
+                            while (index < length  && ch != '}')
+                            {
+                                ch = chArray[index];
+                                index++;
+                            }
+
+                            int endOpts = index - 1;
+
+                            argumentOpts = new string(chArray, startOpts, endOpts - startOpts);
+                        }
+
                         object arg;
-                        if (!getValue(argumentName, out arg))
+                        if (!getValue(argumentName, out arg, argumentOpts))
                         {
                             throw new FormatException(Resource.StringTemplate_ArgumentNotFound);
                         }
@@ -401,6 +421,6 @@ namespace Essential
         /// <param name="value">Value of the argument, if it exists.</param>
         /// <returns>true if the argument name is valid, i.e. the value can be supplied; false if the argument name is invalid (usually treated as an error)</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage ("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
-        public delegate bool GetValue(string name, out object value);
+        public delegate bool GetValue(string name, out object value, string outputTemplate = null);
     }
 }

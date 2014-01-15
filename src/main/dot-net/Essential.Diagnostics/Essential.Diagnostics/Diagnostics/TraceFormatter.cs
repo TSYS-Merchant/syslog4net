@@ -101,8 +101,9 @@ namespace Essential.Diagnostics
             Guid? relatedActivityId, object[] data)
         {
             var result = StringTemplate.Format(CultureInfo.CurrentCulture, template,
-                delegate(string name, out object value)
+                delegate(string name, out object value, string outputTemplate)
                 {
+                    
                     switch (name.ToUpperInvariant())
                     {
                         case "EVENTTYPE":
@@ -122,10 +123,16 @@ namespace Essential.Diagnostics
                             break;
                         case "DATETIME":
                         case "UTCDATETIME":
-                            value = FormatUniversalTime(eventCache);
+                            DateTimeOffset utc = FormatUniversalTime(eventCache);
+
+                            // TODO: Cultural settings too?
+                            value = string.IsNullOrEmpty(outputTemplate) ? utc.ToString() : utc.ToString(outputTemplate);
                             break;
                         case "LOCALDATETIME":
-                            value = FormatLocalTime(eventCache);
+                            DateTimeOffset localTime = FormatLocalTime(eventCache);
+
+                            // TODO: Cultural settings too?
+                            value = string.IsNullOrEmpty(outputTemplate) ? localTime.ToString() : localTime.ToString(outputTemplate);
                             break;
                         case "THREADID":
                             value = FormatThreadId(eventCache);
@@ -444,13 +451,14 @@ namespace Essential.Diagnostics
                 // (i.e. Unspecified Kind is treated as Local)
                 value = ((DateTimeOffset)eventCache.DateTime).ToUniversalTime();
             }
+
             return value;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Portability", "CA1903:UseOnlyApiFromTargetedFramework", MessageId = "System.DateTimeOffset", Justification = "Deliberate dependency, .NET 2.0 SP1 required.")]
-        internal static object FormatLocalTime(TraceEventCache eventCache)
+        internal static DateTimeOffset FormatLocalTime(TraceEventCache eventCache)
         {
-            object value;
+            DateTimeOffset value;
             if (eventCache == null)
             {
                 value = DateTimeOffset.Now;
