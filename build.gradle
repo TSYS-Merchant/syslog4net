@@ -1,0 +1,27 @@
+buildscript {
+    repositories {
+        maven { url "http://artifactory.mw.inc/repo" }
+    }
+    dependencies {
+        classpath 'com.ullink.gradle:gradle-msbuild-plugin:1.9'
+        classpath 'com.merchantwarehouse.releng:mwversion:1.0.0-SNAPSHOT'
+    }
+}
+
+version = '0.1.0-SNAPSHOT'
+apply plugin: 'mwversion'
+apply plugin: 'msbuild'
+
+
+msbuild {
+    projectFile = 'src/main/dot-net/Build.proj'
+    projectName = project.name
+    targets = ['Clean', 'Build']
+    configuration = 'Release'
+    parameters.version = project.version
+    parameters.assemblyVersion = project.assemblyVersion
+    parameters.buildNumber = project.buildNumber
+}
+msbuild.outputs.upToDateWhen { false }
+task build
+build.dependsOn msbuild
