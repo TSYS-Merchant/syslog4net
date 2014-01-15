@@ -1,4 +1,8 @@
-﻿using System;
+﻿//// Class forked from Essential.Diagnostics - https://essentialdiagnostics.codeplex.com/ - RELEASE 1.2.501 (Wed May 1, 2013 at 3:00 AM) - Copyright 2010 Sly Gryphon
+//// Updated Class - 1/14/2014 - Copyright © 2014 Merchant Warehouse
+//// All Code Released Under the MS-PL License: http://opensource.org/licenses/MS-PL
+
+using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -6,6 +10,9 @@ using Essential.IO;
 
 namespace Essential.Diagnostics
 {
+    /// <summary>
+    /// Wraps and manages an instnace of TextWriter to allow for rolling updates to a text file from multiple threads with minimum blocking. 
+    /// </summary>
     class RollingTextWriter : IDisposable
     {
         const int _maxStreamRetries = 5;
@@ -17,16 +24,25 @@ namespace Essential.Diagnostics
         private IFileSystem _fileSystem = new FileSystem();
         TraceFormatter traceFormatter = new TraceFormatter();
 
+        /// <summary>
+        /// Creates a new instance of a <see cref="RollingTextWriter"/>
+        /// </summary>
+        /// <param name="filePathTemplate">file path and naming template for log files</param>
         public RollingTextWriter(string filePathTemplate)
         {
             _filePathTemplate = filePathTemplate;
         }
 
+        /// <summary>
+        /// Gets the File path and naming template for generated log files. 
+        /// </summary>
         public string FilePathTemplate
         {
             get { return _filePathTemplate; }
         }
-
+        /// <summary>
+        /// Gets or sets the <see cref="IFileSystem"/> instance to use when making operations to the file (functions as a repository class for the file)
+        /// </summary>
         public IFileSystem FileSystem
         {
             get { return _fileSystem; }
@@ -39,6 +55,9 @@ namespace Essential.Diagnostics
             }
         }
 
+        /// <summary>
+        /// Flushes any messages waiting in the buffer to the file.
+        /// </summary>
         public void Flush()
         {
             lock (_fileLock)
@@ -50,6 +69,11 @@ namespace Essential.Diagnostics
             }
         }
 
+        /// <summary>
+        /// Writes a message to the log file
+        /// </summary>
+        /// <param name="eventCache">logging event context data</param>
+        /// <param name="value">value to output to the file</param>
         public void Write(TraceEventCache eventCache, string value)
         {
             string filePath = GetCurrentFilePath(eventCache);
@@ -60,6 +84,11 @@ namespace Essential.Diagnostics
             }
         }
 
+        /// <summary>
+        /// Writes a message to the log file and appends a carriage return to create a new line
+        /// </summary>
+        /// <param name="eventCache">logging event context data</param>
+        /// <param name="value">value to output to the file</param>
         public void WriteLine(TraceEventCache eventCache, string value)
         {
             string filePath = GetCurrentFilePath(eventCache);
@@ -67,6 +96,32 @@ namespace Essential.Diagnostics
             {
                 EnsureCurrentWriter(filePath);
                 _currentWriter.WriteLine(value);
+            }
+        }
+
+        /// <summary>
+        /// Disposes of the current text writer and all internal disposable instances.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        static string getFullPath(string path, int num)
+        {
+            var extension = Path.GetExtension(path);
+            return path.Insert(path.Length - extension.Length, "-" + num.ToString(CultureInfo.InvariantCulture));
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_currentWriter != null)
+                {
+                    _currentWriter.Dispose();
+                }
             }
         }
 
@@ -108,12 +163,6 @@ namespace Essential.Diagnostics
 
                 throw new InvalidOperationException(Resource.RollingTextWriter_ExhaustedLogfileNames);
             }
-        }
-
-        static string getFullPath(string path, int num)
-        {
-            var extension = Path.GetExtension(path);
-            return path.Insert(path.Length - extension.Length, "-" + num.ToString(CultureInfo.InvariantCulture));
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Portability", "CA1903:UseOnlyApiFromTargetedFramework", MessageId = "System.DateTimeOffset", Justification = "Deliberate dependency, .NET 2.0 SP1 required.")]
@@ -162,23 +211,6 @@ namespace Essential.Diagnostics
                     return true;
                 });
             return result;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (_currentWriter != null)
-                {
-                    _currentWriter.Dispose();
-                }
-            }
         }
     }
 }

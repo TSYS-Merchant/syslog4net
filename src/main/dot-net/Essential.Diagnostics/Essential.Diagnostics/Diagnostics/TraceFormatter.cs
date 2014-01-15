@@ -1,4 +1,8 @@
-﻿using System;
+﻿//// Class forked from Essential.Diagnostics - https://essentialdiagnostics.codeplex.com/ - RELEASE 1.2.501 (Wed May 1, 2013 at 3:00 AM) - Copyright 2010 Sly Gryphon
+//// Updated Class - 1/14/2014 - Copyright © 2014 Merchant Warehouse
+//// All Code Released Under the MS-PL License: http://opensource.org/licenses/MS-PL
+
+using System;
 using System.Collections;
 using System.Diagnostics;
 using System.Globalization;

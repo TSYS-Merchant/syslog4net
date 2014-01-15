@@ -3,13 +3,21 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading;
 
-// Program class
+/// <summary>
+/// This very simple program creates a random number of worker threads, runs for a random (but short) period of time and sends messages to each of the threads randomly
+/// if a thread recieves too many messages ("pokes") then the thread will throw an exception. All major states and transitions are logged. 
+/// Note that this example is meant to show as many possible logging capibilities as possible in a short demo. Most real world logging scenarios would not be so verbose.
+/// </summary>
 class Program
 {
     static TraceSource _trace = new TraceSource("HelloProgram");
     public static Random Random = new Random();
     public static Collection<Worker> Workers = new Collection<Worker>();
 
+    /// <summary>
+    /// Main body hanldes app startup, top level application flow and worker creation
+    /// </summary>
+    /// <param name="args">no arguments are supported</param>
     public static void Main(string[] args)
     {
         // Trace start
@@ -36,6 +44,9 @@ class Program
         _trace.Flush();
     }
 
+    /// <summary>
+    /// Fire up all worker threads
+    /// </summary>
     static void StartWorkers()
     {
         // Trace transfer in
@@ -56,7 +67,9 @@ class Program
     }
 }
 
-// Worker class
+/// <summary>
+/// Controller for an instance of a woker thread, includes methods for messaging. 
+/// </summary>
 class Worker
 {
     int _count;
@@ -64,6 +77,9 @@ class Worker
     public AutoResetEvent FinishedEvent = new AutoResetEvent(false);
     public string Id;
 
+    /// <summary>
+    /// Recieve a poke from another thread and report it in the log
+    /// </summary>
     public void Poke()
     {
         // Trace - mark with logical operation
@@ -87,6 +103,10 @@ class Worker
         Trace.CorrelationManager.StopLogicalOperation();
     }
 
+    /// <summary>
+    /// Primary control method for worker thread, handles primary control loop and checks poke counts.
+    /// </summary>
+    /// <param name="state">thread state object</param>
     public void Work(object state)
     {
         // Trace transfer to thread

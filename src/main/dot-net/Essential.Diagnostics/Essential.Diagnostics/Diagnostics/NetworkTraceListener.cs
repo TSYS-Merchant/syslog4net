@@ -1,4 +1,7 @@
-﻿using System;
+﻿//// Orignal Class Added to Essentials.Diagnostics - 1/14/2014 - Copyright © 2014 Merchant Warehouse
+//// All Code Released Under the MS-PL License: http://opensource.org/licenses/MS-PL
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -9,6 +12,9 @@ using System.Text;
 
 namespace Essential.Diagnostics
 {
+    /// <summary>
+    /// Provides logging capibilities for network connections. Currently only supports TCP and UDP, designed to support any protocol in <see cref="ProtocolType"/>
+    /// </summary>
     public class NetworkTraceListener : TraceListenerBase
     {
         private const string _defaultTemplate = "{UtcDateTime:yyyy-MM-ddTHH:mm:ss.fffZ} {MachineName} {Source} {ProcessId}";
@@ -111,6 +117,9 @@ namespace Essential.Diagnostics
             }
         }
 
+        /// <summary>
+        /// Gets or sets the configured IP address where messages will be targeted.
+        /// </summary>
         public IPAddress RemoteAddress
         {
             get
@@ -128,6 +137,9 @@ namespace Essential.Diagnostics
             }
         }
 
+        /// <summary>
+        /// Gets or sets the port where messages will be targeted
+        /// </summary>
         public int RemotePort
         {
             get
@@ -145,6 +157,9 @@ namespace Essential.Diagnostics
             }
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="ProtocolType"/>. Currently Supports TCP|UDP - Default is UDP
+        /// </summary>
         public ProtocolType Protocol
         {
             get
@@ -166,10 +181,13 @@ namespace Essential.Diagnostics
             }
             set
             {
-                Attributes["encoding"] = value.ToString().ToUpper();
+                Attributes["protocol"] = value.ToString().ToUpper();
             }
         }
 
+        /// <summary>
+        /// Gets or sets the text encoding to use. All types listed in <see cref="Encoding"/> are supported
+        /// </summary>
         public Encoding TextEncoding
         {
             get
@@ -205,6 +223,13 @@ namespace Essential.Diagnostics
             }
         }
 
+        /// <summary>
+        /// Gets or sets the name of the next source to process the event
+        /// </summary>
+        /// <remarks>
+        /// Allows for chaining of sources with a single TraceSource instance. Value should be the name of another configured source described in the App.config or Web.config.
+        /// WARNING: Does not check for circular references. Take care when configuring this property to prevent stack overflow crashes of the application. 
+        /// </remarks>
         public string NextSource
         {
             get
@@ -222,8 +247,6 @@ namespace Essential.Diagnostics
             }
         }
 
-        protected IPEndPoint RemoteEndpoint { get; set; }
-
         /// <summary>
         /// Gets whether the listener internally handles thread safety
         /// (or if the System.Diagnostics framework needs to co-ordinate threading).
@@ -232,6 +255,11 @@ namespace Essential.Diagnostics
         {
             get { return true; }
         }
+
+        /// <summary>
+        /// Gets or sets configured endpoint instance to be used by lower level <see cref="INetworkTextWriter"/> instances
+        /// </summary>
+        protected IPEndPoint RemoteEndpoint { get; set; }
 
         /// <summary>
         /// Allowed attributes for this trace listener.
