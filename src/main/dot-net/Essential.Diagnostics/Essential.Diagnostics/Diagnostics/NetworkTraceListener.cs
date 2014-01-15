@@ -18,10 +18,10 @@ namespace Essential.Diagnostics
     public class NetworkTraceListener : TraceListenerBase
     {
         private const string _defaultTemplate = "{UtcDateTime:yyyy-MM-ddTHH:mm:ss.fffZ} {MachineName} {Source} {ProcessId}";
-        private IPAddress _remoteAddress;
-        private int _remotePort;
-        private int _localPort;
-        private Encoding _encoding;
+        //private IPAddress _remoteAddress;
+        //private int _remotePort;
+        //private int _localPort;
+        //private Encoding _encoding;
         private INetworkTextWriter _writer;
 
         // I would rather leave this out of the IMPL but I cannot see a clean way to write to 2 sources under different 

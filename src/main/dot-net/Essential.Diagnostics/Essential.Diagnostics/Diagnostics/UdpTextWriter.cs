@@ -87,7 +87,8 @@ namespace Essential.Diagnostics
             }
             catch (Exception ex)
             {
-                var ex2 = ex;
+                // TODO: Review exception types for UdpClient
+                //var ex2 = ex;
             }
         }
     }

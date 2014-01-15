@@ -37,6 +37,6 @@ namespace Essential.Diagnostics
         /// <param name="info">serilization data</param>
         /// <param name="context">streaming context manager</param>
         protected NetworkTextWriterException(System.Runtime.Serialization.SerializationInfo info,
-            System.Runtime.Serialization.StreamingContext context) { }
+            System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
 }

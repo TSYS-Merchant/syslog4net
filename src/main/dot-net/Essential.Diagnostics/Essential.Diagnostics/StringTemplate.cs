@@ -424,7 +424,7 @@ namespace Essential
         /// <param name="name">Name of the argument required.</param>
         /// <param name="value">Value of the argument, if it exists.</param>
         /// <returns>true if the argument name is valid, i.e. the value can be supplied; false if the argument name is invalid (usually treated as an error)</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage ("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
+        
         public delegate bool GetValue(string name, out object value, string outputTemplate = null);
     }
 }

@@ -106,7 +106,8 @@ namespace Essential.Diagnostics
             }
             catch (Exception ex)
             {
-                var ex2 = ex;
+                // TODO: Review exception types for TcpClient
+                //var ex2 = ex;
             }
         }
     }
