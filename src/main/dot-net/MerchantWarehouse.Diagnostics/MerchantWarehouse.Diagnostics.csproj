@@ -62,6 +62,9 @@
         NeutralResourcesLanguage="en"
         OutputFile="_AssemblyInfo.cs"
     />
+	<ItemGroup>
+		<Compile Include="_AssemblyInfo.cs" />
+	</ItemGroup>
   </Target>    
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
