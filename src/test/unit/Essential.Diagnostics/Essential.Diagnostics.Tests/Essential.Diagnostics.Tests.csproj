@@ -54,11 +54,11 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
-  <ItemGroup>
+  <!--ItemGroup>
     <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
       <Visible>False</Visible>
     </CodeAnalysisDependentAssemblyPaths>
-  </ItemGroup>
+  </ItemGroup-->
   <ItemGroup>
     <Compile Include="ActivityScopeTests.cs" />
     <Compile Include="ColoredConsoleTests.cs" />
