@@ -54,7 +54,7 @@
         AssemblyProduct="Diagnostics"
         AssemblyTitle="MerchantWarehouse.Diagnostics"
         AssemblyVersion="$(assemblyVersion)"
-        AssemblyFileVersion="$(version)+$(buildNumber)"
+        AssemblyFileVersion="$(assemblyVersion)"
         CLSCompliant="false"
         CodeLanguage="CS"
         ComVisible="false"
@@ -65,8 +65,8 @@
 	<ItemGroup>
 		<Compile Include="_AssemblyInfo.cs" />
 	</ItemGroup>
-  </Target>    
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
