@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework; 
 using System.Diagnostics;
 using Essential.Diagnostics.Tests.Utility;
 
 namespace Essential.Diagnostics.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class TraceFormatterTest
     {
-        [TestMethod()]
+        [Test]
         public void FormatIdAndMessageTest()
         {
             var traceFormatter = new TraceFormatter();
@@ -32,7 +32,7 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod()]
+        [Test]
         public void FormatPrincipalNameTest()
         {
             var traceFormatter = new TraceFormatter();
@@ -57,7 +57,7 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod()]
+        [Test]
         public void FormatProcessIdTest()
         {
             var traceFormatter = new TraceFormatter();
@@ -78,7 +78,7 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod()]
+        [Test]
         public void FormatHttpRequestUrlTest()
         {
             var mockHttpTraceContext  =new MockHttpTraceContext();
@@ -102,7 +102,7 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod()]
+        [Test]
         public void FormatEmptyHttpContextTest()
         {
             // The default is HttpContext.Current, which should be empty when running unit test
@@ -124,7 +124,7 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod()]
+        [Test]
         public void FormatMessagePrefixAll()
         {
             var traceFormatter = new TraceFormatter();
@@ -146,7 +146,7 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod()]
+        [Test]
         public void FormatMessagePrefixSentinel()
         {
             var traceFormatter = new TraceFormatter();
@@ -167,7 +167,7 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod()]
+        [Test]
         public void FormatMessagePrefixLength()
         {
             var traceFormatter = new TraceFormatter();
@@ -189,7 +189,7 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual(expect, actual);
         }
 
-        [TestMethod()]
+        [Test]
         public void FormatMessagePrefixControlCharacter()
         {
             var traceFormatter = new TraceFormatter();
@@ -211,7 +211,7 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod()]
+        [Test]
         public void FormatMessageDateTime()
         {
             var traceFormatter = new TraceFormatter();

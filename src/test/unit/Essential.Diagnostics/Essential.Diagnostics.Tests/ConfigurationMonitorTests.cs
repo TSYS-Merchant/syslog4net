@@ -7,21 +7,21 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using Essential.Diagnostics.Tests.Utility;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework; 
 
 namespace Essential.Diagnostics.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class ConfigurationMonitorTests
     {
         public TestContext TestContext { get; set; }
 
-        [TestMethod]
+        [Test]
         public void ConfigFileChangeTriggersReload()
         {
             //var configPath = Assembly.GetExecutingAssembly().Location + ".config";
             //var configPath = @"D:\Code\Diagnostics\EssentialDiagnostics\Essential.Diagnostics.Tests\bin\Debug\Essential.Diagnostics.Tests.dll.config";
-            var configPath = ConfigUtility.GetConfigDirFromTestRunDirectory(TestContext.TestRunDirectory);
+            var configPath = ConfigUtility.GetConfigDirFromTestRunDirectory(TestContext.CurrentContext.TestDirectory);
             Console.WriteLine("Config path: '{0}'", configPath);
 
             TraceSource source = new TraceSource("inmemory2Source");

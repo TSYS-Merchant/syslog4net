@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework; 
 
 namespace Essential.Diagnostics.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class LogicalOperationScopeTests
     {
-        [TestMethod]
+        [Test]
         public void ScopeShouldHaveAStackOfValues()
         {
             TraceSource source = new TraceSource("inmemory1Source");

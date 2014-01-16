@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework; 
 using Essential.Diagnostics.Tests.Utility;
 using System.Data.Common;
 using System.Reflection;
 
 namespace Essential.Diagnostics.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class SqlDatabaseTests
     {
         public TestContext TestContext { get; set; }
 
-        [TestMethod]
+        [Test]
         public void SqlHandlesEventSentDirectly()
         {
             // Test should pull our mock command off the queue
@@ -35,7 +35,7 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual("2-A", properties["@Message"]);
         }
 
-        [TestMethod]
+        [Test]
         public void SqlHandlesEventFromTraceSource()
         {
             // Test should pull our mock command off the queue
@@ -57,7 +57,7 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual("App2", properties["@ApplicationName"]);
         }
 
-        [TestMethod]
+        [Test]
         public void SqlConfigParametersLoadedCorrectly()
         {
             TraceSource source = new TraceSource("sql2Source");

@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework; 
 using System.Security.Principal;
 
 namespace Essential.Diagnostics.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class ExpressionFilterTests
     {
-        [TestMethod]
+        [Test]
         public void ShouldAllowValidTraceExpression()
         {
             var filter = new ExpressionFilter("Id < 2");
@@ -21,7 +21,7 @@ namespace Essential.Diagnostics.Tests
             Assert.IsTrue(shouldTrace);
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldBlockInvalidTraceExpression()
         {
             var filter = new ExpressionFilter("Id < 2");
@@ -31,7 +31,7 @@ namespace Essential.Diagnostics.Tests
             Assert.IsFalse(shouldTrace);
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldAllowValidTraceEnvironment()
         {
             var filter = new ExpressionFilter("System.Threading.Thread.CurrentPrincipal.Identity.Name == \"A\" ");
@@ -51,7 +51,7 @@ namespace Essential.Diagnostics.Tests
             Assert.IsTrue(shouldTrace);
         }
 
-        [TestMethod]
+        [Test]
         public void ShoulBlockInvalidTraceEnvironment()
         {
             var filter = new ExpressionFilter("System.Threading.Thread.CurrentPrincipal.Identity.Name == \"A\" ");

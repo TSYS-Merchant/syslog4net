@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-//using NUnit.Framework; - Switched to MSTest framwork to match larger test lib Essential.Diagnostics.Tests
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework; 
+//using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Essential.Diagnostics;
 //using Rnwood.SmtpServer;
 using System.Diagnostics;
@@ -18,8 +18,8 @@ using System.Diagnostics;
 
 namespace EssentialDiagnosticsIntegrationTests
 {
-    [TestClass]
-    //[Description("Test with a local SMTP server that may handle domain example.com.")]
+    [TestFixture]
+    [Description("Test with a local SMTP server that may handle domain example.com.")]
     public class EmailTraceListenersTests
     {
         public EmailTraceListenersTests()

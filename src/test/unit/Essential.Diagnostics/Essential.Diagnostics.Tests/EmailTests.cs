@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework; 
 using System.Diagnostics;
 
 using System.Xml;
@@ -22,12 +22,17 @@ namespace Essential.Diagnostics.Tests
     /// <summary>
     /// Summary description for TestSystem
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class EmailTests
     {
         static string pickupDirectory;
 
-        [ClassInitialize()]
+        public EmailTests()
+        {
+            ClassInitialize(TestContext.CurrentContext);
+        }
+
+        //[SetUpFixture]
         public static void ClassInitialize(TestContext testContext)
         {
             var smtpConfig = System.Configuration.ConfigurationManager.GetSection("system.net/mailSettings/smtp") as System.Net.Configuration.SmtpSection;
@@ -50,7 +55,7 @@ namespace Essential.Diagnostics.Tests
 
         }
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             if (!string.IsNullOrEmpty(pickupDirectory))
@@ -66,7 +71,7 @@ namespace Essential.Diagnostics.Tests
                 File.Delete(filePath);
         }
 
-        [TestCleanup]
+        [TearDown]
         public void TestCleanup()
         {
         }
@@ -81,8 +86,8 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual(expected, Directory.GetFiles(pickupDirectory).Count(), message);
         }
 
-        [TestMethod]
-        [TestCategory("MailIntegration")]
+        [Test]
+        //[TestCategory("MailIntegration")]
         public void EmailSendTwo()
         {
             TraceSource source = new TraceSource("emailSource");
@@ -95,8 +100,8 @@ namespace Essential.Diagnostics.Tests
             AssertMessagesSent(2);
         }
 
-        [TestMethod]
-        [TestCategory("MailIntegration")]
+        [Test]
+        //[TestCategory("MailIntegration")]
         public void EmailFilterSendFiltered()
         {
             TraceSource source = new TraceSource("emailFilterSource");
@@ -110,8 +115,8 @@ namespace Essential.Diagnostics.Tests
             AssertMessagesSent(2);
         }
 
-        [TestMethod]
-        [TestCategory("MailIntegration")]
+        [Test]
+        //[TestCategory("MailIntegration")]
         public void EmailSendManyMaxUnlimited()
         {
             TraceSource source = new TraceSource("emailSource");
@@ -127,8 +132,8 @@ namespace Essential.Diagnostics.Tests
             AssertMessagesSent(2000, "All messages should be sent as max is unlimited.");
         }
 
-        [TestMethod]
-        [TestCategory("MailIntegration")]
+        [Test]
+        //[TestCategory("MailIntegration")]
         public void EmailSendManyThreadsMaxUnlimited()
         {
             TraceSource source = new TraceSource("emailSource");
@@ -158,8 +163,8 @@ namespace Essential.Diagnostics.Tests
             AssertMessagesSent(2000, "All messages should be sent as max is unlimited.");
         }
 
-        [TestMethod]
-        [TestCategory("MailIntegration")]
+        [Test]
+        //[TestCategory("MailIntegration")]
         public void EmailFloodTestMaxDefault50()
         {
             TraceSource source = new TraceSource("emailFloodSource");
@@ -175,8 +180,8 @@ namespace Essential.Diagnostics.Tests
             AssertMessagesSent(50, "Should be limited by default max traces of 50.");
         }
 
-        [TestMethod]
-        [TestCategory("MailIntegration")]
+        [Test]
+        //[TestCategory("MailIntegration")]
         public void EmailFloodManyThreadsMax100()
         {
             TraceSource source = new TraceSource("emailFlood2Source");
@@ -206,8 +211,8 @@ namespace Essential.Diagnostics.Tests
             AssertMessagesSent(100, "Should be limited by max traces of 100.");
         }
 
-        [TestMethod]
-        [TestCategory("MailIntegration")]
+        [Test]
+        //[TestCategory("MailIntegration")]
         public void EmailSendIntermittent()
         {
             TraceSource source = new TraceSource("emailSource");

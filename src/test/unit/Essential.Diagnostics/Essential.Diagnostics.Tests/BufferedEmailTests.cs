@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework; 
 using System.Diagnostics;
 
 using System.Xml;
@@ -21,12 +21,17 @@ namespace Essential.Diagnostics.Tests
     /// <summary>
     /// Summary description for TestSystem
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class BufferedEmailTests
     {
         static string pickupDirectory;
 
-        [ClassInitialize()]
+        public BufferedEmailTests()
+        {
+            ClassInitialize(TestContext.CurrentContext);
+        }
+
+        //[SetUpFixture]
         public static void ClassInitialize(TestContext testContext)
         {
             var smtpConfig = System.Configuration.ConfigurationManager.GetSection("system.net/mailSettings/smtp") as System.Net.Configuration.SmtpSection;
@@ -49,7 +54,7 @@ namespace Essential.Diagnostics.Tests
 
         }
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             if (!string.IsNullOrEmpty(pickupDirectory))
@@ -65,13 +70,13 @@ namespace Essential.Diagnostics.Tests
                 File.Delete(filePath);
         }
 
-        [TestCleanup]
+        [TearDown]
         public void TestCleanup()
         {
         }
 
         // 2013-04-16 SG: Accessor missing
-        //[TestMethod]
+        //[Test]
         //public void TestExtractSubject()
         //{
         //    const string content = "Something to say";
@@ -101,8 +106,8 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual(expected, Directory.GetFiles(pickupDirectory).Count());
         }
 
-        [TestMethod]
-        [TestCategory("MailIntegration")]
+        [Test]
+        ////[TestCategory("MailIntegration")]
         public void BufferedSendOne()
         {
             var source = new TraceSource("bufferedEmailSource");

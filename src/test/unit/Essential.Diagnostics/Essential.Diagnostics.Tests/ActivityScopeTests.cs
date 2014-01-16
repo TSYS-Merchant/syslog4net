@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework; 
 
 namespace Essential.Diagnostics.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class ActivityScopeTests
     {
-        [TestMethod]
+        [Test]
         public void ScopeShouldChangeActivityId()
         {
             TraceSource source = new TraceSource("inmemory1Source");
@@ -36,7 +36,7 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual(Guid.Empty, events[2].ActivityId);
         }
 
-        [TestMethod]
+        [Test]
         public void ScopeShouldWriteActivities()
         {
             TraceSource source = new TraceSource("inmemory1Source");

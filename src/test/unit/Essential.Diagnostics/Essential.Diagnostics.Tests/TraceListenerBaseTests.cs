@@ -3,15 +3,15 @@ using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework; 
 using Essential.Diagnostics.Tests.Utility;
 
 namespace Essential.Diagnostics.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class TraceListenerBaseTests
     {
-        [TestMethod]
+        [Test]
         public void BaseHandlesTraceData()
         {
             object data = Guid.NewGuid();
@@ -20,7 +20,7 @@ namespace Essential.Diagnostics.Tests
                 .ThenVerifyTraceInfo("testSource", TraceEventType.Warning, 2, null, new object[] { data }, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BaseHandlesTraceMultipleData()
         {
             object data0 = Guid.NewGuid();
@@ -31,7 +31,7 @@ namespace Essential.Diagnostics.Tests
         }
 
 
-        [TestMethod]
+        [Test]
         public void BaseHandlesTraceNullData()
         {
             object data0 = null;
@@ -40,7 +40,7 @@ namespace Essential.Diagnostics.Tests
                 .ThenVerifyTraceInfo("testSource", TraceEventType.Warning, 2, null, new object[] { data0 }, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BaseHandlesTraceNullDataArray()
         {
             object[] data = null;
@@ -49,7 +49,7 @@ namespace Essential.Diagnostics.Tests
                 .ThenVerifyTraceInfo("testSource", TraceEventType.Warning, 2, null, null, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BaseHandlesTraceEventWithoutMessage()
         {
             GivenTestSource()
@@ -57,7 +57,7 @@ namespace Essential.Diagnostics.Tests
                 .ThenVerifyTraceInfo("testSource", TraceEventType.Warning, 2, "", null, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BaseHandlesTraceEvent()
         {
             GivenTestSource()
@@ -65,7 +65,7 @@ namespace Essential.Diagnostics.Tests
                 .ThenVerifyTraceInfo("testSource", TraceEventType.Warning, 2, "xyz", null, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BaseHandlesTraceEventWithBraces()
         {
             GivenTestSource()
@@ -73,7 +73,7 @@ namespace Essential.Diagnostics.Tests
                 .ThenVerifyTraceInfo("testSource", TraceEventType.Warning, 2, "xyz{0}", null, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BaseHandlesTraceEventWithNullMessage()
         {
             GivenTestSource()
@@ -81,7 +81,7 @@ namespace Essential.Diagnostics.Tests
                 .ThenVerifyTraceInfo("testSource", TraceEventType.Warning, 2, null, null, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BaseHandlesTraceEventWithParams()
         {
             GivenTestSource()
@@ -89,7 +89,7 @@ namespace Essential.Diagnostics.Tests
                 .ThenVerifyTraceInfo("testSource", TraceEventType.Warning, 2, "3-B", null, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BaseHandlesTraceEventWithNullParam()
         {
             object param = null;
@@ -98,7 +98,7 @@ namespace Essential.Diagnostics.Tests
                 .ThenVerifyTraceInfo("testSource", TraceEventType.Warning, 2, "ab", null, null);
         }
 
-        [TestMethod]
+        [Test]
         //[ExpectedException(typeof(ArgumentNullException))]
         public void BaseWorkAroundHandlesTraceEventWithNullParamArray()
         {
@@ -111,7 +111,7 @@ namespace Essential.Diagnostics.Tests
                 .ThenVerifyTraceInfo("testSource", TraceEventType.Warning, 2, "a{0}b", null, null);
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void BaseThrowExceptionsWhenTraceEventWithParamsAndNullFormat()
         {
@@ -119,7 +119,7 @@ namespace Essential.Diagnostics.Tests
                 .WhenTraceAction(source => source.TraceEvent(TraceEventType.Warning, 2, null, 3, "B"));
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(FormatException))]
         public void BaseThrowExceptionsWhenTraceEventWithZeroParams()
         {
@@ -128,7 +128,7 @@ namespace Essential.Diagnostics.Tests
                 .WhenTraceAction(source => source.TraceEvent(TraceEventType.Warning, 2, "a{0}b", paramArray));
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(FormatException))]
         public void BaseThrowExceptionsWhenTraceEventWithNotEnoughParams()
         {
@@ -136,7 +136,7 @@ namespace Essential.Diagnostics.Tests
                 .WhenTraceAction(source => source.TraceEvent(TraceEventType.Warning, 2, "a{0}b{1}c", "X"));
         }
 
-        [TestMethod]
+        [Test]
         public void BaseHandlesTraceInformation()
         {
             GivenTestSource()
@@ -144,7 +144,7 @@ namespace Essential.Diagnostics.Tests
                 .ThenVerifyTraceInfo("testSource", TraceEventType.Information, 0, "xyz", null, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BaseHandlesTraceInformationWithBraces()
         {
             GivenTestSource()
@@ -152,7 +152,7 @@ namespace Essential.Diagnostics.Tests
                 .ThenVerifyTraceInfo("testSource", TraceEventType.Information, 0, "xyz{0}", null, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BaseHandlesTraceInformationWithNullMessage()
         {
             GivenTestSource()
@@ -160,7 +160,7 @@ namespace Essential.Diagnostics.Tests
                 .ThenVerifyTraceInfo("testSource", TraceEventType.Information, 0, null, null, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BaseHandlesTraceInformationWithParams()
         {
             GivenTestSource()
@@ -168,7 +168,7 @@ namespace Essential.Diagnostics.Tests
                 .ThenVerifyTraceInfo("testSource", TraceEventType.Information, 0, "3-B", null, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BaseHandlesTraceInformationWithNullParam()
         {
             object param = null;
@@ -177,7 +177,7 @@ namespace Essential.Diagnostics.Tests
                 .ThenVerifyTraceInfo("testSource", TraceEventType.Information, 0, "ab", null, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BaseHandlesTraceTransfer()
         {
             var activityId = Guid.NewGuid();
@@ -187,7 +187,7 @@ namespace Essential.Diagnostics.Tests
                 .ThenVerifyTraceInfo("testSource", TraceEventType.Transfer, 2,expectedMessage, null, activityId);
         }
 
-        [TestMethod]
+        [Test]
         public void BaseHandlesTraceTransferWithBraces()
         {
             var activityId = Guid.NewGuid();
@@ -197,7 +197,7 @@ namespace Essential.Diagnostics.Tests
                 .ThenVerifyTraceInfo("testSource", TraceEventType.Transfer, 2, expectedMessage, null, activityId);
         }
 
-        [TestMethod]
+        [Test]
         public void BaseHandlesWriteNumber()
         {
             GivenTestSource()
@@ -205,7 +205,7 @@ namespace Essential.Diagnostics.Tests
                 .ThenVerifyTraceInfo(null, TraceEventType.Verbose, 0, null, new object[] { 1 }, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BaseHandlesWriteString()
         {
             GivenTrace()
@@ -213,7 +213,7 @@ namespace Essential.Diagnostics.Tests
                 .ThenVerifyTraceInfo(null, TraceEventType.Verbose, 0, "ab", null, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BaseHandlesWriteNullObject()
         {
             object param = null;
@@ -222,7 +222,7 @@ namespace Essential.Diagnostics.Tests
                 .ThenVerifyTraceInfo(null, TraceEventType.Verbose, 0, null, null, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BaseHandlesWriteNullString()
         {
             string s = null;
@@ -231,7 +231,7 @@ namespace Essential.Diagnostics.Tests
                 .ThenVerifyTraceInfo(null, TraceEventType.Verbose, 0, null, null, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BaseHandlesWriteCategoryString()
         {
             GivenTrace()
@@ -239,7 +239,7 @@ namespace Essential.Diagnostics.Tests
                 .ThenVerifyTraceInfo(null, TraceEventType.Verbose, 0, "c1: ab", null, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BaseHandlesWriteCategoryNumber()
         {
             GivenTrace()
@@ -247,7 +247,7 @@ namespace Essential.Diagnostics.Tests
                 .ThenVerifyTraceInfo(null, TraceEventType.Verbose, 0, "c1", new object[] { 1 }, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BaseHandlesWriteCategoryNullString()
         {
             string s = null;
@@ -256,7 +256,7 @@ namespace Essential.Diagnostics.Tests
                 .ThenVerifyTraceInfo(null, TraceEventType.Verbose, 0, "c1: ", null, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BaseHandlesWriteCategoryEmptyString()
         {
             GivenTrace()
@@ -264,7 +264,7 @@ namespace Essential.Diagnostics.Tests
                 .ThenVerifyTraceInfo(null, TraceEventType.Verbose, 0, "c1: ", null, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BaseHandlesWriteNullCategoryString()
         {
             GivenTrace()
@@ -272,7 +272,7 @@ namespace Essential.Diagnostics.Tests
                 .ThenVerifyTraceInfo(null, TraceEventType.Verbose, 0, "ab", null, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BaseHandlesWriteEmptyCategoryString()
         {
             GivenTrace()
@@ -280,7 +280,7 @@ namespace Essential.Diagnostics.Tests
                 .ThenVerifyTraceInfo(null, TraceEventType.Verbose, 0, ": ab", null, null);
         }
 
-        [TestMethod]
+        [Test]
         public void BaseHandlesTraceTraceInformation()
         {
             var processName = "vstest.executionengine.x86.exe";

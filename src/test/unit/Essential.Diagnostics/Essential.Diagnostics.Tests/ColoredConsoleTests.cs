@@ -7,16 +7,17 @@ using System.Text;
 using System.Threading;
 using System.Xml.Linq;
 using Essential.Diagnostics.Tests.Utility;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
+using System.Reflection; 
 
 namespace Essential.Diagnostics.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class ColoredConsoleTests
     {
         public TestContext TestContext { get; set; }
 
-        [TestMethod]
+        [Test]
         public void ColoredCorrectDefaultCriticalEventColor()
         {
             var mockConsole = new MockConsole();
@@ -29,7 +30,7 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual(1, mockConsole.ResetColorCount);
         }
 
-        [TestMethod]
+        [Test]
         public void ColoredCorrectDefaultErrorEventColor()
         {
             var mockConsole = new MockConsole();
@@ -42,7 +43,7 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual(1, mockConsole.ResetColorCount);
         }
 
-        [TestMethod]
+        [Test]
         public void ColoredCorrectDefaultWarningEventColor()
         {
             var mockConsole = new MockConsole();
@@ -55,7 +56,7 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual(1, mockConsole.ResetColorCount);
         }
 
-        [TestMethod]
+        [Test]
         public void ColoredCorrectDefaultInformationEventColor()
         {
             var mockConsole = new MockConsole();
@@ -68,7 +69,7 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual(1, mockConsole.ResetColorCount);
         }
 
-        [TestMethod]
+        [Test]
         public void ColoredCorrectDefaultVerboseEventColor()
         {
             var mockConsole = new MockConsole();
@@ -81,7 +82,7 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual(1, mockConsole.ResetColorCount);
         }
 
-        [TestMethod]
+        [Test]
         public void ColoredCorrectMessageWritten()
         {
             var mockConsole = new MockConsole();
@@ -94,7 +95,7 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual("source Information: 1 : 2-A", output);
         }
 
-        [TestMethod]
+        [Test]
         public void ColoredConfigParametersLoadedCorrectly()
         {
             TraceSource source = new TraceSource("colored1Source");
@@ -112,7 +113,7 @@ namespace Essential.Diagnostics.Tests
         }
 
 
-        [TestMethod]
+        [Test]
         public void ColoredOtherConfigParametersLoadedCorrectly()
         {
             TraceSource source = new TraceSource("colored2Source");
@@ -127,7 +128,7 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual(ConsoleColor.DarkRed, listener.GetConsoleColor(TraceEventType.Resume));
         }
 
-        [TestMethod]
+        [Test]
         public void ColoredConfigParametersRefreshCorrectly()
         {
             TraceSource source = new TraceSource("colored1Source");
@@ -138,7 +139,7 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual(ConsoleColor.DarkBlue, listener1.GetConsoleColor(TraceEventType.Critical));
             Assert.IsFalse(listener1.ConvertWriteToEvent);
 
-            var configPath = ConfigUtility.GetConfigDirFromTestRunDirectory(TestContext.TestRunDirectory);
+            var configPath = ConfigUtility.GetConfigDirFromTestRunDirectory(TestContext.CurrentContext.WorkDirectory);
             Debug.WriteLine("configPath=" + configPath);
 
             using (var file = new FileResetScope(configPath))
@@ -166,7 +167,7 @@ namespace Essential.Diagnostics.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void ColoredInitializeDataRefreshCorrectly()
         {
             TraceSource source = new TraceSource("colored1Source");
@@ -175,7 +176,9 @@ namespace Essential.Diagnostics.Tests
             // Verify values are correct before changing
             Assert.IsFalse(listener1.UseErrorStream);
 
-            var configPath = ConfigUtility.GetConfigDirFromTestRunDirectory(TestContext.TestRunDirectory);
+
+            //var configPath = ConfigUtility.GetConfigDirFromTestRunDirectory(TestContext.TestRunDirectory);
+            var configPath = ConfigUtility.GetConfigDirFromTestRunDirectory(TestContext.CurrentContext.TestDirectory);
 
             using (var file = new FileResetScope(configPath))
             {

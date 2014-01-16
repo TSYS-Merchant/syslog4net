@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using Essential;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework; 
 using System;
 using System.Collections.Generic;
 
@@ -12,7 +12,7 @@ namespace Essential.Diagnostics.Tests
     ///This is a test class for StringTemplateTest and is intended
     ///to contain all StringTemplateTest Unit Tests
     ///</summary>
-    [TestClass()]
+    [TestFixture]
     public class StringTemplateTest
     {
         public TestContext TestContext { get; set; }
@@ -22,7 +22,7 @@ namespace Essential.Diagnostics.Tests
         //You can use the following additional attributes as you write your tests:
         //
         //Use ClassInitialize to run code before running the first test in the class
-        //[ClassInitialize()]
+        //[SetUpFixture]
         //public static void MyClassInitialize(TestContext testContext)
         //{
         //}
@@ -191,7 +191,7 @@ namespace Essential.Diagnostics.Tests
 
             Assert.Fail("Should have thrown exception.");
         }*/
-        [TestMethod()]
+        [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void NullDelegateException()
         {

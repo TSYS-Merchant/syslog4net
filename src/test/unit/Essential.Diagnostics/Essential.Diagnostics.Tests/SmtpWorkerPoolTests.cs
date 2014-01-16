@@ -1,5 +1,5 @@
 ﻿//using Essential.Net.Mail;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
+//using NUnit.Framework; 
 //using System;
 //using System.Collections.Generic;
 //using System.Diagnostics;
@@ -9,12 +9,12 @@
 
 //namespace Essential.Diagnostics.Tests
 //{
-//    [TestClass]
+//    [TestFixture]
 //    public class SmtpWorkerPoolTests
 //    {
 //        static string pickupDirectory;
 
-//        [ClassInitialize()]
+//        [SetUpFixture]
 //        public static void ClassInitialize(TestContext testContext)
 //        {
 //            var smtpConfig = System.Configuration.ConfigurationManager.GetSection("system.net/mailSettings/smtp") as System.Net.Configuration.SmtpSection;
@@ -37,7 +37,7 @@
 
 //        }
 
-//        [TestInitialize]
+//        [SetUp]
 //        public void TestInitialize()
 //        {
 //            if (!string.IsNullOrEmpty(pickupDirectory))
@@ -53,7 +53,7 @@
 //                File.Delete(filePath);
 //        }
 
-//        [TestCleanup]
+//        [TearDown]
 //        public void TestCleanup()
 //        {
 //        }
@@ -63,8 +63,8 @@
 //            Assert.AreEqual(expected, Directory.GetFiles(pickupDirectory).Count());
 //        }
 
-//        [TestMethod]
-//        [TestCategory("MailIntegration")]
+//        [Test]
+//        //[TestCategory("MailIntegration")]
 //        public void SmtpWorkerSendOne()
 //        {
 //            SmtpWorkerPool pool = new SmtpWorkerPool(3);
@@ -77,8 +77,8 @@
 //        }
 
 
-//        [TestMethod]
-//        [TestCategory("MailIntegration")]
+//        [Test]
+//        //[TestCategory("MailIntegration")]
 //        public void SmtpWorkerSendTwo()
 //        {
 //            SmtpWorkerPool pool = new SmtpWorkerPool(4);
@@ -91,8 +91,8 @@
 //        }
 
 
-//        [TestMethod]
-//        [TestCategory("MailIntegration")]
+//        [Test]
+//        //[TestCategory("MailIntegration")]
 //        public void SmtpWorkerSendMany()
 //        {
 //            const int messageCount = 1000;
@@ -112,8 +112,8 @@
 //        }
 
 
-//        [TestMethod]
-//        [TestCategory("MailIntegration")]
+//        [Test]
+//        //[TestCategory("MailIntegration")]
 //        public void SmtpWorker2SendOne()
 //        {
 //            SmtpWorkerPool2 pool = new SmtpWorkerPool2(3);
@@ -123,8 +123,8 @@
 //            AssertMessagesSent(1);
 //        }
 
-//        [TestMethod]
-//        [TestCategory("MailIntegration")]
+//        [Test]
+//        //[TestCategory("MailIntegration")]
 //        public void SmtpWorker2SendTwo()
 //        {
 //            SmtpWorkerPool2 pool = new SmtpWorkerPool2(4);
@@ -134,8 +134,8 @@
 //            AssertMessagesSent(2);
 //        }
 
-//        [TestMethod]
-//        [TestCategory("MailIntegration")]
+//        [Test]
+//        //[TestCategory("MailIntegration")]
 //        public void SmtpWorker2SendMany()
 //        {
 //            const int messageCount = 1000;

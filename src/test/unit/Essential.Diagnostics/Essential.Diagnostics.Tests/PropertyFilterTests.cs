@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework; 
 
 namespace Essential.Diagnostics.Tests
 {
-   // [TestClass]no need to test obsolete members since we are not going to modify them.
+   // [TestFixture]no need to test obsolete members since we are not going to modify them.
     //public class PropertyFilterTests
     //{
-    //    [TestMethod]
+    //    [Test]
     //    public void ShouldAllowValidTrace()
     //    {
     //        var filter = new PropertyFilter("id == 1");
@@ -20,7 +20,7 @@ namespace Essential.Diagnostics.Tests
     //        Assert.IsTrue(shouldTrace);
     //    }
 
-    //    [TestMethod]
+    //    [Test]
     //    public void ShouldBlockInvalidTrace()
     //    {
     //        var filter = new PropertyFilter("id == 1");
@@ -31,7 +31,7 @@ namespace Essential.Diagnostics.Tests
     //    }
 
 
-    //    [TestMethod]
+    //    [Test]
     //    public void FilterOnSingleDataItemShouldWork()
     //    {
     //        var filter = new PropertyFilter("data == 'A'");

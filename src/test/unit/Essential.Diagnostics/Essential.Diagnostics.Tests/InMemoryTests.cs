@@ -7,16 +7,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using Essential.Diagnostics.Tests.Utility;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework; 
 
 namespace Essential.Diagnostics.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class InMemoryTests
     {
         public TestContext TestContext { get; set; }
 
-        [TestMethod]
+        [Test]
         public void MemoryRecordsTraceEventSentDirectly()
         {
             var listener = new InMemoryTraceListener();
@@ -31,7 +31,7 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual("2-A", events[0].Message);
         }
 
-        [TestMethod]
+        [Test]
         public void MemoryOverwriteWhenMoreTracesThanLimit()
         {
             var listener = new InMemoryTraceListener(6);
@@ -48,7 +48,7 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual(15, events[5].Id);
         }
 
-        [TestMethod]
+        [Test]
         public void MemoryRecordsEventFromTraceSource()
         {
             TraceSource source = new TraceSource("inmemory1Source");
@@ -72,7 +72,7 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual("3-B", events[0].Message);
         }
 
-        [TestMethod]
+        [Test]
         public void MemoryResetClearsAndResetsPointer()
         {
             TraceSource source = new TraceSource("inmemory1Source");
@@ -94,7 +94,7 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual(2, events3[0].Id);
         }
 
-        [TestMethod]
+        [Test]
         public void MemoryConfigParametersLoadedCorrectly()
         {
             TraceSource source = new TraceSource("inmemory1Source");
@@ -105,7 +105,7 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual(10, listener.Limit);
         }
 
-        [TestMethod]
+        [Test]
         public void MemoryInitializeDataRefreshCorrectly()
         {
             TraceSource source = new TraceSource("inmemory1Source");
@@ -117,7 +117,8 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual(10, listener1.Limit);
             Assert.AreEqual(1, listener1.GetEvents().Length);
 
-            var configPath = ConfigUtility.GetConfigDirFromTestRunDirectory(TestContext.TestRunDirectory);
+            //var configPath = ConfigUtility.GetConfigDirFromTestRunDirectory(TestContext.TestRunDirectory);
+            var configPath = ConfigUtility.GetConfigDirFromTestRunDirectory(TestContext.CurrentContext.TestDirectory);
 
             using (var file = new FileResetScope(configPath))
             {

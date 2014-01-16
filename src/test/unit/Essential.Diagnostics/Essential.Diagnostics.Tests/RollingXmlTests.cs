@@ -7,16 +7,16 @@ using System.Text;
 using System.Threading;
 using System.Xml.Linq;
 using Essential.Diagnostics.Tests.Utility;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework; 
 
 namespace Essential.Diagnostics.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class RollingXmlTests
     {
         public TestContext TestContext { get; set; }
 
-        [TestMethod]
+        [Test]
         public void XmlHandlesEventSentDirectly()
         {
             var mockFileSystem = new MockFileSystem();
@@ -29,13 +29,13 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual(1, mockFileSystem.OpenedItems.Count);
             var tuple0 = mockFileSystem.OpenedItems[0];
             // VS2012 process name (earlier name was "QTAgent32-")
-            StringAssert.StartsWith(tuple0.Item1, "vstest.executionengine.x86-" + DateTimeOffset.Now.Year.ToString());
+            StringAssert.StartsWith("vstest.executionengine.x86-" + DateTimeOffset.Now.Year.ToString(), tuple0.Item1);
             var data = tuple0.Item2.GetBuffer();
             var output = Encoding.UTF8.GetString(data, 0, (int)tuple0.Item2.Length);
-            StringAssert.StartsWith(output, "<E2ETraceEvent");
+            StringAssert.StartsWith("<E2ETraceEvent", output);
         }
 
-        [TestMethod]
+        [Test]
         public void XmlHandlesEventFromTraceSource()
         {
             var mockFileSystem = new MockFileSystem();
@@ -49,12 +49,12 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual(1, mockFileSystem.OpenedItems.Count);
             var tuple0 = mockFileSystem.OpenedItems[0];
             // VS2012 process name (earlier name was "QTAgent32-")
-            StringAssert.StartsWith(tuple0.Item1, "vstest.executionengine.x86-" + DateTimeOffset.Now.Year.ToString());
+            StringAssert.StartsWith("vstest.executionengine.x86-" + DateTimeOffset.Now.Year.ToString(), tuple0.Item1);
             var output = Encoding.UTF8.GetString(tuple0.Item2.GetBuffer(), 0, (int)tuple0.Item2.Length);
-            StringAssert.StartsWith(output, "<E2ETraceEvent");
+            StringAssert.StartsWith("<E2ETraceEvent", output);
         }
 
-        [TestMethod]
+        [Test]
         public void XmlRollOverTest()
         {
             var mockFileSystem = new MockFileSystem();
@@ -69,7 +69,7 @@ namespace Essential.Diagnostics.Tests
             Assert.AreEqual(2, mockFileSystem.OpenedItems.Count);
         }
 
-        [TestMethod]
+        [Test]
         public void XmlConfigParametersLoadedCorrectly()
         {
             TraceSource source = new TraceSource("rollingXml2Source");
