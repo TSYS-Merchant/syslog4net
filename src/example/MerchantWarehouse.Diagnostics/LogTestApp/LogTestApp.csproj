@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,12 +49,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\main\dot-net\Essential.Diagnostics\Essential.Diagnostics\Essential.Diagnostics.csproj">
-      <Project>{7a59aa9b-d2c3-4682-a4d7-ce37b98f5905}</Project>
-      <Name>Essential.Diagnostics</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\main\dot-net\MerchantWarehouse.Diagnostics\MerchantWarehouse.Diagnostics.csproj">
       <Project>{7137fa06-a1b8-4c9b-9639-9963330134bd}</Project>
       <Name>MerchantWarehouse.Diagnostics</Name>
