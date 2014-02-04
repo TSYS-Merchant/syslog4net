@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MerchantWarehouse.Diagnostics
 {
-    class CommandLineConverter : PatternLayoutConverter
+    public class CommandLineConverter : PatternLayoutConverter
     {
         override protected void Convert(TextWriter writer, LoggingEvent loggingEvent)
         {

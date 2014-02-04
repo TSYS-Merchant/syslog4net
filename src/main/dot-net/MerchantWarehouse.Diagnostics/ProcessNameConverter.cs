@@ -11,17 +11,20 @@ using System.Threading.Tasks;
 
 namespace MerchantWarehouse.Diagnostics
 {
-    class ProcessNameConverter : PatternLayoutConverter
+    public class ProcessNameConverter : PatternLayoutConverter
     {
+        private static string _name;
+
         override protected void Convert(TextWriter writer, LoggingEvent loggingEvent)
         {
-            var name = Process.GetCurrentProcess().ProcessName;
-            if (string.IsNullOrEmpty(name))
+            _name = string.IsNullOrEmpty(_name) ? Process.GetCurrentProcess().ProcessName : _name;
+
+            if (string.IsNullOrEmpty(_name))
             {
-                ProcessIdConverter.Converter.Format(writer, loggingEvent);
+                _name = "-"; // the NILVALUE
             }
 
-            writer.Write(PrintableAsciiSanitizer.Sanitize(name, 48));
+            writer.Write(PrintableAsciiSanitizer.Sanitize(_name, 48));
         }
     }
 }

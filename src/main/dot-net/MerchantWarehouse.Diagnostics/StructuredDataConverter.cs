@@ -11,7 +11,7 @@ using log4net.Layout.Pattern;
 
 namespace MerchantWarehouse.Diagnostics
 {
-    class StructuredDataConverter : PatternLayoutConverter
+    public class StructuredDataConverter : PatternLayoutConverter
     {
         public StructuredDataConverter()
         {
@@ -57,13 +57,15 @@ namespace MerchantWarehouse.Diagnostics
             }
         }
 
+        /*
         public static string GetTempFilePathWithExtension(string extension)
         {
             var path = Path.GetTempPath();
             var fileName = System.Guid.NewGuid().ToString() + extension;
             return Path.Combine(path, fileName);
-        }
+        }*/
 
+        /*
         private static void SaveException(System.Exception exceptionObject, out System.Uri uri)
         {
             var path = GetTempFilePathWithExtension(".txt");
@@ -73,7 +75,7 @@ namespace MerchantWarehouse.Diagnostics
                 file.WriteLine(exceptionObject.ToString());
                 uri = new System.Uri(path);
             }
-        }
+        }*/
 
         private void HandleException(TextWriter writer, LoggingEvent loggingEvent)
         {
@@ -87,8 +89,8 @@ namespace MerchantWarehouse.Diagnostics
                 AddStructuredData(writer, "EventHelp", exceptionObject.HelpLink);
 
                 System.Uri uri;
-                SaveException(exceptionObject, out uri);
-                AddStructuredData(writer, "EventLog", uri.ToString());
+                //SaveException(exceptionObject, out uri);
+                //AddStructuredData(writer, "EventLog", uri.ToString());
             }
             else
             {

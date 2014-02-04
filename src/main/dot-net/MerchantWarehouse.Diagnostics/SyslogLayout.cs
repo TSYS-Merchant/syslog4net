@@ -29,7 +29,7 @@ namespace MerchantWarehouse.Diagnostics
 
             _layout.AddConverter("mw-priority", typeof(PriorityConverter));
             _layout.AddConverter("mw-hostname", typeof(HostnameConverter));
-            _layout.AddConverter("mw-app-domain", typeof(ApplicationNameConverter));
+            //_layout.AddConverter("mw-app-domain", typeof(ApplicationNameConverter)); //use %appdomain, same implmentation
             _layout.AddConverter("mw-process-id", typeof(ProcessIdConverter));
             _layout.AddConverter("mw-message-id", typeof(MessageIdConverter));
             _layout.AddConverter("mw-structured-data", typeof(StructuredDataConverter));

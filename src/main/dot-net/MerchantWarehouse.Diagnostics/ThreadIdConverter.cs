@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MerchantWarehouse.Diagnostics
 {
-    class ThreadIdConverter : PatternLayoutConverter
+    public class ThreadIdConverter : PatternLayoutConverter
     {
         override protected void Convert(TextWriter writer, LoggingEvent loggingEvent)
         {

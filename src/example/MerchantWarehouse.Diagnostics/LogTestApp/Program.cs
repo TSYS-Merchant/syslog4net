@@ -7,6 +7,8 @@ using log4net;
 
 using MerchantWarehouse.Diagnostics;
 
+// This is required for log4net to automatically load its configuration from a web.config or app.config file. This line may appear anywhere in the application
+// the most popular locations are in an app's main class or in the AssemblyInfo.cs file.
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
 
 /// <summary>
@@ -17,7 +19,7 @@ using MerchantWarehouse.Diagnostics;
 class Program
 {
     static ILog _log = LogManager.GetLogger(typeof(Program));
-    //static TraceSource _trace = new TraceSource("HelloProgram");
+
     public static Random Random = new Random();
     public static Collection<Worker> Workers = new Collection<Worker>();
 
@@ -27,19 +29,13 @@ class Program
     /// <param name="args">no arguments are supported</param>
     public static void Main(string[] args)
     {
-        // Trace start
-        //Trace.CorrelationManager.ActivityId = Guid.NewGuid();
-        //Trace.CorrelationManager.StartLogicalOperation("Main");
-        //_trace.TraceData(TraceEventType.Critical, 1000, "hello", 5, 0, "soet");
-        //_trace.TraceEvent(TraceEventType.Start, 1000, "Program start. {0} + {1}", 1, "TEST");
-
         _log.Info("Program start");
 
         using (_log.StartThreadActivity())
         {
             // Run program
             int numberOfWorkers = Program.Random.Next(2, 4);
-            //_trace.TraceEvent(TraceEventType.Information, 2000, "Creating {0} workers", numberOfWorkers);
+
             _log.InfoFormat("Creating {0} workers", numberOfWorkers);
             _log.InfoFormat("WOW! {0} workers!!", numberOfWorkers);
 
@@ -53,13 +49,8 @@ class Program
             {
                 worker.FinishedEvent.WaitOne();
             }
-            // Trace stop
-            //_trace.TraceEvent(TraceEventType.Stop, 8000, "Program stop.");
         }
         _log.Info("Program stop.");
-        
-        //Trace.CorrelationManager.StopLogicalOperation();
-        //_trace.Flush();
     }
 
     /// <summary>
@@ -67,27 +58,15 @@ class Program
     /// </summary>
     static void StartWorkers()
     {
-        // Trace transfer in
-        //Guid newActivity = Guid.NewGuid();
-        //_trace.TraceTransfer(6011, "Transferred to Start", newActivity);
-        //Guid oldActivity = Trace.CorrelationManager.ActivityId;
-        //using (_log.StartThreadActivity())
-        //{
+        _log.Info("Starting workers");
 
-            //Trace.CorrelationManager.ActivityId = newActivity;
-            _log.Info("Starting workers");
-            //_trace.TraceEvent(TraceEventType.Start, 1010, "Starting workers.");
-            // Do work
-            foreach (Worker worker in Workers)
-            {
-                ThreadPool.QueueUserWorkItem(worker.Work);
-            }
-            // Trace transfer back
-            //_trace.TraceTransfer(6012, "Transferred back", oldActivity);
-            _log.Info("Finished Starting");
-            //_trace.TraceEvent(TraceEventType.Stop, 8010, "Finished starting.");
-            //Trace.CorrelationManager.ActivityId = oldActivity;
-        //}
+        // Do work
+        foreach (Worker worker in Workers)
+        {
+            ThreadPool.QueueUserWorkItem(worker.Work);
+        }
+
+        _log.Info("Finished Starting");
     }
 }
 
@@ -98,7 +77,7 @@ class Worker
 {
     int _count;
     static ILog _log = LogManager.GetLogger(typeof(Worker));
-    //static TraceSource _trace = new TraceSource("HelloWorker");
+
     public AutoResetEvent FinishedEvent = new AutoResetEvent(false);
     public string Id;
 
@@ -107,9 +86,6 @@ class Worker
     /// </summary>
     public void Poke()
     {
-        // Trace - mark with logical operation
-        //Trace.CorrelationManager.StartLogicalOperation(string.Format("Poked:{0}", Id));
-        //_trace.TraceEvent(TraceEventType.Verbose, 0, "Worker {0} was poked", Id);
         // Work
         Thread.Sleep(Program.Random.Next(500));
         _count++;
@@ -119,15 +95,11 @@ class Worker
         {
             Console.WriteLine("Hi", Id);
             _log.WarnFormat("Worker {0} getting annoyed", Id);
-            //_trace.TraceEvent(TraceEventType.Warning, 4500, "Worker {0} getting annoyed", Id);
         }
         else
         {
             _log.ErrorFormat("Worker {0} - too many pokes", Id);
-            //_trace.TraceEvent(TraceEventType.Error, 5500, "Worker {0} - too many pokes", Id);
         }
-        // Trace - end logical operation
-        //Trace.CorrelationManager.StopLogicalOperation();
     }
 
     /// <summary>
@@ -138,30 +110,23 @@ class Worker
     {
         using (_log.StartThreadActivity())
         {
-            // Trace transfer to thread
-            Guid newActivity = Guid.NewGuid();
-            //_trace.TraceTransfer(6501, "Transfered to worker", newActivity);
-            //Trace.CorrelationManager.ActivityId = newActivity;
-            //Trace.CorrelationManager.StartLogicalOperation(string.Format("Worker:{0}", Id));
-            //_trace.TraceEvent(TraceEventType.Start, 1500, "Worker {0} start.", Id);
             _log.InfoFormat("Worker {0} start.", Id);
+
             // Do work
             int numberOfPokes = Program.Random.Next(3, 6);
-            //_trace.TraceEvent(TraceEventType.Information, 2500, "Worker {0} will poke {1} times", Id, numberOfPokes);
+
             _log.InfoFormat("Worker {0} will poke {1} times", Id, numberOfPokes);
             for (int i = 1; i <= numberOfPokes; i++)
             {
                 Thread.Sleep(Program.Random.Next(500));
                 int index = Program.Random.Next(Program.Workers.Count);
-                //_trace.TraceEvent(TraceEventType.Verbose, 0, "Worker {0} poking {1}", Id, Program.Workers[index].Id);
+
                 _log.DebugFormat("Worker {0} poking {1}", Id, Program.Workers[index].Id);
                 Program.Workers[index].Poke();
             }
             FinishedEvent.Set();
-            // Trace stop (no transfer)
+
             _log.Info("Worker stop");
-            // _trace.TraceEvent(TraceEventType.Stop, 8500, "Worker stop.");
-            //Trace.CorrelationManager.StopLogicalOperation();
         }
     }
 }

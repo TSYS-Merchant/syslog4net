@@ -12,32 +12,26 @@ using log4net.Layout.Pattern;
 
 namespace MerchantWarehouse.Diagnostics
 {
-    class ProcessIdConverter : PatternLayoutConverter
+    public class ProcessIdConverter : PatternLayoutConverter
     {
+        private static string _processId;
+
         override protected void Convert(TextWriter writer, LoggingEvent loggingEvent)
         {
-            string processId = Process.GetCurrentProcess().Id.ToString();
+            _processId = string.IsNullOrEmpty(_processId) ? Process.GetCurrentProcess().Id.ToString() : _processId;
 
+            // TODO: Do we really want to give the option to override the process ID like this? How would it be used?
             if (loggingEvent.Properties.Contains("ProcessId"))
             {
-                processId = loggingEvent.Properties["ProcessId"].ToString();
+                _processId = loggingEvent.Properties["ProcessId"].ToString();
             }
 
-            if (string.IsNullOrEmpty(processId))
+            if (string.IsNullOrEmpty(_processId))
             {
-                processId = "-"; // the NILVALUE
+                _processId = "-"; // the NILVALUE
             }
 
-            writer.Write(PrintableAsciiSanitizer.Sanitize(processId, 48));
-        }
-
-        private static ProcessIdConverter _converter = new ProcessIdConverter();
-        internal static ProcessIdConverter Converter
-        {
-            get
-            {
-                return _converter;
-            }
+            writer.Write(PrintableAsciiSanitizer.Sanitize(_processId, 48));
         }
     }
 }

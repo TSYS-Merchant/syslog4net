@@ -12,7 +12,7 @@ using log4net.Layout.Pattern;
 
 namespace MerchantWarehouse.Diagnostics
 {
-    class HostnameConverter : PatternLayoutConverter
+    public class HostnameConverter : PatternLayoutConverter
     {
         public static string GetLocalhostFqdn()
         {

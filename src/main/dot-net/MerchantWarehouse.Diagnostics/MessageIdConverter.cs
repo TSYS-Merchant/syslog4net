@@ -11,7 +11,7 @@ using log4net.Layout.Pattern;
 
 namespace MerchantWarehouse.Diagnostics
 {
-    class MessageIdConverter : PatternLayoutConverter
+    public class MessageIdConverter : PatternLayoutConverter
     {
         override protected void Convert(TextWriter writer, LoggingEvent loggingEvent)
         {

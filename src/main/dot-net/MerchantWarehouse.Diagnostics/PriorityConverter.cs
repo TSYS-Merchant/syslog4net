@@ -12,7 +12,7 @@ using log4net.Layout.Pattern;
 
 namespace MerchantWarehouse.Diagnostics
 {
-    class PriorityConverter : PatternLayoutConverter
+    public class PriorityConverter : PatternLayoutConverter
     {
         public static string ConvertLevelToPriority(Level level)
         {

@@ -1,9 +1,14 @@
-﻿using log4net;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+using log4net;
+using log4net.Core;
+using log4net.Layout;
+using log4net.Layout.Pattern;
+using log4net.Util;
 
 namespace MerchantWarehouse.Diagnostics
 {
@@ -42,8 +47,21 @@ namespace MerchantWarehouse.Diagnostics
         {
             var name = string.IsNullOrEmpty(stackName) ? DEFAULT_STACK_NAME : stackName;
             var id = string.IsNullOrEmpty(activityId) ? Guid.NewGuid().ToString() : activityId;
-            
+
             return LogicalThreadContext.Stacks[name].Push(id);
+        }
+
+        /// <summary>
+        /// Returns a stack context object for the NDC stack using the provided ID or a randomly generated GUID. Similar to StartThread and StartThreadLogicial activity but is hard-coded to the NDC stack.
+        /// </summary>
+        /// <param name="log">current <see cref="ILog"/> instance</param>
+        /// <param name="id">(optional) message id DEFAULT = Guid.NewGuid()</param>
+        /// <returns>pushed stack context object. Context is popped from stack when object is disposed.</returns>
+        public static IDisposable StartMessage(this ILog log, string id = null)
+        {
+            id = string.IsNullOrEmpty(id) ? Guid.NewGuid().ToString() : id;
+
+            return ThreadContext.Stacks["NDC"].Push(id);
         }
     }
 }
