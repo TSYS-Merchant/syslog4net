@@ -11,6 +11,9 @@ using log4net.Layout.Pattern;
 
 namespace MerchantWarehouse.Diagnostics
 {
+    /// <summary>
+    /// Provides conversion of the MessageId logging event property or the NDC stack data as a message id for correlation purposes
+    /// </summary>
     public class MessageIdConverter : PatternLayoutConverter
     {
         override protected void Convert(TextWriter writer, LoggingEvent loggingEvent)

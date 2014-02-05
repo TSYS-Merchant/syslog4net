@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace MerchantWarehouse.Diagnostics
 {
+    /// <summary>
+    /// Provides the ID value of the current processing thread.
+    /// </summary>
     public class ThreadNameConverter : PatternLayoutConverter
     {
         override protected void Convert(TextWriter writer, LoggingEvent loggingEvent)

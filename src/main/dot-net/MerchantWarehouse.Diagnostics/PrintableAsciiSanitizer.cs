@@ -10,8 +10,19 @@ using log4net.Layout.Pattern;
 
 namespace MerchantWarehouse.Diagnostics
 {
+    /// <summary>
+    /// Provides helper methods for cleaning up string values. It is assumed that the consumer has specific needs for the string. For this implmentation this is mainly used to ensure that syslog
+    /// formatted messages are not too long and that they do not include invalid characters in fields like keynames.
+    /// </summary>
     sealed internal class PrintableAsciiSanitizer
     {
+        /// <summary>
+        /// Cleans up an input string based on the provided data
+        /// </summary>
+        /// <param name="input">input string to clean</param>
+        /// <param name="maxLength">maximum lenght allowed (will trim from the end of the string to the max lenght provided</param>
+        /// <param name="forbiddenOctets">character octets to remove from the string</param>
+        /// <returns>a cleaned string based upon the provided data</returns>
         public static string Sanitize(string input, int maxLength, byte[] forbiddenOctets)
         {
             var ascii = System.Text.Encoding.ASCII;

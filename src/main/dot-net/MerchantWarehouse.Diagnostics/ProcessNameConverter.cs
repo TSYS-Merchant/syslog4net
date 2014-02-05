@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace MerchantWarehouse.Diagnostics
 {
+    /// <summary>
+    /// Provides the current Process name as recorded by the operating system (often the name of the executable or host runtime)
+    /// </summary>
     public class ProcessNameConverter : PatternLayoutConverter
     {
         private static string _name;

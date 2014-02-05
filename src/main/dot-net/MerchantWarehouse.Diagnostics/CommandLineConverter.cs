@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace MerchantWarehouse.Diagnostics
 {
+    /// <summary>
+    /// Provides the Command path and arguments used to start the current process
+    /// </summary>
     public class CommandLineConverter : PatternLayoutConverter
     {
         override protected void Convert(TextWriter writer, LoggingEvent loggingEvent)

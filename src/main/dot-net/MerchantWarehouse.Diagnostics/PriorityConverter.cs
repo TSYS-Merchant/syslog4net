@@ -12,8 +12,16 @@ using log4net.Layout.Pattern;
 
 namespace MerchantWarehouse.Diagnostics
 {
+    /// <summary>
+    /// Converts standard logging levels into merchant warehouse specific syslog priority codes as defined in the TOPS Syslog standard: https://confluence.mw.inc/display/TO/TOps+Syslog+Standard
+    /// </summary>
     public class PriorityConverter : PatternLayoutConverter
     {
+        /// <summary>
+        /// Helper method to convert <see cref="Level"/> into a string ID that is mapped based upon the TOPS Syslog standard: https://confluence.mw.inc/display/TO/TOps+Syslog+Standard
+        /// </summary>
+        /// <param name="level"><see cref="Level"/> to convert to string</param>
+        /// <returns>string representing the syslog priority code as defined in the TOPS Syslog standard</returns>
         public static string ConvertLevelToPriority(Level level)
         {
             if (level >= Level.Emergency)

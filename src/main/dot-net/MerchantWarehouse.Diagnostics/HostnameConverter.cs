@@ -12,6 +12,9 @@ using log4net.Layout.Pattern;
 
 namespace MerchantWarehouse.Diagnostics
 {
+    /// <summary>
+    /// Provides the currently configured FQDN for the current host. Does not validate name with DNS.
+    /// </summary>
     public class HostnameConverter : PatternLayoutConverter
     {
         public static string GetLocalhostFqdn()

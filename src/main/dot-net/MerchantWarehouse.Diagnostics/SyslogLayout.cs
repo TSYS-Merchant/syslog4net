@@ -11,9 +11,9 @@ using log4net.Layout.Pattern;
 
 namespace MerchantWarehouse.Diagnostics
 {
-    // TODO: save exceptions to a configurable place instead of the temp directory
-
-    // https://confluence.mw.inc/display/TO/TOps+Syslog+Standard
+    /// <summary>
+    /// Log4net layout class with default support for the Syslog message format as described in the TOPS Syslong standard: https://confluence.mw.inc/display/TO/TOps+Syslog+Standard
+    /// </summary>
     class SyslogLayout : LayoutSkeleton
     {
         log4net.Layout.PatternLayout _layout;
@@ -21,11 +21,14 @@ namespace MerchantWarehouse.Diagnostics
         // http://tools.ietf.org/html/rfc5424#section-6.1
         private const int SYSLOG_MAX_MESSAGE_LENGTH = 2048;
 
+        /// <summary>
+        /// Instantiates a new instance of <see cref="SyslogLayout"/>
+        /// </summary>
         public SyslogLayout()
         {
             IgnoresException = false;
 
-            _layout = new PatternLayout("<%mw-priority>1 %utcdate{yyyy-MM-ddTHH:mm:ss:FFZ} %mw-hostname %mw-app-domain %mw-process-id %mw-message-id %mw-structured-data %message%newline");
+            _layout = new PatternLayout("<%mw-priority>1 %utcdate{yyyy-MM-ddTHH:mm:ss:FFZ} %mw-hostname %appdomain %mw-process-id %mw-message-id %mw-structured-data %message%newline");
 
             _layout.AddConverter("mw-priority", typeof(PriorityConverter));
             _layout.AddConverter("mw-hostname", typeof(HostnameConverter));
@@ -41,6 +44,11 @@ namespace MerchantWarehouse.Diagnostics
             ActivateOptions();
         }
 
+        /// <summary>
+        /// Formats data within the event and writes the formatted data out to the provided writer instance
+        /// </summary>
+        /// <param name="writer">writer to output the formatted data to</param>
+        /// <param name="logEvent">logging event data to use</param>
         override public void Format(TextWriter writer, LoggingEvent logEvent)
         {
             using (var stringWriter = new StringWriter())
@@ -62,6 +70,9 @@ namespace MerchantWarehouse.Diagnostics
             }
         }
 
+        /// <summary>
+        /// Activates the use of options for the converter allowing the underlying PatternLayout implmentation to behave correctly
+        /// </summary>
         override public void ActivateOptions()
         {
             _layout.ActivateOptions();

@@ -29,28 +29,44 @@ class Program
     /// <param name="args">no arguments are supported</param>
     public static void Main(string[] args)
     {
-        _log.Info("Program start");
+        _log.Error("TESTING", new Exception("THIS IS MY ERROR MESSAGE!", new Exception("THIS IS MY INNER EXCEPTION")));
 
-        using (_log.StartThreadActivity())
+        var zero = 0;
+
+        try
         {
-            // Run program
-            int numberOfWorkers = Program.Random.Next(2, 4);
-
-            _log.InfoFormat("Creating {0} workers", numberOfWorkers);
-            _log.InfoFormat("WOW! {0} workers!!", numberOfWorkers);
-
-            for (int i = 1; i <= numberOfWorkers; i++)
-            {
-                Worker worker = new Worker() { Id = string.Format("Worker {0}", i) };
-                Workers.Add(worker);
-            }
-            StartWorkers();
-            foreach (Worker worker in Workers)
-            {
-                worker.FinishedEvent.WaitOne();
-            }
+            var test = 99999 / zero;
         }
-        _log.Info("Program stop.");
+        catch (Exception ex)
+        {
+            _log.Error("ERROR", ex);
+        }
+
+        using (_log.StartMessage())
+        {
+            _log.Info("Program start");
+
+            using (_log.StartThreadActivity())
+            {
+                // Run program
+                int numberOfWorkers = Program.Random.Next(2, 4);
+
+                _log.InfoFormat("Creating {0} workers", numberOfWorkers);
+                _log.InfoFormat("WOW! {0} workers!!", numberOfWorkers);
+
+                for (int i = 1; i <= numberOfWorkers; i++)
+                {
+                    Worker worker = new Worker() { Id = string.Format("Worker {0}", i) };
+                    Workers.Add(worker);
+                }
+                StartWorkers();
+                foreach (Worker worker in Workers)
+                {
+                    worker.FinishedEvent.WaitOne();
+                }
+            }
+            _log.Info("Program stop.");
+        }
     }
 
     /// <summary>

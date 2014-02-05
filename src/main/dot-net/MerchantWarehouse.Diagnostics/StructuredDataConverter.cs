@@ -11,6 +11,10 @@ using log4net.Layout.Pattern;
 
 namespace MerchantWarehouse.Diagnostics
 {
+    /// <summary>
+    /// Converts data found within the properties of a logging event into Key/Value pairs to be displayed using syslog's Extended Data format as described 
+    /// in the TOPS Syslog standard: https://confluence.mw.inc/display/TO/TOps+Syslog+Standard
+    /// </summary>
     public class StructuredDataConverter : PatternLayoutConverter
     {
         public StructuredDataConverter()
@@ -88,9 +92,9 @@ namespace MerchantWarehouse.Diagnostics
                 AddStructuredData(writer, "ExceptionMessage", exceptionObject.Message);
                 AddStructuredData(writer, "EventHelp", exceptionObject.HelpLink);
 
-                System.Uri uri;
-                //SaveException(exceptionObject, out uri);
-                //AddStructuredData(writer, "EventLog", uri.ToString());
+                // Minor cheat at the moment by using a hardcoded path that is relative to the running
+                // application container.
+                AddStructuredData(writer, "EventLog", System.IO.Directory.GetCurrentDirectory() + "logs\\error\\error_" + loggingEvent.Properties["log4net:mw-exception-key"] + ".txt");
             }
             else
             {

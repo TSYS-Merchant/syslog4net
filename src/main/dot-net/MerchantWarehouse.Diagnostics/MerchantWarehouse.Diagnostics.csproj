@@ -47,6 +47,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandLineConverter.cs" />
+    <Compile Include="ExceptionFileUdpAppender.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ExceptionLoggingFilter.cs" />
     <Compile Include="HostnameConverter.cs" />
     <Compile Include="ILogExtensions.cs" />
     <Compile Include="MessageIdConverter.cs" />
