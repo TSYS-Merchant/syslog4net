@@ -11,12 +11,10 @@ using NUnit.Framework;
 using MerchantWarehouse.Diagnostics;
 using log4net.Core;
 using MerchantWarehouse.Diagnostics.Converters;
-
+using System.Diagnostics;
 
 namespace MerchantWarehouse.Diagnostics.Tests
 {
-
-
     [TestFixture]
     public class CommandLineConverterTests
     {
@@ -30,9 +28,9 @@ namespace MerchantWarehouse.Diagnostics.Tests
             writer.Flush();
 
             var result = TestUtilities.GetStringFromStream(writer.BaseStream);
+            var testRunnerProcess = Process.GetCurrentProcess().ProcessName;
 
-            Assert.AreEqual("vstest.executionengine.x86", result);
-
+            Assert.AreEqual(testRunnerProcess, result);
         }
     }
 }
