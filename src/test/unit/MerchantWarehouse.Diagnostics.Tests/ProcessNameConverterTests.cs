@@ -10,10 +10,13 @@ using NUnit.Framework;
 
 using MerchantWarehouse.Diagnostics;
 using log4net.Core;
+using MerchantWarehouse.Diagnostics.Converters;
 
 
 namespace MerchantWarehouse.Diagnostics.Tests
 {
+
+
     [TestFixture]
     public class CommandLineConverterTests
     {

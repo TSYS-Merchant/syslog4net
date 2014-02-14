@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MerchantWarehouse.Diagnostics
+namespace MerchantWarehouse.Diagnostics.Converters
 {
     /// <summary>
     /// Provides the ID value of the current processing thread.

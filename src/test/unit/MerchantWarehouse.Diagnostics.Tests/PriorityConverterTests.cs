@@ -13,6 +13,7 @@ using log4net.Util;
 using NUnit.Framework;
 
 using MerchantWarehouse.Diagnostics;
+using MerchantWarehouse.Diagnostics.Converters;
 
 namespace MerchantWarehouse.Diagnostics.Tests
 {

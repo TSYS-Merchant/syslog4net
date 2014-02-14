@@ -14,6 +14,8 @@ using NUnit.Framework;
 
 using MerchantWarehouse.Diagnostics;
 using NSubstitute;
+using MerchantWarehouse.Diagnostics.Converters;
+
 
 namespace MerchantWarehouse.Diagnostics.Tests
 {

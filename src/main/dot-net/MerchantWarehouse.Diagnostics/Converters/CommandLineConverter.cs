@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MerchantWarehouse.Diagnostics
+namespace MerchantWarehouse.Diagnostics.Converters
 {
     /// <summary>
     /// Provides the Command path and arguments used to start the current process

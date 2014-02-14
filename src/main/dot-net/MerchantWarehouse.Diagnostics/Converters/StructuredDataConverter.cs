@@ -9,7 +9,7 @@ using log4net.Core;
 using log4net.Layout;
 using log4net.Layout.Pattern;
 
-namespace MerchantWarehouse.Diagnostics
+namespace MerchantWarehouse.Diagnostics.Converters
 {
     /// <summary>
     /// Converts data found within the properties of a logging event into Key/Value pairs to be displayed using syslog's Extended Data format as described 

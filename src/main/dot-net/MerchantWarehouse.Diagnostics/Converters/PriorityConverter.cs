@@ -10,7 +10,7 @@ using log4net.Layout;
 using log4net.Layout.Pattern;
 
 
-namespace MerchantWarehouse.Diagnostics
+namespace MerchantWarehouse.Diagnostics.Converters
 {
     /// <summary>
     /// Converts standard logging levels into merchant warehouse specific syslog priority codes as defined in the TOPS Syslog standard: https://confluence.mw.inc/display/TO/TOps+Syslog+Standard

@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MerchantWarehouse.Diagnostics
+namespace MerchantWarehouse.Diagnostics.Converters
 {
     /// <summary>
     /// Provides the current Process name as recorded by the operating system (often the name of the executable or host runtime)

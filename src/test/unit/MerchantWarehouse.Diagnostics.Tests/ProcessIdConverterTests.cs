@@ -9,10 +9,12 @@ using System.Threading.Tasks;
 using log4net;
 using log4net.Core;
 using log4net.Util;
-
+using MerchantWarehouse.Diagnostics.Tests;
 using NUnit.Framework;
 
 using MerchantWarehouse.Diagnostics;
+using MerchantWarehouse.Diagnostics.Converters;
+
 
 namespace MerchantWarehouse.Diagnostics.Tests
 {

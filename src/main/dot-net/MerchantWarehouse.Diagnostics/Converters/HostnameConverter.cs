@@ -10,7 +10,7 @@ using log4net.Core;
 using log4net.Layout;
 using log4net.Layout.Pattern;
 
-namespace MerchantWarehouse.Diagnostics
+namespace MerchantWarehouse.Diagnostics.Converters
 {
     /// <summary>
     /// Provides the currently configured FQDN for the current host. Does not validate name with DNS.

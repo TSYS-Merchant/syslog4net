@@ -10,7 +10,7 @@ using log4net.Core;
 using log4net.Layout;
 using log4net.Layout.Pattern;
 
-namespace MerchantWarehouse.Diagnostics
+namespace MerchantWarehouse.Diagnostics.Converters
 {
     /// <summary>
     /// Provides conversion to string the current process ID. Can be overridden by the developer of the logging event contains a property with the name of "ProcessId".

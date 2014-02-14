@@ -9,7 +9,7 @@ using log4net.Core;
 using log4net.Layout;
 using log4net.Layout.Pattern;
 
-namespace MerchantWarehouse.Diagnostics
+namespace MerchantWarehouse.Diagnostics.Converters
 {
     /// <summary>
     /// Provides conversion of the MessageId logging event property or the NDC stack data as a message id for correlation purposes
