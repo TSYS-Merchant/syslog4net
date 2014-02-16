@@ -48,17 +48,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandLineConverterTests.cs" />
-    <Compile Include="HostnameConverterTests.cs" />
-    <Compile Include="MessageIdConverterTests.cs" />
-    <Compile Include="PriorityConverterTests.cs" />
-    <Compile Include="ProcessIdConverterTests.cs" />
-    <Compile Include="ProcessNameConverterTests.cs" />
+    <Compile Include="Converters\CommandLineConverterTests.cs" />
+    <Compile Include="Converters\HostnameConverterTests.cs" />
+    <Compile Include="Converters\MessageIdConverterTests.cs" />
+    <Compile Include="Converters\PriorityConverterTests.cs" />
+    <Compile Include="Converters\ProcessIdConverterTests.cs" />
+    <Compile Include="Converters\ProcessNameConverterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StructuredDataConverterTests.cs" />
+    <Compile Include="Converters\StructuredDataConverterTests.cs" />
     <Compile Include="TestUtilities.cs" />
-    <Compile Include="TheadIdConverterTests.cs" />
-    <Compile Include="ThreadNameConverterTests.cs" />
+    <Compile Include="Converters\TheadIdConverterTests.cs" />
+    <Compile Include="Converters\ThreadNameConverterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\main\dot-net\MerchantWarehouse.Diagnostics\MerchantWarehouse.Diagnostics.csproj">

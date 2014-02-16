@@ -1,36 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-
-using log4net;
-using NUnit.Framework;
-
-using MerchantWarehouse.Diagnostics;
 using log4net.Core;
 using MerchantWarehouse.Diagnostics.Converters;
+using NUnit.Framework;
 
-
-namespace MerchantWarehouse.Diagnostics.Tests
+namespace MerchantWarehouse.Diagnostics.Tests.Converters
 {
     [TestFixture]
-    public class ThreadNameConverterTests
+    public class ProcessNameConverterTests
     {
         [Test]
         public void ConvertTest()
         {
             var writer = new StreamWriter(new MemoryStream());
-            var converter = new ThreadNameConverter();
+            var converter = new CommandLineConverter();
 
             converter.Format(writer, new LoggingEvent(new LoggingEventData()));
             writer.Flush();
 
             var result = TestUtilities.GetStringFromStream(writer.BaseStream);
 
-            Assert.AreEqual(Thread.CurrentThread.Name, result);
+            Assert.AreEqual(Environment.CommandLine, result);
 
         }
     }
