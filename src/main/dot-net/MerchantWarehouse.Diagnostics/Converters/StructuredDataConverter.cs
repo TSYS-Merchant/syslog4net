@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
+﻿using System.IO;
 
 using log4net.Core;
-using log4net.Layout;
 using log4net.Layout.Pattern;
 
 namespace MerchantWarehouse.Diagnostics.Converters
@@ -20,7 +14,7 @@ namespace MerchantWarehouse.Diagnostics.Converters
         public StructuredDataConverter()
         {
             // This converter handles the exception
-            IgnoresException = false;
+            IgnoresException = false;  //TODO deal with this. Sealed?
         }
 
         private static string SanitizeSdName(string sdName)

@@ -1,23 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using log4net;
-using log4net.Core;
-using log4net.Layout;
-using log4net.Layout.Pattern;
-using log4net.Util;
 
 namespace MerchantWarehouse.Diagnostics
 {
     /// <summary>
     /// Helper methods/extensions for leveraging log4net types within MerchantWarehouse
     /// </summary>
+    // ReSharper disable once InconsistentNaming (This class exists only to provide extension methods to the ILog interface.)
     public static class ILogExtensions
+    // ReSharper disable
     {
-        public const string DEFAULT_STACK_NAME = "mwas"; //MerchantWarehouseActivityStack
+        public const string DefaultStackName = "mwas"; //MerchantWarehouseActivityStack
 
         /// <summary>
         /// Returns a stack context object for correlation logging
@@ -29,9 +22,9 @@ namespace MerchantWarehouse.Diagnostics
         /// <returns>pushed stack context object. Context is popped from stack when object is disposed.</returns>
         public static IDisposable StartThreadActivity(this ILog log, string stackName = null, string activityId = null)
         {
-            var name = string.IsNullOrEmpty(stackName) ? DEFAULT_STACK_NAME : stackName;
+            var name = string.IsNullOrEmpty(stackName) ? DefaultStackName : stackName;
             var id = string.IsNullOrEmpty(activityId) ? Guid.NewGuid().ToString() : activityId;
-
+            
             return ThreadContext.Stacks[name].Push(id);
         }
 
@@ -45,7 +38,7 @@ namespace MerchantWarehouse.Diagnostics
         /// <returns>pushed stack context object. Context is popped from stack when object is disposed.</returns>
         public static IDisposable StartThreadLogicialActivity(this ILog log, string stackName = null, string activityId = null)
         {
-            var name = string.IsNullOrEmpty(stackName) ? DEFAULT_STACK_NAME : stackName;
+            var name = string.IsNullOrEmpty(stackName) ? DefaultStackName : stackName;
             var id = string.IsNullOrEmpty(activityId) ? Guid.NewGuid().ToString() : activityId;
 
             return LogicalThreadContext.Stacks[name].Push(id);

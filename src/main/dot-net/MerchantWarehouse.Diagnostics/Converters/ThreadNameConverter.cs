@@ -1,12 +1,7 @@
-﻿using log4net.Core;
-using log4net.Layout.Pattern;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 using System.Threading;
-using System.Threading.Tasks;
+using log4net.Core;
+using log4net.Layout.Pattern;
 
 namespace MerchantWarehouse.Diagnostics.Converters
 {
