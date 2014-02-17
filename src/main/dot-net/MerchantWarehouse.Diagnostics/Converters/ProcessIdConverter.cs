@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using System.IO;
-using System.Diagnostics;
-
 using log4net.Core;
-using log4net.Layout;
 using log4net.Layout.Pattern;
+using System.Globalization;
 
-namespace MerchantWarehouse.Diagnostics
+namespace MerchantWarehouse.Diagnostics.Converters
 {
     /// <summary>
     /// Provides conversion to string the current process ID. Can be overridden by the developer of the logging event contains a property with the name of "ProcessId".
@@ -21,7 +15,7 @@ namespace MerchantWarehouse.Diagnostics
 
         override protected void Convert(TextWriter writer, LoggingEvent loggingEvent)
         {
-            _processId = string.IsNullOrEmpty(_processId) ? Process.GetCurrentProcess().Id.ToString() : _processId;
+            _processId = string.IsNullOrEmpty(_processId) ? Process.GetCurrentProcess().Id.ToString(CultureInfo.InvariantCulture) : _processId;
 
             // TODO: Do we really want to give the option to override the process ID like this? How would it be used?
             if (loggingEvent.Properties.Contains("ProcessId"))

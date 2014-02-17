@@ -1,15 +1,9 @@
-﻿using log4net.Core;
-using log4net.Layout.Pattern;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using log4net.Core;
+using log4net.Layout.Pattern;
 
-namespace MerchantWarehouse.Diagnostics
+namespace MerchantWarehouse.Diagnostics.Converters
 {
     /// <summary>
     /// Provides the Command path and arguments used to start the current process

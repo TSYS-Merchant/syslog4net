@@ -1,13 +1,9 @@
-﻿using log4net.Core;
+﻿using System.IO;
+using log4net.Core;
 using log4net.Layout.Pattern;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
 
-namespace MerchantWarehouse.Diagnostics
+namespace MerchantWarehouse.Diagnostics.Converters
 {
     /// <summary>
     /// Provides the ID value of the current processing thread.
@@ -16,7 +12,7 @@ namespace MerchantWarehouse.Diagnostics
     {
         override protected void Convert(TextWriter writer, LoggingEvent loggingEvent)
         {
-            var id = System.Threading.Thread.CurrentThread.ManagedThreadId.ToString();
+            var id = System.Threading.Thread.CurrentThread.ManagedThreadId.ToString(CultureInfo.InvariantCulture);
             writer.Write(PrintableAsciiSanitizer.Sanitize(id, 48));
         }
 

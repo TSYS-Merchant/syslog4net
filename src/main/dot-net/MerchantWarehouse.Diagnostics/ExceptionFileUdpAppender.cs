@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-
-using log4net;
-using log4net.Core;
 using log4net.Appender;
+using log4net.Core;
 
 namespace MerchantWarehouse.Diagnostics
 {
@@ -19,17 +14,15 @@ namespace MerchantWarehouse.Diagnostics
     /// </summary>
     public class ExceptionFileUdpAppender : UdpAppender
     {
-        private const string _idToken = "{errorId}";
-        private const string _baseErrorLogPath = @"log\errors\";
-        private const string _defaultFileName = @"error_" + _idToken + ".txt";
-
-        private string _fileNameSuffix;
+        private const string IdToken = "{errorId}";
+        private const string BaseErrorLogPath = @"log\errors\";
+        private const string DefaultFileName = @"error_" + IdToken + ".txt";
 
         public ExceptionFileUdpAppender()
         {
-            if (!Directory.Exists(_baseErrorLogPath))
+            if (!Directory.Exists(BaseErrorLogPath))
             {
-                Directory.CreateDirectory(_baseErrorLogPath);
+                Directory.CreateDirectory(BaseErrorLogPath);
             }
         }
 
@@ -51,7 +44,7 @@ namespace MerchantWarehouse.Diagnostics
             {
                 if (evt.ExceptionObject != null)
                 {
-                    var logfilePath = _baseErrorLogPath + _defaultFileName.Replace(_idToken, evt.Properties["log4net:mw-exception-key"].ToString());
+                    var logfilePath = BaseErrorLogPath + DefaultFileName.Replace(IdToken, evt.Properties["log4net:mw-exception-key"].ToString());
 
                     // Should not need any complex locking or threading here as we dump the info
                     // to the file and never touch that file again.

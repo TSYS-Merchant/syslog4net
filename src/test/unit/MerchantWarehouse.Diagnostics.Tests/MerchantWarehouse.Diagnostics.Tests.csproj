@@ -31,10 +31,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net">
-      <HintPath>..\..\..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+      <HintPath>..\..\..\example\MerchantWarehouse.Diagnostics\LogTestApp\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="NSubstitute">
-      <HintPath>..\..\..\packages\NSubstitute.1.7.1.0\lib\NET40\NSubstitute.dll</HintPath>
+      <HintPath>..\..\..\example\MerchantWarehouse.Diagnostics\LogTestApp\packages\NSubstitute.1.7.1.0\lib\NET40\NSubstitute.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\..\..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
@@ -48,17 +48,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandLineConverterTests.cs" />
-    <Compile Include="HostnameConverterTests.cs" />
-    <Compile Include="MessageIdConverterTests.cs" />
-    <Compile Include="PriorityConverterTests.cs" />
-    <Compile Include="ProcessIdConverterTests.cs" />
-    <Compile Include="ProcessNameConverterTests.cs" />
+    <Compile Include="Converters\CommandLineConverterTests.cs" />
+    <Compile Include="Converters\HostnameConverterTests.cs" />
+    <Compile Include="Converters\MessageIdConverterTests.cs" />
+    <Compile Include="Converters\PriorityConverterTests.cs" />
+    <Compile Include="Converters\ProcessIdConverterTests.cs" />
+    <Compile Include="Converters\ProcessNameConverterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StructuredDataConverterTests.cs" />
+    <Compile Include="Converters\StructuredDataConverterTests.cs" />
     <Compile Include="TestUtilities.cs" />
-    <Compile Include="TheadIdConverterTests.cs" />
-    <Compile Include="ThreadNameConverterTests.cs" />
+    <Compile Include="Converters\TheadIdConverterTests.cs" />
+    <Compile Include="Converters\ThreadNameConverterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\main\dot-net\MerchantWarehouse.Diagnostics\MerchantWarehouse.Diagnostics.csproj">

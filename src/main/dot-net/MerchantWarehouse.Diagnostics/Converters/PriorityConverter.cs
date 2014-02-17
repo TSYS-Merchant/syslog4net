@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
+﻿using System.IO;
 
 using log4net.Core;
-using log4net.Layout;
 using log4net.Layout.Pattern;
 
 
-namespace MerchantWarehouse.Diagnostics
+namespace MerchantWarehouse.Diagnostics.Converters
 {
     /// <summary>
     /// Converts standard logging levels into merchant warehouse specific syslog priority codes as defined in the TOPS Syslog standard: https://confluence.mw.inc/display/TO/TOps+Syslog+Standard

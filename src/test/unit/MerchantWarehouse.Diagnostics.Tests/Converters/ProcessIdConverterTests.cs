@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using log4net;
 using log4net.Core;
 using log4net.Util;
-
+using MerchantWarehouse.Diagnostics.Converters;
 using NUnit.Framework;
 
-using MerchantWarehouse.Diagnostics;
-
-namespace MerchantWarehouse.Diagnostics.Tests
+namespace MerchantWarehouse.Diagnostics.Tests.Converters
 {
     [TestFixture]
     public class ProcessIdConverterTests

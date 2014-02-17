@@ -35,7 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net">
-      <HintPath>..\..\..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+      <HintPath>..\..\..\example\MerchantWarehouse.Diagnostics\LogTestApp\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -46,23 +46,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandLineConverter.cs" />
+    <Compile Include="Converters\CommandLineConverter.cs" />
     <Compile Include="ExceptionFileUdpAppender.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ExceptionLoggingFilter.cs" />
-    <Compile Include="HostnameConverter.cs" />
+    <Compile Include="Converters\HostnameConverter.cs" />
     <Compile Include="ILogExtensions.cs" />
-    <Compile Include="MessageIdConverter.cs" />
+    <Compile Include="Converters\MessageIdConverter.cs" />
     <Compile Include="PrintableAsciiSanitizer.cs" />
-    <Compile Include="PriorityConverter.cs" />
-    <Compile Include="ProcessIdConverter.cs" />
-    <Compile Include="ProcessNameConverter.cs" />
-    <Compile Include="StructuredDataConverter.cs" />
+    <Compile Include="Converters\PriorityConverter.cs" />
+    <Compile Include="Converters\ProcessIdConverter.cs" />
+    <Compile Include="Converters\ProcessNameConverter.cs" />
+    <Compile Include="Converters\StructuredDataConverter.cs" />
     <Compile Include="SyslogLayout.cs" />
-    <Compile Include="ThreadIdConverter.cs" />
-    <Compile Include="ThreadNameConverter.cs" />
+    <Compile Include="Converters\ThreadIdConverter.cs" />
+    <Compile Include="Converters\ThreadNameConverter.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets" />
   <Import Project="$(NugetTools)\NuGet.targets" Condition="Exists('$(NugetTools)\NuGet.targets')" />
