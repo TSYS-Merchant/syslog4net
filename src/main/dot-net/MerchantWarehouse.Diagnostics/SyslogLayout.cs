@@ -23,18 +23,13 @@ namespace MerchantWarehouse.Diagnostics
         {
             IgnoresException = false;  //TODO deal with this. sealed?
 
-            this._layout = new PatternLayout("<%mw-priority>1 %utcdate{yyyy-MM-ddTHH:mm:ss:FFZ} %mw-hostname %appdomain %mw-process-id %mw-message-id %mw-structured-data %message%newline");
+            this._layout = new PatternLayout("<%syslog-priority>1 %utcdate{yyyy-MM-ddTHH:mm:ss:FFZ} %syslog-hostname %appdomain %syslog-process-id %syslog-message-id %syslog-structured-data %message%newline");
 
-            this._layout.AddConverter("mw-priority", typeof(PriorityConverter));
-            this._layout.AddConverter("mw-hostname", typeof(HostnameConverter));
-            //_layout.AddConverter("mw-app-domain", typeof(ApplicationNameConverter)); //use %appdomain, same implmentation
-            this._layout.AddConverter("mw-process-id", typeof(ProcessIdConverter));
-            this._layout.AddConverter("mw-message-id", typeof(MessageIdConverter));
-            this._layout.AddConverter("mw-structured-data", typeof(StructuredDataConverter));
-            this._layout.AddConverter("mw-thread-id", typeof(ThreadIdConverter));
-            this._layout.AddConverter("mw-thread-name", typeof(ThreadNameConverter));
-            this._layout.AddConverter("mw-command-line", typeof(CommandLineConverter));
-            this._layout.AddConverter("mw-process-name", typeof(ProcessNameConverter));
+            this._layout.AddConverter("syslog-priority", typeof(PriorityConverter));
+            this._layout.AddConverter("syslog-hostname", typeof(HostnameConverter));
+            this._layout.AddConverter("syslog-process-id", typeof(ProcessIdConverter));
+            this._layout.AddConverter("syslog-message-id", typeof(MessageIdConverter));
+            this._layout.AddConverter("syslog-structured-data", typeof(StructuredDataConverter));
 
             this.ActivateOptions();
         }
