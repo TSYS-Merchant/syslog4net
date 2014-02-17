@@ -7,7 +7,7 @@ namespace MerchantWarehouse.Diagnostics.Converters
 {
     /// <summary>
     /// Converts data found within the properties of a logging event into Key/Value pairs to be displayed using syslog's Extended Data format as described 
-    /// in the TOPS Syslog standard: https://confluence.mw.inc/display/TO/TOps+Syslog+Standard
+    /// in RFC 5424 section 6.3: http://tools.ietf.org/html/rfc5424#section-6.3
     /// </summary>
     public class StructuredDataConverter : PatternLayoutConverter
     {
@@ -54,26 +54,6 @@ namespace MerchantWarehouse.Diagnostics.Converters
                 writer.Write("\"");
             }
         }
-
-        /*
-        public static string GetTempFilePathWithExtension(string extension)
-        {
-            var path = Path.GetTempPath();
-            var fileName = System.Guid.NewGuid().ToString() + extension;
-            return Path.Combine(path, fileName);
-        }*/
-
-        /*
-        private static void SaveException(System.Exception exceptionObject, out System.Uri uri)
-        {
-            var path = GetTempFilePathWithExtension(".txt");
-
-            using (var file = new System.IO.StreamWriter(path))
-            {
-                file.WriteLine(exceptionObject.ToString());
-                uri = new System.Uri(path);
-            }
-        }*/
 
         private void HandleException(TextWriter writer, LoggingEvent loggingEvent)
         {
