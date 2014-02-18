@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 using log4net.Appender;
 using log4net.Core;
 
@@ -12,14 +10,15 @@ namespace MerchantWarehouse.Diagnostics
     /// rather than to syslog via UDP. This version of the appender uses the ID set by the exception filter to ensure
     /// that the correct information pointing to the error file is included in the syslog message.
     /// </summary>
-    public class ExceptionFileUdpAppender : UdpAppender
+    public class ExceptionFileTcpAppender : TcpAppender
     {
         private const string IdToken = "{errorId}";
         private const string BaseErrorLogPath = @"log\errors\";
         private const string DefaultFileName = @"error_" + IdToken + ".txt";
 
-        public ExceptionFileUdpAppender()
+        public ExceptionFileTcpAppender()
         {
+            //TODO this should not be in constructor. will fail to initialize if ACL check fails
             if (!Directory.Exists(BaseErrorLogPath))
             {
                 Directory.CreateDirectory(BaseErrorLogPath);
@@ -46,33 +45,13 @@ namespace MerchantWarehouse.Diagnostics
                 {
                     var logfilePath = BaseErrorLogPath + DefaultFileName.Replace(IdToken, evt.Properties["log4net:mw-exception-key"].ToString());
 
+                    //TODO what happens during file name collision?
+
                     // Should not need any complex locking or threading here as we dump the info
                     // to the file and never touch that file again.
-                    File.WriteAllText(logfilePath, BuildErrorString(evt.ExceptionObject));
+                    File.WriteAllText(logfilePath, evt.ExceptionObject.ToString());
                 }
             }
-        }
-
-        private string BuildErrorString(Exception ex)
-        {
-            var sb = new StringBuilder();
-
-            sb.AppendLine("Source : " + ex.Source);
-            sb.AppendLine("Type : " + ex.GetType());
-            sb.AppendLine("Message : " + ex.Message);
-            sb.AppendLine("Target Site : " + ex.TargetSite);
-            sb.AppendLine("Help Link : " + ex.HelpLink);
-            sb.AppendLine("HResult : " + ex.HResult);
-            sb.AppendLine("Stack Trace : " + ex.StackTrace);
-
-            if (ex.InnerException != null)
-            {
-                sb.AppendLine();
-                sb.AppendLine("---INNER EXCEPTION DATA---");
-                sb.AppendLine(BuildErrorString(ex.InnerException));
-            }
-
-            return sb.ToString();
         }
     }
 }

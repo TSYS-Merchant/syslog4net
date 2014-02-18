@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\CommandLineConverter.cs" />
-    <Compile Include="ExceptionFileUdpAppender.cs">
+    <Compile Include="ExceptionFileTcpAppender.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ExceptionLoggingFilter.cs" />
@@ -62,6 +62,7 @@
     <Compile Include="SyslogLayout.cs" />
     <Compile Include="Converters\ThreadIdConverter.cs" />
     <Compile Include="Converters\ThreadNameConverter.cs" />
+    <Compile Include="TcpAppender.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
