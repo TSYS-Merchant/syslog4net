@@ -22,6 +22,7 @@ using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using log4net.Appender;
 using log4net.Core;
 
@@ -105,6 +106,8 @@ namespace MerchantWarehouse.Diagnostics
     /// <author>Nicko Cadell</author>
     public class TcpAppender : AppenderSkeleton
     {
+        private static int FailedConnectionCount = 0;
+
         #region Public Instance Constructors
 
         /// <summary>
@@ -115,6 +118,12 @@ namespace MerchantWarehouse.Diagnostics
         /// </remarks>
         public TcpAppender()
         {
+        }
+
+        private class AsyncLoggingData
+        {
+            internal TcpClient Client { get; set; }
+            internal LoggingEvent LoggingEvent { get; set; }
         }
 
         #endregion Public Instance Constructors
@@ -298,11 +307,11 @@ namespace MerchantWarehouse.Diagnostics
         /// returned from <see cref="Client" /> if you require access beyond that which 
         /// <see cref="TcpAppender" /> provides.
         /// </remarks>
-        protected TcpClient Client
-        {
-            get { return this.m_client; }
-            set { this.m_client = value; }
-        }
+        //protected TcpClient Client
+        //{
+        //    get { return this.m_client; }
+        //    set { this.m_client = value; }
+        //}
 
         /// <summary>
         /// Gets or sets the cached remote endpoint to which the logging events should be sent.
@@ -315,11 +324,11 @@ namespace MerchantWarehouse.Diagnostics
         /// with the values of the <see cref="RemoteAddress" /> and <see cref="RemotePort"/>
         /// properties.
         /// </remarks>
-        protected IPEndPoint RemoteEndPoint
-        {
-            get { return this.m_remoteEndPoint; }
-            set { this.m_remoteEndPoint = value; }
-        }
+        //protected IPEndPoint RemoteEndPoint
+        //{
+        //    get { return this.m_remoteEndPoint; }
+        //    set { this.m_remoteEndPoint = value; }
+        //}
 
         #endregion Protected Instance Properties
 
@@ -371,11 +380,6 @@ namespace MerchantWarehouse.Diagnostics
                     " or greater than " +
                     IPEndPoint.MaxPort.ToString(NumberFormatInfo.InvariantInfo) + ".");
             }
-            else
-            {
-                this.RemoteEndPoint = new IPEndPoint(this.RemoteAddress, this.RemotePort);
-                this.InitializeClientConnection();
-            }
         }
 
         #endregion
@@ -396,14 +400,23 @@ namespace MerchantWarehouse.Diagnostics
         /// </remarks>
         protected override void Append(LoggingEvent loggingEvent)
         {
+            TcpClient client = null;
             NetworkStream netStream = null;
 
             try
             {
-                Byte[] buffer = this.m_encoding.GetBytes(RenderLoggingEvent(loggingEvent).ToCharArray());
-                this.Client.Connect(this.RemoteEndPoint);
-                netStream = this.Client.GetStream();
-                netStream.Write(buffer, 0, buffer.Length);
+                client = new TcpClient();
+
+                //Async Programming Model allows socket connection to happen on threadpool so app can continue.
+                client.BeginConnect(
+                    this.RemoteAddress,
+                    this.RemotePort,
+                    new AsyncCallback(this.ConnectionEstablishedCallback),
+                    new AsyncLoggingData()
+                    {
+                        Client = client,
+                        LoggingEvent = loggingEvent
+                    });
             }
             catch (Exception ex)
             {
@@ -411,13 +424,49 @@ namespace MerchantWarehouse.Diagnostics
                     "Unable to send logging event to remote host " + this.RemoteAddress.ToString() + " on port " +
                     this.RemotePort + ".", ex, ErrorCode.WriteFailure);
             }
-            finally
+        }
+
+        private void ConnectionEstablishedCallback(IAsyncResult asyncResult)
+        {
+            //TODO callback happens on background thread. lose data if app pool recycled?
+            NetworkStream netStream = null;
+            AsyncLoggingData loggingData = asyncResult.AsyncState as AsyncLoggingData;
+            if (loggingData == null)
             {
+                throw new Exception("LoggingData is null");
+            }
+            Byte[] buffer = this.m_encoding.GetBytes(RenderLoggingEvent(loggingData.LoggingEvent).ToCharArray());
+
+            try
+            {
+                loggingData.Client.EndConnect(asyncResult);
+            }
+            catch
+            {
+                Interlocked.Increment(ref FailedConnectionCount);
+                if (FailedConnectionCount >= 1)
+                {
+                    //We have failed to connect to all the IP Addresses
+                    //connection has failed overall.
+                    return;
+                }
+            }
+
+            try
+            {
+                netStream = loggingData.Client.GetStream();
+                netStream.Write(buffer, 0, buffer.Length);
+
                 if (netStream != null)
                 {
                     netStream.Close();
                 }
-                this.Client.Close();
+                loggingData.Client.Close();
+
+            }
+            catch (Exception ex)
+            {
+                //TODO fallback default appender?
             }
         }
 
@@ -448,12 +497,6 @@ namespace MerchantWarehouse.Diagnostics
         override protected void OnClose()
         {
             base.OnClose();
-
-            if (this.Client != null)
-            {
-                this.Client.Close();
-                this.Client = null;
-            }
         }
 
         #endregion Override implementation of AppenderSkeleton
@@ -472,39 +515,39 @@ namespace MerchantWarehouse.Diagnostics
         /// Exceptions are passed to the <see cref="AppenderSkeleton.ErrorHandler"/>.
         /// </para>
         /// </remarks>
-        protected virtual void InitializeClientConnection()
-        {
-            try
-            {
-                if (this.LocalPort == 0)
-                {
-#if NETCF
-					this.Client = new UdpClient();
-#else
-                    this.Client = new TcpClient(this.RemoteAddress.AddressFamily);
-#endif
-                }
-                else
-                {
-#if NETCF
-					this.Client = new UdpClient(this.LocalPort);
-#else
-                    //TODO localport not required for TCP
-                    //this.Client = new TcpClient(this.LocalPort, this.RemoteAddress.AddressFamily);
-#endif
-                }
-            }
-            catch (Exception ex)
-            {
-                ErrorHandler.Error(
-                    "Could not initialize the UdpClient connection on port " +
-                    this.LocalPort.ToString(NumberFormatInfo.InvariantInfo) + ".",
-                    ex,
-                    ErrorCode.GenericFailure);
+        //        protected virtual void InitializeClientConnection()
+        //        {
+        //            try
+        //            {
+        //                if (this.LocalPort == 0)
+        //                {
+        //#if NETCF
+        //                    this.Client = new UdpClient();
+        //#else
+        //                    this.Client = new TcpClient(this.RemoteAddress.AddressFamily);
+        //#endif
+        //                }
+        //                else
+        //                {
+        //#if NETCF
+        //                    this.Client = new UdpClient(this.LocalPort);
+        //#else
+        //                    //TODO localport not required for TCP
+        //                    //this.Client = new TcpClient(this.LocalPort, this.RemoteAddress.AddressFamily);
+        //#endif
+        //                }
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                ErrorHandler.Error(
+        //                    "Could not initialize the UdpClient connection on port " +
+        //                    this.LocalPort.ToString(NumberFormatInfo.InvariantInfo) + ".",
+        //                    ex,
+        //                    ErrorCode.GenericFailure);
 
-                this.Client = null;
-            }
-        }
+        //                this.Client = null;
+        //            }
+        //        }
 
         #endregion Protected Instance Methods
 

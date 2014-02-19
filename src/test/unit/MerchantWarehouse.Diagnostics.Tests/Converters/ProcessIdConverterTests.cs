@@ -27,7 +27,7 @@ namespace MerchantWarehouse.Diagnostics.Tests.Converters
         [Test]
         public void ConvertTestWithLoggingEventProperty()
         {
-            var testId = "9001";
+            var testId = Process.GetCurrentProcess().Id.ToString();
             var writer = new StreamWriter(new MemoryStream());
             var converter = new ProcessIdConverter();
             var props = new PropertiesDictionary();
