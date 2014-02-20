@@ -67,6 +67,8 @@ class Program
             }
             _log.Info("Program stop.");
         }
+
+        Thread.Sleep(new TimeSpan(0, 0, 0, 30));
     }
 
     /// <summary>

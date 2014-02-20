@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.IO;
 using System.Net;
+using log4net;
 using log4net.Appender;
 using log4net.Core;
 
@@ -19,6 +20,8 @@ namespace MerchantWarehouse.Diagnostics
         private const string DefaultFileName = @"error_" + IdToken + ".txt";
 
         public string ExceptionLogFolder { get; set; }
+
+        public string StructuredDataPrefix { get; set; }
 
         protected override void Append(LoggingEvent loggingEvent)
         {
@@ -44,6 +47,8 @@ namespace MerchantWarehouse.Diagnostics
             {
                 Directory.CreateDirectory(this.ExceptionLogFolder);
             }
+            GlobalContext.Properties["StructuredDataPrefix"] = StructuredDataPrefix;
+            GlobalContext.Properties["ExceptionLogFolder"] = ExceptionLogFolder;
         }
 
         private void WriteExceptionFile(params LoggingEvent[] loggingEvents)
