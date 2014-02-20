@@ -68,7 +68,7 @@ namespace MerchantWarehouse.Diagnostics.Converters
 
                 // Minor cheat at the moment by using a hardcoded path that is relative to the running
                 // application container.
-                AddStructuredData(writer, "EventLog", GlobalContext.Properties["ExceptionLogFolder"].ToString() + loggingEvent.Properties["log4net:mw-exception-key"] + ".txt");
+                AddStructuredData(writer, "EventLog", GlobalContext.Properties["log4net:ExceptionLogFolder"].ToString() + loggingEvent.Properties["log4net:mw-exception-key"] + ".txt");
             }
             else
             {
@@ -82,7 +82,7 @@ namespace MerchantWarehouse.Diagnostics.Converters
 
         override protected void Convert(TextWriter writer, LoggingEvent loggingEvent)
         {
-            writer.Write(GlobalContext.Properties["StructuredDataPrefix"]);
+            writer.Write(GlobalContext.Properties["log4net:StructuredDataPrefix"]);
 
             var properties = loggingEvent.GetProperties();
             foreach (var key in properties.GetKeys())

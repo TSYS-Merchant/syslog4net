@@ -47,8 +47,8 @@ namespace MerchantWarehouse.Diagnostics
             {
                 Directory.CreateDirectory(this.ExceptionLogFolder);
             }
-            GlobalContext.Properties["StructuredDataPrefix"] = StructuredDataPrefix;
-            GlobalContext.Properties["ExceptionLogFolder"] = ExceptionLogFolder;
+            GlobalContext.Properties["log4net:StructuredDataPrefix"] = StructuredDataPrefix;
+            GlobalContext.Properties["log4net:ExceptionLogFolder"] = ExceptionLogFolder;
         }
 
         private void WriteExceptionFile(params LoggingEvent[] loggingEvents)
