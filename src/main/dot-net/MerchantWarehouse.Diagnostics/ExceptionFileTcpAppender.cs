@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.Globalization;
+using System.IO;
+using System.Net;
 using log4net.Appender;
 using log4net.Core;
 
@@ -13,17 +16,9 @@ namespace MerchantWarehouse.Diagnostics
     public class ExceptionFileTcpAppender : TcpAppender
     {
         private const string IdToken = "{errorId}";
-        private const string BaseErrorLogPath = @"log\errors\";
         private const string DefaultFileName = @"error_" + IdToken + ".txt";
 
-        public ExceptionFileTcpAppender()
-        {
-            //TODO this should not be in constructor. will fail to initialize if ACL check fails
-            if (!Directory.Exists(BaseErrorLogPath))
-            {
-                Directory.CreateDirectory(BaseErrorLogPath);
-            }
-        }
+        public string ExceptionLogFolder { get; set; }
 
         protected override void Append(LoggingEvent loggingEvent)
         {
@@ -37,13 +32,27 @@ namespace MerchantWarehouse.Diagnostics
             base.Append(loggingEvents);
         }
 
+        public override void ActivateOptions()
+        {
+            base.ActivateOptions();
+
+            if (string.IsNullOrWhiteSpace(this.ExceptionLogFolder))
+            {
+                throw new ArgumentNullException("The required property 'ExceptionFileLogFolder' was not specified.");
+            }
+            if (!Directory.Exists(this.ExceptionLogFolder))
+            {
+                Directory.CreateDirectory(this.ExceptionLogFolder);
+            }
+        }
+
         private void WriteExceptionFile(params LoggingEvent[] loggingEvents)
         {
             foreach (var evt in loggingEvents)
             {
                 if (evt.ExceptionObject != null)
                 {
-                    var logfilePath = BaseErrorLogPath + DefaultFileName.Replace(IdToken, evt.Properties["log4net:mw-exception-key"].ToString());
+                    var logfilePath = this.ExceptionLogFolder + Path.DirectorySeparatorChar + DefaultFileName.Replace(IdToken, evt.Properties["log4net:mw-exception-key"].ToString());
 
                     //TODO what happens during file name collision?
 
