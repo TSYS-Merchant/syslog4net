@@ -5,7 +5,7 @@ using System.Threading;
 
 using log4net;
 
-using MerchantWarehouse.Diagnostics;
+using syslog4net;
 
 // This is required for log4net to automatically load its configuration from a web.config or app.config file. This line may appear anywhere in the application
 // the most popular locations are in an app's main class or in the AssemblyInfo.cs file.
@@ -42,11 +42,11 @@ class Program
             _log.Error("ERROR", ex);
         }
 
-        using (_log.StartMessage())
+        using (_log.StartMessage("Program start"))
         {
             _log.Info("Program start");
 
-            using (_log.StartThreadActivity())
+            using (_log.StartThreadActivity("NDC", "creating workers"))
             {
                 // Run program
                 int numberOfWorkers = Program.Random.Next(2, 4);
@@ -56,7 +56,7 @@ class Program
 
                 for (int i = 1; i <= numberOfWorkers; i++)
                 {
-                    Worker worker = new Worker() { Id = string.Format("Worker {0}", i) };
+                    Worker worker = new Worker() { WorkerId = i };
                     Workers.Add(worker);
                 }
                 StartWorkers();
@@ -67,8 +67,6 @@ class Program
             }
             _log.Info("Program stop.");
         }
-
-        Thread.Sleep(new TimeSpan(0, 0, 0, 30));
     }
 
     /// <summary>
@@ -97,7 +95,14 @@ class Worker
     static ILog _log = LogManager.GetLogger(typeof(Worker));
 
     public AutoResetEvent FinishedEvent = new AutoResetEvent(false);
-    public string Id;
+    public int WorkerId;
+    public string Id
+    {
+        get
+        {
+            return string.Format("Worker {0}", WorkerId);
+        }
+    }
 
     /// <summary>
     /// Recieve a poke from another thread and report it in the log
@@ -126,12 +131,16 @@ class Worker
     /// <param name="state">thread state object</param>
     public void Work(object state)
     {
-        using (_log.StartThreadActivity())
+        using (_log.StartThreadActivity("NDC", "Work"))
         {
+            log4net.LogicalThreadContext.Properties["WorkerId"] = WorkerId;
+
             _log.InfoFormat("Worker {0} start.", Id);
 
             // Do work
             int numberOfPokes = Program.Random.Next(3, 6);
+
+            log4net.LogicalThreadContext.Properties["NumberOfPokes"] = numberOfPokes;
 
             _log.InfoFormat("Worker {0} will poke {1} times", Id, numberOfPokes);
             for (int i = 1; i <= numberOfPokes; i++)

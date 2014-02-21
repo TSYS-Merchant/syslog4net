@@ -23,31 +23,21 @@ namespace syslog4net.Converters
             // if that's not there, pop the NDC
             if (string.IsNullOrEmpty(messageId))
             {
-                log4net.Util.ThreadContextStack ndc = loggingEvent.LookupProperty("NDC") as log4net.Util.ThreadContextStack;
+                object ndc = loggingEvent.LookupProperty("NDC");
                 if (ndc != null)
                 {
-                    // the NDC represents a context stack, whose levels are separated by whitespace. here, we get the
-                    // rightmost segement of the NDC. we will use this as our MessageId.
-                    var ndcMessage = ndc.ToString();
-                    if (!string.IsNullOrEmpty(ndcMessage))
-                    {
-                        int lastSpace = ndcMessage.LastIndexOf(' ');
-                        if (lastSpace > -1 && ndcMessage.Length > lastSpace + 1)
-                        {
-                            messageId = ndcMessage.Substring(lastSpace + 1);
-                        }
-                        else
-                        {
-                            // no spaces and the NDC wasn't empty. there's just a single segment.
-                            messageId = ndcMessage;
-                        }
-                    }
+                    // the NDC represents a context stack, whose levels are separated by whitespace. we will use this as our MessageId.
+                    messageId = ndc.ToString();
                 }
             }
 
             if (string.IsNullOrEmpty(messageId))
             {
                 messageId = "-"; // the NILVALUE
+            }
+            else
+            {
+                messageId = messageId.Replace(' ', '.'); // replace spaces with periods
             }
 
             writer.Write(PrintableAsciiSanitizer.Sanitize(messageId, 32));

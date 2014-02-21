@@ -5,9 +5,9 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogTestApp", "LogTestApp.csproj", "{974A482F-3982-4008-B5BC-096CFB33BDA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchantWarehouse.Diagnostics", "..\..\..\main\dot-net\MerchantWarehouse.Diagnostics\MerchantWarehouse.Diagnostics.csproj", "{7137FA06-A1B8-4C9B-9639-9963330134BD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "syslog4net", "..\..\..\main\dot-net\syslog4net\syslog4net.csproj", "{7137FA06-A1B8-4C9B-9639-9963330134BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerchantWarehouse.Diagnostics.Tests", "..\..\..\test\unit\MerchantWarehouse.Diagnostics.Tests\MerchantWarehouse.Diagnostics.Tests.csproj", "{DB69AD9C-5875-430F-81FD-74C3DF566444}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "syslog4net.Tests", "..\..\..\test\unit\syslog4net.Tests\syslog4net.Tests.csproj", "{DB69AD9C-5875-430F-81FD-74C3DF566444}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

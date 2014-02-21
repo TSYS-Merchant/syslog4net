@@ -24,7 +24,7 @@ namespace syslog4net
 
             foreach (byte b in asciiBytes)
             {
-                if (!(b < 32 || b > 126 || System.Array.FindIndex(forbiddenOctets, item => item == b) != -1))
+                if (!(b < 33 || b > 126 || System.Array.FindIndex(forbiddenOctets, item => item == b) != -1))
                 {
                     sanitizedBytes.Add(b);
                 }

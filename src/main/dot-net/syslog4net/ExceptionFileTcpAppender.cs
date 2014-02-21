@@ -57,7 +57,7 @@ namespace syslog4net
             {
                 if (evt.ExceptionObject != null)
                 {
-                    var logfilePath = this.ExceptionLogFolder + Path.DirectorySeparatorChar + DefaultFileName.Replace(IdToken, evt.Properties["log4net:mw-exception-key"].ToString());
+                    var logfilePath = this.ExceptionLogFolder + Path.DirectorySeparatorChar + DefaultFileName.Replace(IdToken, evt.Properties["log4net:syslog-exception-key"].ToString());
 
                     //TODO what happens during file name collision?
 

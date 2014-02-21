@@ -7,7 +7,7 @@ using System.Text;
 namespace syslog4net
 {
     /// <summary>
-    /// Log4net layout class with default support for the Syslog message format as described in the TOPS Syslong standard: https://confluence.mw.inc/display/TO/TOps+Syslog+Standard
+    /// Log4net layout class with default support for the Syslog message format as described in Syslog IETF 5424 standard: http://tools.ietf.org/html/rfc5424
     /// </summary>
     internal class SyslogLayout : LayoutSkeleton
     {
@@ -21,6 +21,8 @@ namespace syslog4net
         /// </summary>
         public SyslogLayout()
         {
+            StructuredDataPrefix = "UNKNOWN@11111";
+
             IgnoresException = false;  //TODO deal with this. sealed?
 
             this._layout = new PatternLayout("<%syslog-priority>1 %utcdate{yyyy-MM-ddTHH:mm:ss:FFZ} %syslog-hostname %appdomain %syslog-process-id %syslog-message-id %syslog-structured-data %message%newline");
@@ -41,6 +43,8 @@ namespace syslog4net
         /// <param name="logEvent">logging event data to use</param>
         override public void Format(TextWriter writer, LoggingEvent logEvent)
         {
+            logEvent.Properties["log4net:StructuredDataPrefix"] = StructuredDataPrefix;
+
             using (var stringWriter = new StringWriter())
             {
                 this._layout.Format(stringWriter, logEvent);
@@ -59,6 +63,8 @@ namespace syslog4net
                 writer.Write(message);
             }
         }
+
+        public string StructuredDataPrefix { get; set; }
 
         /// <summary>
         /// Activates the use of options for the converter allowing the underlying PatternLayout implmentation to behave correctly
