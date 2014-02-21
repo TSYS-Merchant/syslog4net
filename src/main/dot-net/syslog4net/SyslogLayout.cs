@@ -1,10 +1,10 @@
 ﻿using System.IO;
 using log4net.Core;
 using log4net.Layout;
-using MerchantWarehouse.Diagnostics.Converters;
+using syslog4net.Converters;
 using System.Text;
 
-namespace MerchantWarehouse.Diagnostics
+namespace syslog4net
 {
     /// <summary>
     /// Log4net layout class with default support for the Syslog message format as described in the TOPS Syslong standard: https://confluence.mw.inc/display/TO/TOps+Syslog+Standard

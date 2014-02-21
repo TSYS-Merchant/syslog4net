@@ -2,11 +2,11 @@
 using log4net;
 using log4net.Core;
 using log4net.Util;
-using MerchantWarehouse.Diagnostics.Converters;
+using syslog4net.Converters;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace MerchantWarehouse.Diagnostics.Tests.Converters
+namespace syslog4net.Tests.Converters
 {
     [TestFixture]
     public class MessageIdConverterTests

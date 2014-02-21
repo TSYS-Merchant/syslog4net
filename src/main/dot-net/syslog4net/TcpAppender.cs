@@ -26,7 +26,7 @@ using System.Threading;
 using log4net.Appender;
 using log4net.Core;
 
-namespace MerchantWarehouse.Diagnostics
+namespace syslog4net
 {
     /// <summary>
     /// Sends logging events through TCP connection to a remote host

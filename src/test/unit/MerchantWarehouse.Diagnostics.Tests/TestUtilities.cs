@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace MerchantWarehouse.Diagnostics.Tests
+namespace syslog4net.Tests
 {
     public static class TestUtilities
     {

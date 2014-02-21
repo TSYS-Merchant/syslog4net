@@ -6,7 +6,7 @@ using log4net;
 using log4net.Appender;
 using log4net.Core;
 
-namespace MerchantWarehouse.Diagnostics
+namespace syslog4net
 {
     /// <summary>
     /// Wrapper for the UDP appender to enable dual writing to different targets under different circumstances.

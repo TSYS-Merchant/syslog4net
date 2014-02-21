@@ -1,7 +1,7 @@
 ﻿using System;
 using log4net;
 
-namespace MerchantWarehouse.Diagnostics
+namespace syslog4net
 {
     /// <summary>
     /// Helper methods/extensions for leveraging log4net types within MerchantWarehouse

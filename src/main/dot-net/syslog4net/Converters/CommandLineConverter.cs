@@ -3,7 +3,7 @@ using System.IO;
 using log4net.Core;
 using log4net.Layout.Pattern;
 
-namespace MerchantWarehouse.Diagnostics.Converters
+namespace syslog4net.Converters
 {
     /// <summary>
     /// Provides the Command path and arguments used to start the current process

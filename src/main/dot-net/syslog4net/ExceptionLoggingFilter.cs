@@ -1,7 +1,7 @@
 ﻿using System;
 using log4net.Filter;
 
-namespace MerchantWarehouse.Diagnostics
+namespace syslog4net
 {
     /// <summary>
     /// Handles marking logging events that contain exception data so that the extended data may be handled and reported to all appenders with a unifying exception ID.
