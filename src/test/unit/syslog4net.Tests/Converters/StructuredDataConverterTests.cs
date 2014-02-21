@@ -19,6 +19,7 @@ namespace syslog4net.Tests.Converters
             var converter = new StructuredDataConverter();
             var props = new PropertiesDictionary();
             props["MessageId"] = testId;
+            props["log4net:StructuredDataPrefix"] = "MW@55555";
 
             // Additional tests using stack data is prevented as the converter class only pulls from LoggingEvent.GetProperties()
             // The data behind this method is setup by log4net itself so testing stack usage would not really apply properly here
