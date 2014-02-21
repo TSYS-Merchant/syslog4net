@@ -35,8 +35,11 @@ As a bonus feature, our adapter intelligently logs exceptions to syslog. Informa
       <exceptionLogFolder value="C:\logs\splunk" />
       <remoteAddress value="10.233.114.35" />
       <remotePort value="8080" />
-      <layout type="syslog4net.SyslogLayout, syslog4net">
-            <structuredDataPrefix value="MW@55555"/>
+      <filter type="syslog4net.Filter.ExceptionLoggingFilter, syslog4net">
+        <exceptionLogFolder value="C:\Users\dominicl\Desktop\log4net\common-diagnostics\src\example\syslog4net\LogTestApp\bin\Debug\exceptions"/>
+      </filter>
+      <layout type="syslog4net.Layout.SyslogLayout, syslog4net">
+        <structuredDataPrefix value="MW@55555"/>
       </layout>
 </appender>  
 
@@ -48,10 +51,13 @@ As a bonus feature, our adapter intelligently logs exceptions to syslog. Informa
       <maxSizeRollBackups value="5" />
       <maximumFileSize value="10MB" />
       <staticLogFileName value="true" />
-      <layout type="syslog4net.SyslogLayout, syslog4net">
-            <structuredDataPrefix value="MW@55555"/>
+      <filter type="syslog4net.Filter.ExceptionLoggingFilter, syslog4net">
+        <exceptionLogFolder value="C:\Users\dominicl\Desktop\log4net\common-diagnostics\src\example\syslog4net\LogTestApp\bin\Debug\exceptions"/>
+      </filter>
+      <layout type="syslog4net.Layout.SyslogLayout, syslog4net">
+        <structuredDataPrefix value="MW@55555"/>
       </layout>
-</appender>
+    </appender>
 ```
 
 ## Example code
