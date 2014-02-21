@@ -77,7 +77,7 @@ Check out our simple Hello World example. TODO: link to example once it's merged
 
 # Using it with Splunk
 
-Just point your TCP or UDP log4net appender to your favorite Splunk server. That's all that's required.
+Just point your TCP or UDP log4net appender using our SyslogLayout to your favorite Splunk server. That's really all that's required.
 
 ## Grepping for errors
 
