@@ -93,7 +93,7 @@ Here, we see Splunk querying for all invalid login attempts.
 
 ## Defining an alert
 
-Below, we have defined an alert - if there are more than 30 failed login attempts in the past 30 minutes, this alert will trigger. You can hook this up to an alert management solution such as [PagerDuty](http://www.pagerduty.com/) or [opsgenie](http://www.opsgenie.com/).
+Below, we have defined an alert - if there are more than 30 failed login attempts in the past 30 minutes, this alert will trigger. You can hook this up to an alert management solution such as [PagerDuty](http://www.pagerduty.com/) or [OpsGenie](http://www.opsgenie.com/).
 
 ![we've created an alert on the number of invalid login attempts in the last 30 minutes](https://raw.github.com/merchantwarehouse/syslog4net/master/.README/Splunk_HostsInvalidLoginAttemptsOver30Past30Min.JPG)
 
