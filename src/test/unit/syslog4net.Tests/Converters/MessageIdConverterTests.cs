@@ -5,6 +5,7 @@ using log4net.Util;
 using syslog4net.Converters;
 using NSubstitute;
 using NUnit.Framework;
+using syslog4net.Util;
 
 namespace syslog4net.Tests.Converters
 {

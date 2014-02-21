@@ -3,7 +3,7 @@ using System.IO;
 using log4net.Filter;
 using log4net.Core;
 
-namespace syslog4net
+namespace syslog4net.Filter
 {
     /// <summary>
     /// Writes exceptions to a local file on disk, and passes along the log file location for other appenders to use.

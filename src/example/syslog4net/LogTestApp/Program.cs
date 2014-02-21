@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
+//using System.Diagnostics;
+using syslog4net.Util;
 using System.Threading;
 
 using log4net;

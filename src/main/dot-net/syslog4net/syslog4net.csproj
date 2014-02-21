@@ -48,23 +48,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Appender\TcpAppender.cs" />
+    <Compile Include="Filter\ExceptionLoggingFilter.cs" />
+    <Compile Include="Util\ILogExtensions.cs" />
+    <Compile Include="Util\PrintableAsciiSanitizer.cs" />
+    <Compile Include="Layout\SyslogLayout.cs" />
     <Compile Include="Converters\CommandLineConverter.cs" />
-    <Compile Include="ExceptionFileTcpAppender.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ExceptionLoggingFilter.cs" />
     <Compile Include="Converters\HostnameConverter.cs" />
-    <Compile Include="ILogExtensions.cs" />
     <Compile Include="Converters\MessageIdConverter.cs" />
-    <Compile Include="PrintableAsciiSanitizer.cs" />
     <Compile Include="Converters\PriorityConverter.cs" />
     <Compile Include="Converters\ProcessIdConverter.cs" />
     <Compile Include="Converters\ProcessNameConverter.cs" />
     <Compile Include="Converters\StructuredDataConverter.cs" />
-    <Compile Include="SyslogLayout.cs" />
     <Compile Include="Converters\ThreadIdConverter.cs" />
     <Compile Include="Converters\ThreadNameConverter.cs" />
-    <Compile Include="TcpAppender.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

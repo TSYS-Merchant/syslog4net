@@ -1,7 +1,7 @@
 ﻿using System;
 using log4net;
 
-namespace syslog4net
+namespace syslog4net.Util
 {
     /// <summary>
     /// Helper methods/extensions for leveraging log4net types within MerchantWarehouse

@@ -2,6 +2,7 @@
 using System.IO;
 using log4net.Core;
 using log4net.Layout.Pattern;
+using syslog4net.Util;
 
 namespace syslog4net.Converters
 {

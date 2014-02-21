@@ -1,6 +1,6 @@
 ﻿
 
-namespace syslog4net
+namespace syslog4net.Util
 {
     /// <summary>
     /// Provides helper methods for cleaning up string values. It is assumed that the consumer has specific needs for the string. For this implmentation this is mainly used to ensure that syslog

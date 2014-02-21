@@ -26,7 +26,7 @@ using System.Threading;
 using log4net.Appender;
 using log4net.Core;
 
-namespace syslog4net
+namespace syslog4net.Appender
 {
     /// <summary>
     /// Sends logging events through TCP connection to a remote host

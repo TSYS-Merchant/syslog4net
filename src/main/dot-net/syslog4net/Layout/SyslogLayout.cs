@@ -5,7 +5,7 @@ using syslog4net.Converters;
 using System.Text;
 using System;
 
-namespace syslog4net
+namespace syslog4net.Layout
 {
     /// <summary>
     /// Log4net layout class with default support for the Syslog message format as described in Syslog IETF 5424 standard: http://tools.ietf.org/html/rfc5424
