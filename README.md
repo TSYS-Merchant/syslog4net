@@ -77,7 +77,7 @@ Check out our simple Hello World example. TODO: link to example once it's merged
 
 #Downloading / Installation
 
-Currently, Merchant Warehouse’s log4net extension is only available as a source download. If you’d like to provide a Nuget package, that'd be very welcome.
+Currently, syslog4net is only available as a source download. If you’d like to provide a Nuget package, that'd be very welcome.
 
 # Contributing
 
