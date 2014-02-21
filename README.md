@@ -4,13 +4,13 @@
 
 [Syslog](http://en.wikipedia.org/wiki/Syslog), on the other hand, is an [IETF](http://www.ietf.org/) standard for message logging. Syslog can be used for computer system management and security auditing as well as generalized informational, analysis, and debugging messages.  With Syslog, software applications and physical devices like printers and routers can send logging information to a centralized logging server. Because of this, syslog can be used to integrate log data from many different types of systems into a central repository.
 
-[Merchant Warehouse’s](http://www.merchantwarehouse.com/) extensions bridge that missing link between log4net and Syslog, allowing your .NET applications to send application-level telemetry into a centrally managed operational intelligence solution, such as Splunk. By monitoring and analyzing everything from customer clickstreams and transactions to network activity and call records, [Splunk](http://www.splunk.com/) helps Merchant Warehouse turn our machine data into valuable insights. With this data flowing into Splunk, we can troubleshoot problems and investigate security incidents in minutes, not hours or days. We monitor our end-to-end infrastructure to avoid service degradation or outages. And we gain real-time visibility into customer experience, transactions and behavior.
+[Merchant Warehouse’s](http://www.merchantwarehouse.com/) syslog4net extension bridges that missing link between log4net and Syslog, allowing your .NET applications to send application-level telemetry into a centrally managed operational intelligence solution, such as Splunk. By monitoring and analyzing everything from customer clickstreams and transactions to network activity and call records, [Splunk](http://www.splunk.com/) helps Merchant Warehouse turn our machine data into valuable insights. With this data flowing into Splunk, we can troubleshoot problems and investigate security incidents in minutes, not hours or days. We monitor our end-to-end infrastructure to avoid service degradation or outages. And we gain real-time visibility into customer experience, transactions and behavior.
 
-And with our log4net adapter, you can do all that too.
+And with our syslog4net adapter, you can do all that too.
 
 #How it works
 
-MW’s log4net extension works by creating a custom [log4net layout](https://logging.apache.org/log4net/release/sdk/log4net.Layout.PatternLayout.html) that writes messages in [Syslog’s RFC5424 standard format](http://tools.ietf.org/html/rfc5424). You can then hook that up to any [log4net appender](https://logging.apache.org/log4net/release/sdk/log4net.Appender.html). You can write to a Syslog daemon, such as Splunk, pretty easily by connecting our SyslogLayout class to [log4net’s UdpAppender](https://logging.apache.org/log4net/release/sdk/log4net.Appender.UdpAppender.html) or our custom TcpAppender.
+syslog4net works by creating a custom [log4net layout](https://logging.apache.org/log4net/release/sdk/log4net.Layout.PatternLayout.html) that writes messages in [Syslog’s RFC5424 standard format](http://tools.ietf.org/html/rfc5424). You can then hook that up to any [log4net appender](https://logging.apache.org/log4net/release/sdk/log4net.Appender.html). You can write to a Syslog daemon, such as Splunk, pretty easily by connecting our SyslogLayout class to [log4net’s UdpAppender](https://logging.apache.org/log4net/release/sdk/log4net.Appender.UdpAppender.html) or our custom TcpAppender.
 
 Those of you familiar with log4net and syslog already know that you can send any old log4net message to a syslog daemon using the UdpAppender today. But by using messages conforming to the RFC5424 standard, you get additional telemetry about:
 * Your application’s name & process ID
@@ -66,7 +66,7 @@ We love contributions! Please send [pull requests](https://help.github.com/artic
 
 # Getting help
 
-We also love bug reports & feature requests. You can file bugs and feature requests in the Github Issue Tracker. Please consider including the following information when you file a ticket:
+We also love bug reports & feature requests. You can file bugs and feature requests in our Github Issue Tracker. Please consider including the following information when you file a ticket:
 * What version you're using
 * What command or code you ran
 * What output you saw
