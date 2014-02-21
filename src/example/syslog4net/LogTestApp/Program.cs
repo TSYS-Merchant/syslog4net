@@ -67,6 +67,8 @@ class Program
             }
             _log.Info("Program stop.");
         }
+
+        Console.ReadLine();
     }
 
     /// <summary>

@@ -68,9 +68,9 @@ namespace syslog4net.Converters
 
                 // Minor cheat at the moment by using a hardcoded path that is relative to the running
                 // application container.
-                if (loggingEvent.Properties.Contains("log4net:syslog-exception-key"))
+                if (loggingEvent.Properties.Contains("log4net:syslog-exception-log"))
                 {
-                    AddStructuredData(writer, "EventLog", GlobalContext.Properties["log4net:ExceptionLogFolder"].ToString() + loggingEvent.Properties["log4net:syslog-exception-key"] + ".txt");
+                    AddStructuredData(writer, "EventLog", loggingEvent.Properties["log4net:syslog-exception-log"].ToString());
                 }
             }
             else
