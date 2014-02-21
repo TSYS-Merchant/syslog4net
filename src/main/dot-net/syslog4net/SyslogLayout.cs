@@ -3,6 +3,7 @@ using log4net.Core;
 using log4net.Layout;
 using syslog4net.Converters;
 using System.Text;
+using System;
 
 namespace syslog4net
 {
@@ -21,8 +22,6 @@ namespace syslog4net
         /// </summary>
         public SyslogLayout()
         {
-            StructuredDataPrefix = "UNKNOWN@11111";
-
             IgnoresException = false;  //TODO deal with this. sealed?
 
             this._layout = new PatternLayout("<%syslog-priority>1 %utcdate{yyyy-MM-ddTHH:mm:ss:FFZ} %syslog-hostname %appdomain %syslog-process-id %syslog-message-id %syslog-structured-data %message%newline");
@@ -32,8 +31,6 @@ namespace syslog4net
             this._layout.AddConverter("syslog-process-id", typeof(ProcessIdConverter));
             this._layout.AddConverter("syslog-message-id", typeof(MessageIdConverter));
             this._layout.AddConverter("syslog-structured-data", typeof(StructuredDataConverter));
-
-            this.ActivateOptions();
         }
 
         /// <summary>
@@ -71,6 +68,10 @@ namespace syslog4net
         /// </summary>
         override public void ActivateOptions()
         {
+            if (string.IsNullOrWhiteSpace(this.StructuredDataPrefix))
+            {
+                throw new ArgumentNullException("The required property 'StructuredDataPrefix' was not specified.");
+            }
             this._layout.ActivateOptions();
         }
     }
