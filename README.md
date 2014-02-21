@@ -56,9 +56,17 @@ Check out our simple Hello World example. TODO: link to example once it's merged
 <134>1 2014-01-20T13:58:59:08Z MW-DLACHOWICZ.MW.INC ConsoleApp.vshost.exe 10768 - [MW@55555 auth="auth-none" foo="foo-none\]\"" thread-prop="thread prop" EventSeverity="INFO"] Application [ConsoleApp] End
 ```
 
-#Getting help
+#Downloading / Installation
 
-You can register bugs and feature requests in the Github Issue Tracker. Please consider including the following information when you register a ticket:
+Currently, Merchant Warehouse’s log4net extension is only available as a source download. If you’d like to provide a Nuget package, that'd be very welcome.
+
+# Contributing
+
+We love contributions! Please send [pull requests](https://help.github.com/articles/using-pull-requests) our way. Please include unit tests with all of your pull requests.
+
+# Getting help
+
+We also love bug reports & feature requests. You can file bugs and feature requests in the Github Issue Tracker. Please consider including the following information when you file a ticket:
 * What version you're using
 * What command or code you ran
 * What output you saw
@@ -66,10 +74,7 @@ You can register bugs and feature requests in the Github Issue Tracker. Please c
 
 You can also always find help on our Google Group. Please send a message to [TODO] https://groups.google.com/forum/#!overview
 
-#Downloading / Installation
-
-Currently, Merchant Warehouse’s log4net extension is only available as a source download. If you’d like to provide a Nuget package, that'd be very welcome.
-
-# Contributing
-
-See CONTRIBUTING.md (steal from https://github.com/cucumber/cucumber-jvm/blob/master/CONTRIBUTING.md)
+* Reporting a bug? We need to know what java/ruby/node.js etc. runtime you have, and what jar/gem/npm package versions you are using. Bugs with pull requests get fixed quicker. Some bugs may never be fixed.
+You have to tell us how to reproduce a bug. Bonus point for a pull request with a failing test that reproduces the bug.
+Want to paste some code or output? Put ``` on a line above and below your code/output. See GFM's Fenced Code Blocks for details.
+We love pull requests, but if you don't have a test to go with it we probably won't merge it.
