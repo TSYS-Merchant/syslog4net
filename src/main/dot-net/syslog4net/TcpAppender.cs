@@ -401,7 +401,6 @@ namespace syslog4net
         protected override void Append(LoggingEvent loggingEvent)
         {
             TcpClient client = null;
-            NetworkStream netStream = null;
 
             try
             {
@@ -566,20 +565,9 @@ namespace syslog4net
         private int m_remotePort;
 
         /// <summary>
-        /// The cached remote endpoint to which the logging events will be sent.
-        /// </summary>
-        private IPEndPoint m_remoteEndPoint;
-
-        /// <summary>
         /// The TCP port number from which the <see cref="UdpClient" /> will communicate.
         /// </summary>
         private int m_localPort;
-
-        /// <summary>
-        /// The <see cref="UdpClient" /> instance that will be used for sending the 
-        /// logging events.
-        /// </summary>
-        private TcpClient m_client;
 
         /// <summary>
         /// The encoding to use for the packet.
