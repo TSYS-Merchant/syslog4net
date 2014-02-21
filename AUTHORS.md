@@ -2,7 +2,7 @@ Maintainers
 ====
 Copyright 2014, Merchant Warehouse, LLC.
 
-Google Group: TO BE DETERMINED
+Find us on the [syslog4net Google Group](https://groups.google.com/forum/#!forum/syslog4net).
 
 Original Authors
 ====
