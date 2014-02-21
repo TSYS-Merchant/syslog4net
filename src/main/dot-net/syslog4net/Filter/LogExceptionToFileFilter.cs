@@ -8,7 +8,7 @@ namespace syslog4net.Filter
     /// <summary>
     /// Writes exceptions to a local file on disk, and passes along the log file location for other appenders to use.
     /// </summary>
-    public class ExceptionLoggingFilter : FilterSkeleton
+    public class LogExceptionToFileFilter : FilterSkeleton
     {
         private const string IdToken = "{errorId}";
         private const string DefaultFileName = @"error_" + IdToken + ".txt";

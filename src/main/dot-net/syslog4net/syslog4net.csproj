@@ -49,7 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Appender\TcpAppender.cs" />
-    <Compile Include="Filter\ExceptionLoggingFilter.cs" />
+    <Compile Include="Filter\LogExceptionToFileFilter.cs" />
     <Compile Include="Util\ILogExtensions.cs" />
     <Compile Include="Util\PrintableAsciiSanitizer.cs" />
     <Compile Include="Layout\SyslogLayout.cs" />
