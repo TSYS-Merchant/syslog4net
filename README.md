@@ -39,7 +39,7 @@ As a bonus feature, our adapter intelligently logs exceptions to syslog. Informa
         <exceptionLogFolder value="C:\Users\dominicl\Desktop\log4net\common-diagnostics\src\example\syslog4net\LogTestApp\bin\Debug\exceptions"/>
       </filter>
       <layout type="syslog4net.Layout.SyslogLayout, syslog4net">
-        <structuredDataPrefix value="MW@55555"/>
+            <structuredDataPrefix value="MW@55555"/>
       </layout>
 </appender>  
 
@@ -55,9 +55,9 @@ As a bonus feature, our adapter intelligently logs exceptions to syslog. Informa
         <exceptionLogFolder value="C:\Users\dominicl\Desktop\log4net\common-diagnostics\src\example\syslog4net\LogTestApp\bin\Debug\exceptions"/>
       </filter>
       <layout type="syslog4net.Layout.SyslogLayout, syslog4net">
-        <structuredDataPrefix value="MW@55555"/>
+            <structuredDataPrefix value="MW@55555"/>
       </layout>
-    </appender>
+</appender>
 ```
 
 ## Example code
