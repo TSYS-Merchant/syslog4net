@@ -73,8 +73,3 @@ We also love bug reports & feature requests. You can file bugs and feature reque
 * How the problem can be reproduced. A small Visual Studio project zipped up or code snippet that demonstrates or reproduces the issue is always appreciated.
 
 You can also always find help on our Google Group. Please send a message to [TODO] https://groups.google.com/forum/#!overview
-
-* Reporting a bug? We need to know what java/ruby/node.js etc. runtime you have, and what jar/gem/npm package versions you are using. Bugs with pull requests get fixed quicker. Some bugs may never be fixed.
-You have to tell us how to reproduce a bug. Bonus point for a pull request with a failing test that reproduces the bug.
-Want to paste some code or output? Put ``` on a line above and below your code/output. See GFM's Fenced Code Blocks for details.
-We love pull requests, but if you don't have a test to go with it we probably won't merge it.
