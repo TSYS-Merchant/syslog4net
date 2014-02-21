@@ -24,7 +24,7 @@ For Merchant Warehouse, we use this to record various metadata about each of our
 
 We do this by mapping log4net’s Context Properties (“MDC”) onto Syslog’s Structured Data section, and by mapping log4net’s Context Stack (“NDC”) onto Syslog’s Message Id field.
 
-As a bonus feature, our adapter intelligently logs exceptions to syslog. Information about the exception’s source, .NET class type, message, and help link are logged to Syslog’s Structured Data section. Additionally, the exception – including its stack trace and any inner exceptions – is logged locally, and a link to the exception’s URI is also included in the Structured Data. This allows you to have access to vital debugging information without cluttering your logs.
+As a bonus feature, our adapter intelligently logs exceptions to syslog. Information about the exception’s source, .NET class type, message, and help link are logged to Syslog’s Structured Data section. The exception – including its message, stack trace and any inner exceptions – is logged locally, and a link to the exception’s URI is also included in the Structured Data. This allows you to have access to vital debugging information without cluttering your logs.
 
 #Documentation
 
