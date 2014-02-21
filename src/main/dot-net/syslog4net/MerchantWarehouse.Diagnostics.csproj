@@ -11,8 +11,8 @@
     <ProjectGuid>{7137FA06-A1B8-4C9B-9639-9963330134BD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MerchantWarehouse.Diagnostics</RootNamespace>
-    <AssemblyName>MerchantWarehouse.Diagnostics</AssemblyName>
+    <RootNamespace>syslog4net</RootNamespace>
+    <AssemblyName>syslog4net</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -35,7 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net">
-      <HintPath>..\..\..\example\MerchantWarehouse.Diagnostics\LogTestApp\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+      <HintPath>..\..\..\example\syslog4net\LogTestApp\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -72,7 +72,7 @@
   <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets" />
   <Import Project="$(NugetTools)\NuGet.targets" Condition="Exists('$(NugetTools)\NuGet.targets')" />
   <Target Name="BeforeBuild">
-    <MSBuild.Community.Tasks.AssemblyInfo AssemblyCompany="Merchant Warehouse" AssemblyCopyright="Copyright © 2014 Merchant Warehouse" AssemblyDescription="MW Standard Diagnostics Library" AssemblyProduct="Diagnostics" AssemblyTitle="MerchantWarehouse.Diagnostics" AssemblyVersion="$(assemblyVersion)" AssemblyFileVersion="$(assemblyVersion)" CLSCompliant="false" CodeLanguage="CS" ComVisible="false" Guid="8df622ae-577e-4de1-a848-871113f42643" NeutralResourcesLanguage="en" OutputFile="_AssemblyInfo.cs" />
+    <MSBuild.Community.Tasks.AssemblyInfo AssemblyCompany="Merchant Warehouse" AssemblyCopyright="Copyright © 2014 Merchant Warehouse" AssemblyDescription="MW Standard Diagnostics Library" AssemblyProduct="Diagnostics" AssemblyTitle="syslog4net" AssemblyVersion="$(assemblyVersion)" AssemblyFileVersion="$(assemblyVersion)" CLSCompliant="false" CodeLanguage="CS" ComVisible="false" Guid="8df622ae-577e-4de1-a848-871113f42643" NeutralResourcesLanguage="en" OutputFile="_AssemblyInfo.cs" />
     <ItemGroup>
       <Compile Include="_AssemblyInfo.cs" />
     </ItemGroup>
