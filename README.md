@@ -72,4 +72,4 @@ We also love bug reports & feature requests. You can file bugs and feature reque
 * What output you saw
 * How the problem can be reproduced. A small Visual Studio project zipped up or code snippet that demonstrates or reproduces the issue is always appreciated.
 
-You can also always find help on our Google Group. Please send a message to [TODO] https://groups.google.com/forum/#!overview
+You can also always find help on the [syslog4net Google Group](https://groups.google.com/forum/#!forum/syslog4net).
