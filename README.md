@@ -62,7 +62,7 @@ Currently, Merchant Warehouse’s log4net extension is only available as a sourc
 
 # Contributing
 
-We love contributions! Please send [pull requests](https://help.github.com/articles/using-pull-requests) our way. Please include unit tests with all of your pull requests.
+We love contributions! Please send [pull requests](https://help.github.com/articles/using-pull-requests) our way. All that we ask is that you please include unit tests with all of your pull requests.
 
 # Getting help
 
