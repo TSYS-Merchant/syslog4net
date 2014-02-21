@@ -30,14 +30,28 @@ As a bonus feature, our adapter intelligently logs exceptions to syslog. Informa
 
 ## Configuration
 ```xml
-<appender name="TcpAppender" type="MerchantWarehouse.Diagnostics.ExceptionFileTcpAppender, MerchantWarehouse.Diagnostics">
+<!-- log to a remote syslog server, such as splunk -->
+<appender name="TcpAppender" type="syslog4net.ExceptionFileTcpAppender, syslog4net">
       <exceptionLogFolder value="C:\logs\splunk" />
       <remoteAddress value="10.233.114.35" />
       <remotePort value="8080" />
-      <structuredDataPrefix value="MW@55555" />
-      <layout type="MerchantWarehouse.Diagnostics.SyslogLayout, MerchantWarehouse.Diagnostics"/>
-      <filter type="MerchantWarehouse.Diagnostics.ExceptionLoggingFilter, MerchantWarehouse.Diagnostics" />
+      <layout type="syslog4net.SyslogLayout, syslog4net">
+            <structuredDataPrefix value="MW@55555"/>
+      </layout>
 </appender>  
+
+<!-- log to a local file -->
+<appender name="RollingFileAppender" type="log4net.Appender.RollingFileAppender">
+      <file value="mylogfile.txt" />
+      <appendToFile value="true" />
+      <rollingStyle value="Size" />
+      <maxSizeRollBackups value="5" />
+      <maximumFileSize value="10MB" />
+      <staticLogFileName value="true" />
+      <layout type="syslog4net.SyslogLayout, syslog4net">
+            <structuredDataPrefix value="MW@55555"/>
+      </layout>
+</appender>
 ```
 
 ## Example code
