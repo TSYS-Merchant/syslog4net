@@ -60,7 +60,7 @@ As a bonus feature, our adapter intelligently logs exceptions to syslog. Informa
 ```
 
 ## Example code
-Check out our simple Hello World example. TODO: link to example once it's merged to master
+Check out our simple [Hello World](https://github.com/merchantwarehouse/syslog4net/blob/master/src/example/syslog4net/LogTestApp/Program.cs) logging example and its corresponding [log4net XML config](https://github.com/merchantwarehouse/syslog4net/blob/master/src/example/syslog4net/LogTestApp/App.config).
 
 ## Example output
 ```python
