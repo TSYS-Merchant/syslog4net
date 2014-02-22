@@ -83,19 +83,19 @@ Just point your TCP or UDP log4net appender using our SyslogLayout to your favor
 
 Here, we can see all of the errors logged by a particular process. You can also see how syslog4net saves your exception data as part of Syslog's Structured Data Block.
 
-![a visual of the number of errrors produced by a specific process ID](https://raw.github.com/merchantwarehouse/syslog4net/master/.README/Splunk_MessageId1788.JPG)
+![a visual of the number of errrors produced by a specific process ID](.README/Splunk_MessageId1788.JPG)
 
 ## Viewing the number of invalid login attempts
 
 Here, we see Splunk querying for all invalid login attempts.
 
-![a visual of the number of invalid login attempts](https://raw.github.com/merchantwarehouse/syslog4net/master/.README/Splunk_InvalidLoginAttempts.JPG)
+![a visual of the number of invalid login attempts](.README/Splunk_InvalidLoginAttempts.JPG)
 
 ## Defining an alert
 
 Below, we have defined an alert - if there are more than 30 failed login attempts in the past 30 minutes, this alert will trigger. You can hook this up to an alert management solution such as [PagerDuty](http://www.pagerduty.com/) or [OpsGenie](http://www.opsgenie.com/).
 
-![we've created an alert on the number of invalid login attempts in the last 30 minutes](https://raw.github.com/merchantwarehouse/syslog4net/master/.README/Splunk_HostsInvalidLoginAttemptsOver30Past30Min.JPG)
+![we've created an alert on the number of invalid login attempts in the last 30 minutes](.README/Splunk_HostsInvalidLoginAttemptsOver30Past30Min.JPG)
 
 #Downloading / Installation
 
