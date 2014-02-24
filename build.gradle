@@ -12,6 +12,9 @@ version = '0.1.0-SNAPSHOT'
 apply plugin: 'mwversion'
 apply plugin: 'msbuild'
 
+task restoreNuget(type: Exec) {
+    commandLine 'cmd', '/c', 'nuget', 'restore', 'src/main/dot-net/syslog4net.sln'
+}
 
 msbuild {
     projectFile = 'src/main/dot-net/Build.proj'
@@ -22,6 +25,7 @@ msbuild {
     parameters.assemblyVersion = project.assemblyVersion
     parameters.buildNumber = project.buildNumber
 }
+msbuild.dependsOn restoreNuget
 msbuild.outputs.upToDateWhen { false }
 task build
 build.dependsOn msbuild
