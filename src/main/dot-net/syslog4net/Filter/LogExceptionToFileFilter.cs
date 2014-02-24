@@ -40,7 +40,7 @@ namespace syslog4net.Filter
 
             if (string.IsNullOrWhiteSpace(this.ExceptionLogFolder))
             {
-                throw new ArgumentNullException("The required property 'ExceptionFileLogFolder' was not specified.");
+                throw new ArgumentNullException("ExceptionFileLogFolder");
             }
 
             if (!Directory.Exists(this.ExceptionLogFolder))
