@@ -23,16 +23,9 @@ namespace syslog4net.Tests.Converters
             var result = TestUtilities.GetStringFromStream(writer.BaseStream);
             var testRunnerProcess = Process.GetCurrentProcess().ProcessName;
 
-            StringBuilder sb = new StringBuilder();
-            foreach (char ch in testRunnerProcess)
-            {
-                if (ch > 32 && ch < 128)
-                {
-                    sb.Append(ch);
-                }
-            }
+            var expected = TestUtilities.MakePrintableASCII(testRunnerProcess, 48);
 
-            Assert.AreEqual(sb.ToString(), result);
+            Assert.AreEqual(expected, result);
         }
     }
 }
