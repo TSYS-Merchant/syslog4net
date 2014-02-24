@@ -67,8 +67,6 @@ namespace syslog4net.Converters
                 AddStructuredData(writer, "ExceptionMessage", exceptionObject.Message);
                 AddStructuredData(writer, "EventHelp", exceptionObject.HelpLink);
 
-                // Minor cheat at the moment by using a hardcoded path that is relative to the running
-                // application container.
                 if (loggingEvent.Properties.Contains("log4net:syslog-exception-log"))
                 {
                     AddStructuredData(writer, "EventLog", loggingEvent.Properties["log4net:syslog-exception-log"].ToString());
