@@ -21,14 +21,16 @@ namespace syslog4net.Tests.Converters
             var converter = new MessageIdConverter();
 
             var log = Substitute.For<ILog>();
-            log.StartMessage(testId);
+            using (log.StartMessage(testId))
+            {
 
-            converter.Format(writer, new LoggingEvent(new LoggingEventData()));
-            writer.Flush();
+                converter.Format(writer, new LoggingEvent(new LoggingEventData()));
+                writer.Flush();
 
-            var result = TestUtilities.GetStringFromStream(writer.BaseStream);
+                var result = TestUtilities.GetStringFromStream(writer.BaseStream);
 
-            Assert.AreEqual(testId, result);
+                Assert.AreEqual(testId, result);
+            }
         }
 
         [Test]

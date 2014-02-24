@@ -45,10 +45,7 @@ namespace syslog4net.Tests.Layout
             // it's hard to test the whole message, because it depends on your machine name, process id, time & date, etc.
             // just test the message's invariant portions
             Assert.IsTrue(result.StartsWith("<135>1 "));
-            Assert.IsTrue(result.Contains("[TEST@12345"));
-            Assert.IsTrue(result.Contains("EventSeverity=\"DEBUG\""));
-            Assert.IsTrue(result.Contains("ExceptionType=\"System.ArgumentNullException\""));
-            Assert.IsTrue(result.Contains("ExceptionMessage=\"Value cannot be null.\"")); 
+            Assert.IsTrue(result.Contains("[TEST@12345 EventSeverity=\"DEBUG\" ExceptionType=\"System.ArgumentNullException\" ExceptionMessage=\"Value cannot be null.\"]"));
             Assert.IsTrue(result.EndsWith("test message" + Environment.NewLine));
         }
     }

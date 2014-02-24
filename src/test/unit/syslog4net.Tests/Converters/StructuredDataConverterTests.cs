@@ -83,10 +83,7 @@ namespace syslog4net.Tests.Converters
 
             var result = TestUtilities.GetStringFromStream(writer.BaseStream);
 
-            Assert.IsTrue(result.StartsWith("[TEST@12345"));
-            Assert.IsTrue(result.Contains("EventSeverity=\"DEBUG\""));
-            Assert.IsTrue(result.Contains("ExceptionType=\"System.ArgumentNullException\""));
-            Assert.IsTrue(result.Contains("ExceptionMessage=\"Value cannot be null.\""));
+            Assert.AreEqual("[TEST@12345 EventSeverity=\"DEBUG\" ExceptionType=\"System.ArgumentNullException\" ExceptionMessage=\"Value cannot be null.\"]", result);
         }    
     }
 }
