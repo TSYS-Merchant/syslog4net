@@ -28,10 +28,23 @@ namespace syslog4net.Tests.Converters
 
             var result = TestUtilities.GetStringFromStream(writer.BaseStream);
 
-            Console.WriteLine("Actual: " + result);
-            Console.WriteLine("Expected: " + testId);
-
             Assert.AreEqual(testId, result);
         }
+
+        [Test]
+        public void ConvertTestNoStackData()
+        {
+            var writer = new StreamWriter(new MemoryStream());
+            var converter = new MessageIdConverter();
+
+            var log = Substitute.For<ILog>();
+
+            converter.Format(writer, new LoggingEvent(new LoggingEventData()));
+            writer.Flush();
+
+            var result = TestUtilities.GetStringFromStream(writer.BaseStream);
+
+            Assert.AreEqual("-", result);
+        }    
     }
 }
