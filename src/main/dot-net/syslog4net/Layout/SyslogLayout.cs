@@ -12,7 +12,7 @@ namespace syslog4net.Layout
     /// <summary>
     /// Log4net layout class with default support for the Syslog message format as described in Syslog IETF 5424 standard: http://tools.ietf.org/html/rfc5424
     /// </summary>
-    internal class SyslogLayout : LayoutSkeleton
+    public class SyslogLayout : LayoutSkeleton
     {
         private readonly PatternLayout _layout;
 
@@ -73,7 +73,7 @@ namespace syslog4net.Layout
         {
             if (string.IsNullOrWhiteSpace(this.StructuredDataPrefix))
             {
-                throw new ArgumentNullException("The required property 'StructuredDataPrefix' was not specified.");
+                throw new ArgumentNullException("StructuredDataPrefix");
             }
             this._layout.ActivateOptions();
         }
