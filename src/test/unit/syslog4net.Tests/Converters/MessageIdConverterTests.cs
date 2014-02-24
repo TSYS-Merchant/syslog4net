@@ -6,29 +6,13 @@ using syslog4net.Converters;
 using NSubstitute;
 using NUnit.Framework;
 using syslog4net.Util;
+using System;
 
 namespace syslog4net.Tests.Converters
 {
     [TestFixture]
     public class MessageIdConverterTests
     {
-        [Test]
-        public void ConvertTestLoggingEventData()
-        {
-            var testId = "9001";
-            var writer = new StreamWriter(new MemoryStream());
-            var converter = new MessageIdConverter();
-            var props = new PropertiesDictionary();
-            props["MessageId"] = testId;
-
-            converter.Format(writer, new LoggingEvent(new LoggingEventData() { Properties = props }));
-            writer.Flush();
-
-            var result = TestUtilities.GetStringFromStream(writer.BaseStream);
-
-            Assert.AreEqual(testId, result);
-        }
-
         [Test]
         public void ConvertTestStackData()
         {
@@ -44,29 +28,10 @@ namespace syslog4net.Tests.Converters
 
             var result = TestUtilities.GetStringFromStream(writer.BaseStream);
 
+            Console.WriteLine("Actual: " + result);
+            Console.WriteLine("Expected: " + testId);
+
             Assert.AreEqual(testId, result);
-        }
-
-        [Test]
-        public void ConvertTestLoggingEventOverridesStackData()
-        {
-            var propTestId = "9001";
-            var ndcTestId = "0";
-
-            var writer = new StreamWriter(new MemoryStream());
-            var converter = new MessageIdConverter();
-            var props = new PropertiesDictionary();
-            props["MessageId"] = propTestId;
-
-            var log = Substitute.For<ILog>();
-            log.StartMessage(ndcTestId);
-
-            converter.Format(writer, new LoggingEvent(new LoggingEventData() { Properties = props }));
-            writer.Flush();
-
-            var result = TestUtilities.GetStringFromStream(writer.BaseStream);
-
-            Assert.AreEqual(propTestId, result);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using log4net.Core;
 using syslog4net.Converters;
 using NUnit.Framework;
@@ -7,7 +8,7 @@ using NUnit.Framework;
 namespace syslog4net.Tests.Converters
 {
     [TestFixture]
-    public class ProcessNameConverterTests
+    public class CommandLineConverterTests
     {
         [Test]
         public void ConvertTest()
@@ -20,7 +21,16 @@ namespace syslog4net.Tests.Converters
 
             var result = TestUtilities.GetStringFromStream(writer.BaseStream);
 
-            Assert.AreEqual(Environment.CommandLine, result);
+            StringBuilder sb = new StringBuilder();
+            foreach (char ch in Environment.CommandLine)
+            {
+                if (ch > 32 && ch < 128)
+                {
+                    sb.Append(ch);
+                }
+            }
+
+            Assert.AreEqual(sb.ToString(), result);
 
         }
     }

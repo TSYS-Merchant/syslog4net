@@ -2,12 +2,14 @@
 using System.IO;
 using log4net.Core;
 using syslog4net.Converters;
+using syslog4net.Util;
 using NUnit.Framework;
+using System.Text;
 
 namespace syslog4net.Tests.Converters
 {
     [TestFixture]
-    public class CommandLineConverterTests
+    public class ProcessNameConverterTests
     {
         [Test]
         public void ConvertTest()
@@ -21,7 +23,16 @@ namespace syslog4net.Tests.Converters
             var result = TestUtilities.GetStringFromStream(writer.BaseStream);
             var testRunnerProcess = Process.GetCurrentProcess().ProcessName;
 
-            Assert.AreEqual(testRunnerProcess, result);
+            StringBuilder sb = new StringBuilder();
+            foreach (char ch in testRunnerProcess)
+            {
+                if (ch > 32 && ch < 128)
+                {
+                    sb.Append(ch);
+                }
+            }
+
+            Assert.AreEqual(sb.ToString(), result);
         }
     }
 }

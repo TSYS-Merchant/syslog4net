@@ -15,13 +15,7 @@ namespace syslog4net.Converters
         {
             string messageId = null;
 
-            // first, try to pop the message id from the MDC
-            if (loggingEvent.Properties.Contains("MessageId"))
-            {
-                messageId = loggingEvent.Properties["MessageId"].ToString();
-            }
-
-            // if that's not there, pop the NDC
+            // pop the NDC
             if (string.IsNullOrEmpty(messageId))
             {
                 object ndc = loggingEvent.LookupProperty("NDC");
