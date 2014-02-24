@@ -13,7 +13,7 @@ namespace syslog4net.Util
         /// <summary>
         /// The default stack name
         /// </summary>
-        public const string DefaultStackName = "mwas"; //MerchantWarehouseActivityStack
+        public const string DefaultStackName = "NDC";
 
         /// <summary>
         /// Returns a stack context object for correlation logging
@@ -56,9 +56,7 @@ namespace syslog4net.Util
         /// <returns>pushed stack context object. Context is popped from stack when object is disposed.</returns>
         public static IDisposable StartMessage(this ILog log, string id = null)
         {
-            id = string.IsNullOrEmpty(id) ? Guid.NewGuid().ToString() : id;
-
-            return ThreadContext.Stacks["NDC"].Push(id);
+            return StartThreadActivity(log, "NDC", id);
         }
     }
 }
