@@ -43,14 +43,15 @@ namespace syslog4net.Tests.Converters
         public void ConvertTestWithExceptionString()
         {
             var level = Level.Debug;
-            var testId = "9001";
+            var testId = "9001]";
             var exceptionMessage = "exception occurred";
-            var resultString = "[MW@55555 MessageId=\"" + testId + "\" EventSeverity=\"" + level.DisplayName + "\" ExceptionMessage=\"" + exceptionMessage + "\"]";
+            var resultString = "[MW@55555 MessageId=\"9001\\]" + "\" EventSeverity=\"" + level.DisplayName + "\" ExceptionMessage=\"" + exceptionMessage + "\"]";
             var writer = new StreamWriter(new MemoryStream());
             var converter = new StructuredDataConverter();
             var props = new PropertiesDictionary();
             props["MessageId"] = testId;
             props["log4net:StructuredDataPrefix"] = "MW@55555";
+            props["log4net:syslog-exception-log"] = "file://some-log-file/who/cares";
 
             var evt = new LoggingEvent(new LoggingEventData() { Properties = props, Level = level, ExceptionString = exceptionMessage });
 
