@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.IO;
 using syslog4net.Layout;
 using log4net.Core;
@@ -48,5 +49,31 @@ namespace syslog4net.Tests.Layout
             Assert.IsTrue(result.Contains("[TEST@12345 EventSeverity=\"DEBUG\" ExceptionType=\"System.ArgumentNullException\" ExceptionMessage=\"Value cannot be null.\"]"));
             Assert.IsTrue(result.EndsWith("test message" + Environment.NewLine));
         }
+
+        [Test]
+        public void TestThatWeTruncateLongMessages()
+        {
+            SyslogLayout layout = new SyslogLayout();
+            layout.StructuredDataPrefix = "TEST@12345";
+            layout.ActivateOptions();
+
+            StringBuilder longMessage = new StringBuilder();
+            for (int i = 0; i < 2048; i++)
+            {
+                longMessage.Append("test message");
+            }
+
+            var exception = new ArgumentNullException();
+            ILoggerRepository logRepository = Substitute.For<ILoggerRepository>();
+            var evt = new LoggingEvent(typeof(SyslogLayoutTests), logRepository, "test logger", Level.Debug, longMessage.ToString(), exception);
+
+            StringWriter writer = new StringWriter();
+
+            layout.Format(writer, evt);
+
+            string result = writer.ToString();
+
+            Assert.AreEqual(2048, result.Length);
+        }    
     }
 }
