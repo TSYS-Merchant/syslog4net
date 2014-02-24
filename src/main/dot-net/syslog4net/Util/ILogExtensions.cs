@@ -10,6 +10,9 @@ namespace syslog4net.Util
     public static class ILogExtensions
     // ReSharper disable
     {
+        /// <summary>
+        /// The default stack name
+        /// </summary>
         public const string DefaultStackName = "mwas"; //MerchantWarehouseActivityStack
 
         /// <summary>

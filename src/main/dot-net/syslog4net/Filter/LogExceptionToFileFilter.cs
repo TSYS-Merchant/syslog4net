@@ -13,8 +13,16 @@ namespace syslog4net.Filter
         private const string IdToken = "{errorId}";
         private const string DefaultFileName = @"error_" + IdToken + ".txt";
 
+        /// <summary>
+        /// The folder that all exceptions will be logged to. Must be set before any messages are filtered.
+        /// </summary>
         public string ExceptionLogFolder { get; set; }
 
+        /// <summary>
+        /// If any exceptions are present on the logging event, save them to a file and set the "log4net:syslog-exception-log" property on the event.
+        /// </summary>
+        /// <param name="loggingEvent">a logging event</param>
+        /// <returns>FilterDecision.Neutral</returns>
         public override FilterDecision Decide(LoggingEvent loggingEvent)
         {
             // if there is an exception we generate a GUID and store it for the appender to use
@@ -34,6 +42,9 @@ namespace syslog4net.Filter
             return FilterDecision.Neutral;
         }
 
+        /// <summary>
+        /// Activates log4net's options
+        /// </summary>
         public override void ActivateOptions()
         {
             base.ActivateOptions();

@@ -64,6 +64,9 @@ namespace syslog4net.Layout
             }
         }
 
+        /// <summary>
+        /// Sets the syslog structured data ID. See http://tools.ietf.org/html/rfc5424#section-6.3.2 for more details.
+        /// </summary>
         public string StructuredDataPrefix { get; set; }
 
         /// <summary>

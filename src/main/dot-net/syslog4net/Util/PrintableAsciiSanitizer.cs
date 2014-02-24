@@ -37,6 +37,12 @@
             return ascii.GetString(sanitizedByteArray).Substring(0, maxLength);
         }
 
+        /// <summary>
+        /// Cleans up an input string based on the provided data
+        /// </summary>
+        /// <param name="input">input string to clean</param>
+        /// <param name="maxLength">maximum lenght allowed (will trim from the end of the string to the max lenght provided</param>
+        /// <returns>a cleaned string based upon the provided data</returns>
         public static string Sanitize(string input, int maxLength)
         {
             return Sanitize(input, maxLength, new byte[] { });

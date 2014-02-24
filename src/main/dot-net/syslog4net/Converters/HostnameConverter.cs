@@ -12,7 +12,7 @@ namespace syslog4net.Converters
     /// </summary>
     public class HostnameConverter : PatternLayoutConverter
     {
-        public static string GetLocalhostFqdn()
+        internal static string GetLocalhostFqdn()
         {
             var ipProperties = IPGlobalProperties.GetIPGlobalProperties();
             return string.Format(CultureInfo.InvariantCulture, "{0}.{1}", ipProperties.HostName, ipProperties.DomainName);
