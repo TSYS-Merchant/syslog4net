@@ -1,13 +1,16 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using log4net.Core;
 using log4net.Util;
+using log4net.Repository;
 using syslog4net.Converters;
 using NUnit.Framework;
+using NSubstitute;
 
 namespace syslog4net.Tests.Converters
 {
     [TestFixture]
-    public class StrcturedDataConverterTests
+    public class StructuredDataConverterTests
     {
         [Test]
         public void ConvertTestNoException()
@@ -35,5 +38,55 @@ namespace syslog4net.Tests.Converters
 
             Assert.AreEqual(resultString, result);
         }
+
+        [Test]
+        public void ConvertTestWithExceptionString()
+        {
+            var level = Level.Debug;
+            var testId = "9001";
+            var exceptionMessage = "exception occurred";
+            var resultString = "[MW@55555 MessageId=\"" + testId + "\" EventSeverity=\"" + level.DisplayName + "\" ExceptionMessage=\"" + exceptionMessage + "\"]";
+            var writer = new StreamWriter(new MemoryStream());
+            var converter = new StructuredDataConverter();
+            var props = new PropertiesDictionary();
+            props["MessageId"] = testId;
+            props["log4net:StructuredDataPrefix"] = "MW@55555";
+
+            var evt = new LoggingEvent(new LoggingEventData() { Properties = props, Level = level, ExceptionString = exceptionMessage });
+
+            converter.Format(writer, evt);
+
+            writer.Flush();
+
+            var result = TestUtilities.GetStringFromStream(writer.BaseStream);
+
+            Assert.AreEqual(resultString, result);
+        }
+
+        [Test]
+        public void ConvertTestWithExceptionObject()
+        {
+            var level = Level.Debug;
+            var testId = "9001";
+            var resultString = "[MW@55555 MessageId=\"9001\" EventSeverity=\"DEBUG\" ExceptionType=\"System.ArgumentNullException\" ExceptionMessage=\"Value cannot be null.\"]";
+            var writer = new StreamWriter(new MemoryStream());
+            var converter = new StructuredDataConverter();
+
+            var exception = new ArgumentNullException();
+            ILoggerRepository logRepository = Substitute.For<ILoggerRepository>();
+
+            var evt = new LoggingEvent(typeof(StructuredDataConverterTests), logRepository, "test logger", level, "test message", exception);
+
+            evt.Properties["MessageId"] = testId;
+            evt.Properties["log4net:StructuredDataPrefix"] = "MW@55555";
+
+            converter.Format(writer, evt);
+
+            writer.Flush();
+
+            var result = TestUtilities.GetStringFromStream(writer.BaseStream);
+
+            Assert.AreEqual(resultString, result);
+        }    
     }
 }
