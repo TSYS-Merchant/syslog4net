@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Net.NetworkInformation;
-
+using System.Globalization;
 using log4net.Core;
 using log4net.Layout.Pattern;
 using syslog4net.Util;
@@ -15,7 +15,7 @@ namespace syslog4net.Converters
         public static string GetLocalhostFqdn()
         {
             var ipProperties = IPGlobalProperties.GetIPGlobalProperties();
-            return string.Format("{0}.{1}", ipProperties.HostName, ipProperties.DomainName);
+            return string.Format(CultureInfo.InvariantCulture, "{0}.{1}", ipProperties.HostName, ipProperties.DomainName);
         }
 
         override protected void Convert(TextWriter writer, LoggingEvent loggingEvent)

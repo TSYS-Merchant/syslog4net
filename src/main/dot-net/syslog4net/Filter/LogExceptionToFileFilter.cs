@@ -22,7 +22,7 @@ namespace syslog4net.Filter
             {
                 var exceptionId = Guid.NewGuid().ToString("N");
 
-                var logfilePath = this.ExceptionLogFolder + Path.DirectorySeparatorChar + DefaultFileName.Replace(IdToken, exceptionId.ToString());
+                var logfilePath = this.ExceptionLogFolder + Path.DirectorySeparatorChar + DefaultFileName.Replace(IdToken, exceptionId);
                 loggingEvent.Properties["log4net:syslog-exception-log"] = logfilePath;
 
                 // Should not need any complex locking or threading here as we dump the info

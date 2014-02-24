@@ -45,7 +45,8 @@ namespace syslog4net.Util
         }
 
         /// <summary>
-        /// Returns a stack context object for the NDC stack using the provided ID or a randomly generated GUID. Similar to StartThread and StartThreadLogicial activity but is hard-coded to the NDC stack.
+        /// Returns a stack context object for the NDC stack using the provided ID or a randomly generated GUID. Similar to StartThread and 
+        /// StartThreadLogicial activity but is hard-coded to the NDC stack.
         /// </summary>
         /// <param name="log">current <see cref="ILog"/> instance</param>
         /// <param name="id">(optional) message id DEFAULT = Guid.NewGuid()</param>

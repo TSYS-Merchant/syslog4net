@@ -1,12 +1,10 @@
-﻿
-
-namespace syslog4net.Util
+﻿namespace syslog4net.Util
 {
     /// <summary>
     /// Provides helper methods for cleaning up string values. It is assumed that the consumer has specific needs for the string. For this implmentation this is mainly used to ensure that syslog
     /// formatted messages are not too long and that they do not include invalid characters in fields like keynames.
     /// </summary>
-    sealed internal class PrintableAsciiSanitizer
+    internal static class PrintableAsciiSanitizer
     {
         /// <summary>
         /// Cleans up an input string based on the provided data

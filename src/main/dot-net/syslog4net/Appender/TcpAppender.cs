@@ -432,7 +432,7 @@ namespace syslog4net.Appender
             AsyncLoggingData loggingData = asyncResult.AsyncState as AsyncLoggingData;
             if (loggingData == null)
             {
-                throw new Exception("LoggingData is null");
+                throw new ArgumentException("LoggingData is null", "loggingData");
             }
             Byte[] buffer = this.m_encoding.GetBytes(RenderLoggingEvent(loggingData.LoggingEvent).ToCharArray());
 
