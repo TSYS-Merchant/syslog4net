@@ -67,8 +67,6 @@ namespace syslog4net.Tests.Converters
         public void ConvertTestWithExceptionObject()
         {
             var level = Level.Debug;
-            var testId = "9001";
-            var resultString = "[MW@55555 MessageId=\"9001\" EventSeverity=\"DEBUG\" ExceptionType=\"System.ArgumentNullException\" ExceptionMessage=\"Value cannot be null.\"]";
             var writer = new StreamWriter(new MemoryStream());
             var converter = new StructuredDataConverter();
 
@@ -77,8 +75,7 @@ namespace syslog4net.Tests.Converters
 
             var evt = new LoggingEvent(typeof(StructuredDataConverterTests), logRepository, "test logger", level, "test message", exception);
 
-            evt.Properties["MessageId"] = testId;
-            evt.Properties["log4net:StructuredDataPrefix"] = "MW@55555";
+            evt.Properties["log4net:StructuredDataPrefix"] = "TEST@12345";
 
             converter.Format(writer, evt);
 
@@ -86,7 +83,10 @@ namespace syslog4net.Tests.Converters
 
             var result = TestUtilities.GetStringFromStream(writer.BaseStream);
 
-            Assert.AreEqual(resultString, result);
+            Assert.IsTrue(result.StartsWith("[TEST@12345"));
+            Assert.IsTrue(result.Contains("EventSeverity=\"DEBUG\""));
+            Assert.IsTrue(result.Contains("ExceptionType=\"System.ArgumentNullException\""));
+            Assert.IsTrue(result.Contains("ExceptionMessage=\"Value cannot be null.\""));
         }    
     }
 }
