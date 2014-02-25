@@ -106,7 +106,7 @@ namespace syslog4net.Appender
     /// <author>Nicko Cadell</author>
     public class TcpAppender : AppenderSkeleton
     {
-        private static int FailedConnectionCount = 0;
+        private static int _failedConnectionCount = 0;
 
         #region Public Instance Constructors
 
@@ -119,7 +119,7 @@ namespace syslog4net.Appender
         public TcpAppender()
         {
             // set port to some invalid value, forcing you to set the port
-            m_remotePort = IPEndPoint.MinPort - 1;
+            this._remotePort = IPEndPoint.MinPort - 1;
         }
 
         private class AsyncLoggingData
@@ -200,8 +200,8 @@ namespace syslog4net.Appender
         /// </remarks>
         public IPAddress RemoteAddress
         {
-            get { return this.m_remoteAddress; }
-            set { this.m_remoteAddress = value; }
+            get { return this._remoteAddress; }
+            set { this._remoteAddress = value; }
         }
 
         /// <summary>
@@ -220,12 +220,12 @@ namespace syslog4net.Appender
         /// <exception cref="ArgumentOutOfRangeException">The value specified is less than <see cref="IPEndPoint.MinPort" /> or greater than <see cref="IPEndPoint.MaxPort" />.</exception>
         public int RemotePort
         {
-            get { return this.m_remotePort; }
+            get { return this._remotePort; }
             set
             {
                 if (value < IPEndPoint.MinPort || value > IPEndPoint.MaxPort)
                 {
-                    throw log4net.Util.SystemInfo.CreateArgumentOutOfRangeException("value", (object)value,
+                    throw log4net.Util.SystemInfo.CreateArgumentOutOfRangeException("value", value,
                         "The value specified is less than " +
                         IPEndPoint.MinPort.ToString(NumberFormatInfo.InvariantInfo) +
                         " or greater than " +
@@ -233,7 +233,7 @@ namespace syslog4net.Appender
                 }
                 else
                 {
-                    this.m_remotePort = value;
+                    this._remotePort = value;
                 }
             }
         }
@@ -251,8 +251,8 @@ namespace syslog4net.Appender
         /// </remarks>
         public Encoding Encoding
         {
-            get { return this.m_encoding; }
-            set { this.m_encoding = value; }
+            get { return this._encoding; }
+            set { this._encoding = value; }
         }
 
         #endregion Public Instance Properties
@@ -280,19 +280,19 @@ namespace syslog4net.Appender
         /// </para>
         /// </remarks>
         /// <exception cref="ArgumentNullException">The required property <see cref="RemoteAddress" /> was not specified.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">The TCP port number assigned to <see cref="LocalPort" /> or <see cref="RemotePort" /> is less than <see cref="IPEndPoint.MinPort" /> or greater than <see cref="IPEndPoint.MaxPort" />.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The TCP port number assigned to <see cref="RemotePort" /> is less than <see cref="IPEndPoint.MinPort" /> or greater than <see cref="IPEndPoint.MaxPort" />.</exception>
         public override void ActivateOptions()
         {
             base.ActivateOptions();
 
             if (this.RemoteAddress == null)
             {
-                throw new ArgumentNullException("Address");
+                throw new ArgumentNullException("RemoteAddress");
             }
             
             if (this.RemotePort < IPEndPoint.MinPort || this.RemotePort > IPEndPoint.MaxPort)
             {
-                throw log4net.Util.SystemInfo.CreateArgumentOutOfRangeException("RemotePort", (object)this.RemotePort,
+                throw log4net.Util.SystemInfo.CreateArgumentOutOfRangeException("RemotePort", this.RemotePort,
                     "The RemotePort is less than " +
                     IPEndPoint.MinPort.ToString(NumberFormatInfo.InvariantInfo) +
                     " or greater than " +
@@ -318,17 +318,16 @@ namespace syslog4net.Appender
         /// </remarks>
         protected override void Append(LoggingEvent loggingEvent)
         {
-            TcpClient client = null;
 
             try
             {
-                client = new TcpClient();
+                TcpClient client = new TcpClient();
 
                 //Async Programming Model allows socket connection to happen on threadpool so app can continue.
                 client.BeginConnect(
                     this.RemoteAddress,
                     this.RemotePort,
-                    new AsyncCallback(this.ConnectionEstablishedCallback),
+                    this.ConnectionEstablishedCallback,
                     new AsyncLoggingData()
                     {
                         Client = client,
@@ -351,7 +350,7 @@ namespace syslog4net.Appender
             {
                 throw new ArgumentException("LoggingData is null", "loggingData");
             }
-            Byte[] buffer = this.m_encoding.GetBytes(RenderLoggingEvent(loggingData.LoggingEvent).ToCharArray());
+            Byte[] buffer = this._encoding.GetBytes(RenderLoggingEvent(loggingData.LoggingEvent).ToCharArray());
 
             try
             {
@@ -359,8 +358,8 @@ namespace syslog4net.Appender
             }
             catch
             {
-                Interlocked.Increment(ref FailedConnectionCount);
-                if (FailedConnectionCount >= 1)
+                Interlocked.Increment(ref _failedConnectionCount);
+                if (_failedConnectionCount >= 1)
                 {
                     //We have failed to connect to all the IP Addresses
                     //connection has failed overall.
@@ -422,18 +421,18 @@ namespace syslog4net.Appender
         /// The IP address of the remote host or multicast group to which 
         /// the logging event will be sent.
         /// </summary>
-        private IPAddress m_remoteAddress;
+        private IPAddress _remoteAddress;
 
         /// <summary>
         /// The TCP port number of the remote host or multicast group to 
         /// which the logging event will be sent.
         /// </summary>
-        private int m_remotePort;
+        private int _remotePort;
 
         /// <summary>
         /// The encoding to use for the packet.
         /// </summary>
-        private Encoding m_encoding = Encoding.Default;
+        private Encoding _encoding = Encoding.Default;
 
         #endregion Private Instance Fields
     }
