@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Appender\TcpAppenderTests.cs" />
     <Compile Include="Converters\CommandLineConverterTests.cs" />
     <Compile Include="Converters\HostnameConverterTests.cs" />
     <Compile Include="Converters\MessageIdConverterTests.cs" />

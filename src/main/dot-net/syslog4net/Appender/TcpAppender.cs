@@ -51,17 +51,17 @@ namespace syslog4net.Appender
     /// encoded in the packet as a unicode string and it is decoded as such. 
     /// <code lang="C#">
     /// IPEndPoint remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
-    /// UdpClient udpClient;
+    /// TcpClient TcpClient;
     /// byte[] buffer;
     /// string loggingEvent;
     /// 
     /// try 
     /// {
-    ///     udpClient = new UdpClient(8080);
+    ///     TcpClient = new TcpClient(8080);
     ///     
     ///     while(true) 
     ///     {
-    ///         buffer = udpClient.Receive(ref remoteEndPoint);
+    ///         buffer = TcpClient.Receive(ref remoteEndPoint);
     ///         loggingEvent = System.Text.Encoding.Unicode.GetString(buffer);
     ///         Console.WriteLine(loggingEvent);
     ///     }
@@ -73,16 +73,16 @@ namespace syslog4net.Appender
     /// </code>
     /// <code lang="Visual Basic">
     /// Dim remoteEndPoint as IPEndPoint
-    /// Dim udpClient as UdpClient
+    /// Dim TcpClient as TcpClient
     /// Dim buffer as Byte()
     /// Dim loggingEvent as String
     /// 
     /// Try 
     ///     remoteEndPoint = new IPEndPoint(IPAddress.Any, 0)
-    ///     udpClient = new UdpClient(8080)
+    ///     TcpClient = new TcpClient(8080)
     ///
     ///     While True
-    ///         buffer = udpClient.Receive(ByRef remoteEndPoint)
+    ///         buffer = TcpClient.Receive(ByRef remoteEndPoint)
     ///         loggingEvent = System.Text.Encoding.Unicode.GetString(buffer)
     ///         Console.WriteLine(loggingEvent)
     ///     Wend
@@ -118,6 +118,8 @@ namespace syslog4net.Appender
         /// </remarks>
         public TcpAppender()
         {
+            // set port to some invalid value, forcing you to set the port
+            m_remotePort = IPEndPoint.MinPort - 1;
         }
 
         private class AsyncLoggingData
@@ -204,7 +206,7 @@ namespace syslog4net.Appender
 
         /// <summary>
         /// Gets or sets the TCP port number of the remote host or multicast group to which 
-        /// the underlying <see cref="UdpClient" /> should sent the logging event.
+        /// the underlying <see cref="TcpClient" /> should sent the logging event.
         /// </summary>
         /// <value>
         /// An integer value in the range <see cref="IPEndPoint.MinPort" /> to <see cref="IPEndPoint.MaxPort" /> 
@@ -212,7 +214,7 @@ namespace syslog4net.Appender
         /// will be sent.
         /// </value>
         /// <remarks>
-        /// The underlying <see cref="UdpClient" /> will send messages to this TCP port number
+        /// The underlying <see cref="TcpClient" /> will send messages to this TCP port number
         /// on the remote host or multicast group.
         /// </remarks>
         /// <exception cref="ArgumentOutOfRangeException">The value specified is less than <see cref="IPEndPoint.MinPort" /> or greater than <see cref="IPEndPoint.MaxPort" />.</exception>
@@ -232,43 +234,6 @@ namespace syslog4net.Appender
                 else
                 {
                     this.m_remotePort = value;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the TCP port number from which the underlying <see cref="UdpClient" /> will communicate.
-        /// </summary>
-        /// <value>
-        /// An integer value in the range <see cref="IPEndPoint.MinPort" /> to <see cref="IPEndPoint.MaxPort" /> 
-        /// indicating the TCP port number from which the underlying <see cref="UdpClient" /> will communicate.
-        /// </value>
-        /// <remarks>
-        /// <para>
-        /// The underlying <see cref="UdpClient" /> will bind to this port for sending messages.
-        /// </para>
-        /// <para>
-        /// Setting the value to 0 (the default) will cause the udp client not to bind to
-        /// a local port.
-        /// </para>
-        /// </remarks>
-        /// <exception cref="ArgumentOutOfRangeException">The value specified is less than <see cref="IPEndPoint.MinPort" /> or greater than <see cref="IPEndPoint.MaxPort" />.</exception>
-        public int LocalPort
-        {
-            get { return this.m_localPort; }
-            set
-            {
-                if (value != 0 && (value < IPEndPoint.MinPort || value > IPEndPoint.MaxPort))
-                {
-                    throw log4net.Util.SystemInfo.CreateArgumentOutOfRangeException("value", (object)value,
-                        "The value specified is less than " +
-                        IPEndPoint.MinPort.ToString(NumberFormatInfo.InvariantInfo) +
-                        " or greater than " +
-                        IPEndPoint.MaxPort.ToString(NumberFormatInfo.InvariantInfo) + ".");
-                }
-                else
-                {
-                    this.m_localPort = value;
                 }
             }
         }
@@ -295,15 +260,15 @@ namespace syslog4net.Appender
         #region Protected Instance Properties
 
         /// <summary>
-        /// Gets or sets the underlying <see cref="UdpClient" />.
+        /// Gets or sets the underlying <see cref="TcpClient" />.
         /// </summary>
         /// <value>
-        /// The underlying <see cref="UdpClient" />.
+        /// The underlying <see cref="TcpClient" />.
         /// </value>
         /// <remarks>
-        /// <see cref="TcpAppender" /> creates a <see cref="UdpClient" /> to send logging events 
+        /// <see cref="TcpAppender" /> creates a <see cref="TcpClient" /> to send logging events 
         /// over a network.  Classes deriving from <see cref="TcpAppender" /> can use this
-        /// property to get or set this <see cref="UdpClient" />.  Use the underlying <see cref="UdpClient" />
+        /// property to get or set this <see cref="TcpClient" />.  Use the underlying <see cref="TcpClient" />
         /// returned from <see cref="Client" /> if you require access beyond that which 
         /// <see cref="TcpAppender" /> provides.
         /// </remarks>
@@ -362,20 +327,13 @@ namespace syslog4net.Appender
 
             if (this.RemoteAddress == null)
             {
-                throw new ArgumentNullException("The required property 'Address' was not specified.");
+                throw new ArgumentNullException("Address");
             }
-            else if (this.RemotePort < IPEndPoint.MinPort || this.RemotePort > IPEndPoint.MaxPort)
+            
+            if (this.RemotePort < IPEndPoint.MinPort || this.RemotePort > IPEndPoint.MaxPort)
             {
-                throw log4net.Util.SystemInfo.CreateArgumentOutOfRangeException("this.RemotePort", (object)this.RemotePort,
+                throw log4net.Util.SystemInfo.CreateArgumentOutOfRangeException("RemotePort", (object)this.RemotePort,
                     "The RemotePort is less than " +
-                    IPEndPoint.MinPort.ToString(NumberFormatInfo.InvariantInfo) +
-                    " or greater than " +
-                    IPEndPoint.MaxPort.ToString(NumberFormatInfo.InvariantInfo) + ".");
-            }
-            else if (this.LocalPort != 0 && (this.LocalPort < IPEndPoint.MinPort || this.LocalPort > IPEndPoint.MaxPort))
-            {
-                throw log4net.Util.SystemInfo.CreateArgumentOutOfRangeException("this.LocalPort", (object)this.LocalPort,
-                    "The LocalPort is less than " +
                     IPEndPoint.MinPort.ToString(NumberFormatInfo.InvariantInfo) +
                     " or greater than " +
                     IPEndPoint.MaxPort.ToString(NumberFormatInfo.InvariantInfo) + ".");
@@ -392,7 +350,7 @@ namespace syslog4net.Appender
         /// <param name="loggingEvent">The event to log.</param>
         /// <remarks>
         /// <para>
-        /// Sends the event using an UDP datagram.
+        /// Sends the event using an Tcp datagram.
         /// </para>
         /// <para>
         /// Exceptions are passed to the <see cref="AppenderSkeleton.ErrorHandler"/>.
@@ -484,12 +442,12 @@ namespace syslog4net.Appender
         }
 
         /// <summary>
-        /// Closes the UDP connection and releases all resources associated with 
+        /// Closes the Tcp connection and releases all resources associated with 
         /// this <see cref="TcpAppender" /> instance.
         /// </summary>
         /// <remarks>
         /// <para>
-        /// Disables the underlying <see cref="UdpClient" /> and releases all managed 
+        /// Disables the underlying <see cref="TcpClient" /> and releases all managed 
         /// and unmanaged resources associated with the <see cref="TcpAppender" />.
         /// </para>
         /// </remarks>
@@ -503,11 +461,11 @@ namespace syslog4net.Appender
         #region Protected Instance Methods
 
         /// <summary>
-        /// Initializes the underlying  <see cref="UdpClient" /> connection.
+        /// Initializes the underlying  <see cref="TcpClient" /> connection.
         /// </summary>
         /// <remarks>
         /// <para>
-        /// The underlying <see cref="UdpClient"/> is initialized and binds to the 
+        /// The underlying <see cref="TcpClient"/> is initialized and binds to the 
         /// port number from which you intend to communicate.
         /// </para>
         /// <para>
@@ -521,7 +479,7 @@ namespace syslog4net.Appender
         //                if (this.LocalPort == 0)
         //                {
         //#if NETCF
-        //                    this.Client = new UdpClient();
+        //                    this.Client = new TcpClient();
         //#else
         //                    this.Client = new TcpClient(this.RemoteAddress.AddressFamily);
         //#endif
@@ -529,7 +487,7 @@ namespace syslog4net.Appender
         //                else
         //                {
         //#if NETCF
-        //                    this.Client = new UdpClient(this.LocalPort);
+        //                    this.Client = new TcpClient(this.LocalPort);
         //#else
         //                    //TODO localport not required for TCP
         //                    //this.Client = new TcpClient(this.LocalPort, this.RemoteAddress.AddressFamily);
@@ -539,7 +497,7 @@ namespace syslog4net.Appender
         //            catch (Exception ex)
         //            {
         //                ErrorHandler.Error(
-        //                    "Could not initialize the UdpClient connection on port " +
+        //                    "Could not initialize the TcpClient connection on port " +
         //                    this.LocalPort.ToString(NumberFormatInfo.InvariantInfo) + ".",
         //                    ex,
         //                    ErrorCode.GenericFailure);
@@ -563,11 +521,6 @@ namespace syslog4net.Appender
         /// which the logging event will be sent.
         /// </summary>
         private int m_remotePort;
-
-        /// <summary>
-        /// The TCP port number from which the <see cref="UdpClient" /> will communicate.
-        /// </summary>
-        private int m_localPort;
 
         /// <summary>
         /// The encoding to use for the packet.
