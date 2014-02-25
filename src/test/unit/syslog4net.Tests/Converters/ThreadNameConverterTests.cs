@@ -20,7 +20,8 @@ namespace syslog4net.Tests.Converters
 
             var result = TestUtilities.GetStringFromStream(writer.BaseStream);
 
-            Assert.AreEqual(Thread.CurrentThread.Name, result);
+            //converter will sanitize string and remove spaces so we need to match
+            Assert.AreEqual(Thread.CurrentThread.Name.Replace(" ", ""), result);
 
         }
     }
