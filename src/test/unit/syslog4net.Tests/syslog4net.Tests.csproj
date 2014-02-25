@@ -64,6 +64,7 @@
     <Compile Include="TestUtilities.cs" />
     <Compile Include="Converters\TheadIdConverterTests.cs" />
     <Compile Include="Converters\ThreadNameConverterTests.cs" />
+    <Compile Include="Util\ILogExtensionsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\main\dot-net\syslog4net\syslog4net.csproj">
