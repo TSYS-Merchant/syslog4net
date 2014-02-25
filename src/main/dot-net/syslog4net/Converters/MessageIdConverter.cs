@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System;
 using log4net.Core;
 using log4net.Layout.Pattern;
 using syslog4net.Util;
@@ -16,14 +15,11 @@ namespace syslog4net.Converters
             string messageId = null;
 
             // pop the NDC
-            if (string.IsNullOrEmpty(messageId))
+            log4net.Util.ThreadContextStack ndc = loggingEvent.LookupProperty("NDC") as log4net.Util.ThreadContextStack;
+            if (ndc != null && ndc.Count > 0)
             {
-                log4net.Util.ThreadContextStack ndc = loggingEvent.LookupProperty("NDC") as log4net.Util.ThreadContextStack;
-                if (ndc != null && ndc.Count > 0)
-                {
-                    // the NDC represents a context stack, whose levels are separated by whitespace. we will use this as our MessageId.
-                    messageId = ndc.ToString();
-                }
+                // the NDC represents a context stack, whose levels are separated by whitespace. we will use this as our MessageId.
+                messageId = ndc.ToString();
             }
 
             if (string.IsNullOrEmpty(messageId))

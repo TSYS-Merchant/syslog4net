@@ -21,7 +21,7 @@ namespace syslog4net.Tests.Filter
                 () => filter.ActivateOptions(),
                 Throws.Exception
                 .TypeOf<ArgumentNullException>()
-                .With.Property("ParamName").EqualTo("ExceptionFileLogFolder")
+                .With.Property("ParamName").EqualTo("ExceptionLogFolder")
                 );            
         }
 

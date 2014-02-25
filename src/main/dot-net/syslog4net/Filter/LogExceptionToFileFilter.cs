@@ -51,7 +51,7 @@ namespace syslog4net.Filter
 
             if (string.IsNullOrWhiteSpace(this.ExceptionLogFolder))
             {
-                throw new ArgumentNullException("ExceptionFileLogFolder");
+                throw new ArgumentNullException("ExceptionLogFolder");
             }
 
             if (!Directory.Exists(this.ExceptionLogFolder))
