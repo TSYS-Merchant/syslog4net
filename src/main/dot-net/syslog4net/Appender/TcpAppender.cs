@@ -257,46 +257,6 @@ namespace syslog4net.Appender
 
         #endregion Public Instance Properties
 
-        #region Protected Instance Properties
-
-        /// <summary>
-        /// Gets or sets the underlying <see cref="TcpClient" />.
-        /// </summary>
-        /// <value>
-        /// The underlying <see cref="TcpClient" />.
-        /// </value>
-        /// <remarks>
-        /// <see cref="TcpAppender" /> creates a <see cref="TcpClient" /> to send logging events 
-        /// over a network.  Classes deriving from <see cref="TcpAppender" /> can use this
-        /// property to get or set this <see cref="TcpClient" />.  Use the underlying <see cref="TcpClient" />
-        /// returned from <see cref="Client" /> if you require access beyond that which 
-        /// <see cref="TcpAppender" /> provides.
-        /// </remarks>
-        //protected TcpClient Client
-        //{
-        //    get { return this.m_client; }
-        //    set { this.m_client = value; }
-        //}
-
-        /// <summary>
-        /// Gets or sets the cached remote endpoint to which the logging events should be sent.
-        /// </summary>
-        /// <value>
-        /// The cached remote endpoint to which the logging events will be sent.
-        /// </value>
-        /// <remarks>
-        /// The <see cref="ActivateOptions" /> method will initialize the remote endpoint 
-        /// with the values of the <see cref="RemoteAddress" /> and <see cref="RemotePort"/>
-        /// properties.
-        /// </remarks>
-        //protected IPEndPoint RemoteEndPoint
-        //{
-        //    get { return this.m_remoteEndPoint; }
-        //    set { this.m_remoteEndPoint = value; }
-        //}
-
-        #endregion Protected Instance Properties
-
         #region Implementation of IOptionHandler
 
         /// <summary>
@@ -385,8 +345,7 @@ namespace syslog4net.Appender
 
         private void ConnectionEstablishedCallback(IAsyncResult asyncResult)
         {
-            //TODO callback happens on background thread. lose data if app pool recycled?
-            NetworkStream netStream = null;
+            // TODO callback happens on background thread. lose data if app pool recycled?
             AsyncLoggingData loggingData = asyncResult.AsyncState as AsyncLoggingData;
             if (loggingData == null)
             {
@@ -411,19 +370,18 @@ namespace syslog4net.Appender
 
             try
             {
-                netStream = loggingData.Client.GetStream();
-                netStream.Write(buffer, 0, buffer.Length);
-
-                if (netStream != null)
+                using (var netStream = loggingData.Client.GetStream())
                 {
-                    netStream.Close();
+                    netStream.Write(buffer, 0, buffer.Length);
                 }
-                loggingData.Client.Close();
-
             }
-            catch (Exception ex)
+            catch
             {
-                //TODO fallback default appender?
+                // TODO fallback default appender?
+            }
+            finally
+            {
+                loggingData.Client.Close();
             }
         }
 
@@ -457,56 +415,6 @@ namespace syslog4net.Appender
         }
 
         #endregion Override implementation of AppenderSkeleton
-
-        #region Protected Instance Methods
-
-        /// <summary>
-        /// Initializes the underlying  <see cref="TcpClient" /> connection.
-        /// </summary>
-        /// <remarks>
-        /// <para>
-        /// The underlying <see cref="TcpClient"/> is initialized and binds to the 
-        /// port number from which you intend to communicate.
-        /// </para>
-        /// <para>
-        /// Exceptions are passed to the <see cref="AppenderSkeleton.ErrorHandler"/>.
-        /// </para>
-        /// </remarks>
-        //        protected virtual void InitializeClientConnection()
-        //        {
-        //            try
-        //            {
-        //                if (this.LocalPort == 0)
-        //                {
-        //#if NETCF
-        //                    this.Client = new TcpClient();
-        //#else
-        //                    this.Client = new TcpClient(this.RemoteAddress.AddressFamily);
-        //#endif
-        //                }
-        //                else
-        //                {
-        //#if NETCF
-        //                    this.Client = new TcpClient(this.LocalPort);
-        //#else
-        //                    //TODO localport not required for TCP
-        //                    //this.Client = new TcpClient(this.LocalPort, this.RemoteAddress.AddressFamily);
-        //#endif
-        //                }
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                ErrorHandler.Error(
-        //                    "Could not initialize the TcpClient connection on port " +
-        //                    this.LocalPort.ToString(NumberFormatInfo.InvariantInfo) + ".",
-        //                    ex,
-        //                    ErrorCode.GenericFailure);
-
-        //                this.Client = null;
-        //            }
-        //        }
-
-        #endregion Protected Instance Methods
 
         #region Private Instance Fields
 
