@@ -76,7 +76,7 @@ namespace syslog4net.Tests.Appender
                 () => appender.ActivateOptions(),
                 Throws.Exception
                 .TypeOf<ArgumentNullException>()
-                .With.Property("ParamName").EqualTo("Address")
+                .With.Property("ParamName").EqualTo("RemoteAddress")
                 );
 
             // ok, set the remote address
