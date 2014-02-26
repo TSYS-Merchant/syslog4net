@@ -67,15 +67,15 @@ Check out our simple [Hello World](https://github.com/merchantwarehouse/syslog4n
 
 ## Example output
 ```python
-<134>1 2014-01-20T13:58:58:98Z MW-DLACHOWICZ.MW.INC ConsoleApp.vshost.exe 10768 - [MW@55555 EventSeverity="INFO"] Application [ConsoleApp] Start
-<135>1 2014-01-20T13:58:59:04Z MW-DLACHOWICZ.MW.INC ConsoleApp.vshost.exe 10768 - [MW@55555 EventSeverity="DEBUG"] This is a debug message
-<131>1 2014-01-20T13:58:59:05Z MW-DLACHOWICZ.MW.INC ConsoleApp.vshost.exe 10768 - [MW@55555 EventSeverity="ERROR" ExceptionSource="ConsoleApp" ExceptionType="System.ArithmeticException" ExceptionMessage="Failed in Goo. Calling Foo. Inner Exception provided" EventLog="file:///C:/Users/dominicl/AppData/Local/Temp/7b56f81a-0144-457b-9f9c-c246ca2e48dd.txt"] Exception thrown from method Bar
-<131>1 2014-01-20T13:58:59:07Z MW-DLACHOWICZ.MW.INC ConsoleApp.vshost.exe 10768 - [MW@55555 EventSeverity="ERROR"] Hey this is an error!
-<132>1 2014-01-20T13:58:59:07Z MW-DLACHOWICZ.MW.INC ConsoleApp.vshost.exe 10768 NDC_Message [MW@55555 EventSeverity="WARN"] This should have an NDC message
-<132>1 2014-01-20T13:58:59:07Z MW-DLACHOWICZ.MW.INC ConsoleApp.vshost.exe 10768 NDC2 [MW@55555 auth="auth-none" EventSeverity="WARN"] This should have an MDC message for the key 'auth'
-<132>1 2014-01-20T13:58:59:07Z MW-DLACHOWICZ.MW.INC ConsoleApp.vshost.exe 10768 NDC2 [MW@55555 auth="auth-none" foo="foo-none\]\"" EventSeverity="WARN"] This should have an MDC message for the key 'auth' and 'foo-none'
-<132>1 2014-01-20T13:58:59:08Z MW-DLACHOWICZ.MW.INC ConsoleApp.vshost.exe 10768 - [MW@55555 auth="auth-none" foo="foo-none\]\"" thread-prop="thread prop" EventSeverity="WARN"] See the NDC has been popped of! The MDC 'auth' key is still with us.
-<134>1 2014-01-20T13:58:59:08Z MW-DLACHOWICZ.MW.INC ConsoleApp.vshost.exe 10768 - [MW@55555 auth="auth-none" foo="foo-none\]\"" thread-prop="thread prop" EventSeverity="INFO"] Application [ConsoleApp] End
+<134>1 2014-01-20T13:58:58:98Z HOST.MWAREHOUSE.INC ConsoleApp.vshost.exe 10768 - [MW@55555 EventSeverity="INFO"] Application [ConsoleApp] Start
+<135>1 2014-01-20T13:58:59:04Z HOST.MWAREHOUSE.INC ConsoleApp.vshost.exe 10768 - [MW@55555 EventSeverity="DEBUG"] This is a debug message
+<131>1 2014-01-20T13:58:59:05Z HOST.MWAREHOUSE.INC ConsoleApp.vshost.exe 10768 - [MW@55555 EventSeverity="ERROR" ExceptionSource="ConsoleApp" ExceptionType="System.ArithmeticException" ExceptionMessage="Failed in Goo. Calling Foo. Inner Exception provided" EventLog="file:///C:/Users/dominicl/AppData/Local/Temp/7b56f81a-0144-457b-9f9c-c246ca2e48dd.txt"] Exception thrown from method Bar
+<131>1 2014-01-20T13:58:59:07Z HOST.MWAREHOUSE.INC ConsoleApp.vshost.exe 10768 - [MW@55555 EventSeverity="ERROR"] Hey this is an error!
+<132>1 2014-01-20T13:58:59:07Z HOST.MWAREHOUSE.INC ConsoleApp.vshost.exe 10768 NDC_Message [MW@55555 EventSeverity="WARN"] This should have an NDC message
+<132>1 2014-01-20T13:58:59:07Z HOST.MWAREHOUSE.INC ConsoleApp.vshost.exe 10768 NDC2 [MW@55555 auth="auth-none" EventSeverity="WARN"] This should have an MDC message for the key 'auth'
+<132>1 2014-01-20T13:58:59:07Z HOST.MWAREHOUSE.INC ConsoleApp.vshost.exe 10768 NDC2 [MW@55555 auth="auth-none" foo="foo-none\]\"" EventSeverity="WARN"] This should have an MDC message for the key 'auth' and 'foo-none'
+<132>1 2014-01-20T13:58:59:08Z HOST.MWAREHOUSE.INC ConsoleApp.vshost.exe 10768 - [MW@55555 auth="auth-none" foo="foo-none\]\"" thread-prop="thread prop" EventSeverity="WARN"] See the NDC has been popped of! The MDC 'auth' key is still with us.
+<134>1 2014-01-20T13:58:59:08Z HOST.MWAREHOUSE.INC ConsoleApp.vshost.exe 10768 - [MW@55555 auth="auth-none" foo="foo-none\]\"" thread-prop="thread prop" EventSeverity="INFO"] Application [ConsoleApp] End
 ```
 
 # Using it with Splunk
