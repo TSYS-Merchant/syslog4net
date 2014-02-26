@@ -10,7 +10,7 @@ And with our syslog4net adapter, you can do all that too.
 
 #How it works
 
-syslog4net works by creating a custom [log4net layout](https://logging.apache.org/log4net/release/sdk/log4net.Layout.PatternLayout.html) that writes messages in [Syslog’s RFC5424 standard format](http://tools.ietf.org/html/rfc5424). You can then hook that up to any [log4net appender](https://logging.apache.org/log4net/release/sdk/log4net.Appender.html). You can write to a Syslog daemon, such as Splunk, pretty easily by connecting our SyslogLayout class to [log4net’s UdpAppender](https://logging.apache.org/log4net/release/sdk/log4net.Appender.UdpAppender.html) or our custom [TcpAppender](src/main/dot-net/syslog4net/Appender/TcpAppender.cs).
+syslog4net works by creating a custom [log4net layout](https://logging.apache.org/log4net/release/sdk/log4net.Layout.PatternLayout.html) that writes messages in [Syslog’s RFC5424 standard format](http://tools.ietf.org/html/rfc5424). You can then hook that up to any [log4net appender](https://logging.apache.org/log4net/release/sdk/log4net.Appender.html). You can write to a Syslog daemon, splunk, or any machine data aggregator pretty easily by connecting our SyslogLayout class to [log4net’s UdpAppender](https://logging.apache.org/log4net/release/sdk/log4net.Appender.UdpAppender.html) or our custom [TcpAppender](src/main/dot-net/syslog4net/Appender/TcpAppender.cs).
 
 Those of you familiar with log4net and syslog already know that you can send any old log4net message to a syslog daemon using log4net's UdpAppender today. But by using messages conforming to the RFC5424 standard, you get additional telemetry about:
 * The message's priority
