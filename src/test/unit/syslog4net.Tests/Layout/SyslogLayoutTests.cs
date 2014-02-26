@@ -33,7 +33,7 @@ namespace syslog4net.Tests.Layout
             layout.StructuredDataPrefix = "TEST@12345";
             layout.ActivateOptions();
 
-            var exception = new ArgumentNullException();
+            var exception = new Exception("test exception message");
             ILoggerRepository logRepository = Substitute.For<ILoggerRepository>();
             var evt = new LoggingEvent(typeof(SyslogLayoutTests), logRepository, "test logger", Level.Debug, "test message", exception);
 
@@ -46,7 +46,7 @@ namespace syslog4net.Tests.Layout
             // it's hard to test the whole message, because it depends on your machine name, process id, time & date, etc.
             // just test the message's invariant portions
             Assert.IsTrue(result.StartsWith("<135>1 "));
-            Assert.IsTrue(result.Contains("[TEST@12345 EventSeverity=\"DEBUG\" ExceptionType=\"System.ArgumentNullException\" ExceptionMessage=\"Value cannot be null.\"]"));
+            Assert.IsTrue(result.Contains("[TEST@12345 EventSeverity=\"DEBUG\" ExceptionType=\"System.Exception\" ExceptionMessage=\"test exception message\"]"));
             Assert.IsTrue(result.EndsWith("test message" + Environment.NewLine));
         }
 
