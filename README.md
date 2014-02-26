@@ -100,6 +100,10 @@ Below, we have defined an alert - if there are more than 30 failed login attempt
 
 ![we've created an alert on the number of invalid login attempts in the last 30 minutes](.README/Splunk_HostsInvalidLoginAttemptsOver30Past30Min.JPG)
 
+#Supported platforms
+
+Syslog4net has been tested on versions 4.0 and 4.5 of Microsoft's CLR, as well as Mono 3.2 on CentOS 6.4.
+
 #Downloading / Installation
 
 Currently, syslog4net is only available as a source download. If you’d like to provide a Nuget package, that'd be very welcome.
