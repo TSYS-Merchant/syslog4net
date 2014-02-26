@@ -38,7 +38,7 @@ As a bonus feature, our adapter intelligently logs exceptions to syslog. Informa
       <remoteAddress value="10.233.114.35" />
       <remotePort value="8080" />
       <filter type="syslog4net.Filter.LogExceptionToFileFilter, syslog4net">
-            <exceptionLogFolder value="C:\Users\dominicl\Desktop\log4net\common-diagnostics\src\example\syslog4net\LogTestApp\bin\Debug\exceptions"/>
+            <exceptionLogFolder value="/var/log/application-logs/exceptions"/>
       </filter>
       <layout type="syslog4net.Layout.SyslogLayout, syslog4net">
             <structuredDataPrefix value="MW@55555"/>
@@ -54,7 +54,7 @@ As a bonus feature, our adapter intelligently logs exceptions to syslog. Informa
       <maximumFileSize value="10MB" />
       <staticLogFileName value="true" />
       <filter type="syslog4net.Filter.LogExceptionToFileFilter, syslog4net">
-            <exceptionLogFolder value="C:\Users\dominicl\Desktop\log4net\common-diagnostics\src\example\syslog4net\LogTestApp\bin\Debug\exceptions"/>
+            <exceptionLogFolder value="/var/log/application-logs/exceptions"/>
       </filter>
       <layout type="syslog4net.Layout.SyslogLayout, syslog4net">
             <structuredDataPrefix value="MW@55555"/>
@@ -69,7 +69,7 @@ Check out our simple [Hello World](https://github.com/merchantwarehouse/syslog4n
 ```python
 <134>1 2014-01-20T13:58:58:98Z HOST.MWAREHOUSE.INC ConsoleApp.vshost.exe 10768 - [MW@55555 EventSeverity="INFO"] Application [ConsoleApp] Start
 <135>1 2014-01-20T13:58:59:04Z HOST.MWAREHOUSE.INC ConsoleApp.vshost.exe 10768 - [MW@55555 EventSeverity="DEBUG"] This is a debug message
-<131>1 2014-01-20T13:58:59:05Z HOST.MWAREHOUSE.INC ConsoleApp.vshost.exe 10768 - [MW@55555 EventSeverity="ERROR" ExceptionSource="ConsoleApp" ExceptionType="System.ArithmeticException" ExceptionMessage="Failed in Goo. Calling Foo. Inner Exception provided" EventLog="file:///C:/Users/dominicl/AppData/Local/Temp/7b56f81a-0144-457b-9f9c-c246ca2e48dd.txt"] Exception thrown from method Bar
+<131>1 2014-01-20T13:58:59:05Z HOST.MWAREHOUSE.INC ConsoleApp.vshost.exe 10768 - [MW@55555 EventSeverity="ERROR" ExceptionSource="ConsoleApp" ExceptionType="System.ArithmeticException" ExceptionMessage="Failed in Goo. Calling Foo. Inner Exception provided" EventLog="/var/log/application-logs/exceptions/7b56f81a-0144-457b-9f9c-c246ca2e48dd.txt"] Exception thrown from method Bar
 <131>1 2014-01-20T13:58:59:07Z HOST.MWAREHOUSE.INC ConsoleApp.vshost.exe 10768 - [MW@55555 EventSeverity="ERROR"] Hey this is an error!
 <132>1 2014-01-20T13:58:59:07Z HOST.MWAREHOUSE.INC ConsoleApp.vshost.exe 10768 NDC_Message [MW@55555 EventSeverity="WARN"] This should have an NDC message
 <132>1 2014-01-20T13:58:59:07Z HOST.MWAREHOUSE.INC ConsoleApp.vshost.exe 10768 NDC2 [MW@55555 auth="auth-none" EventSeverity="WARN"] This should have an MDC message for the key 'auth'
