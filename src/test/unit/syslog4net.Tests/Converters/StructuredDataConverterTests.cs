@@ -70,7 +70,7 @@ namespace syslog4net.Tests.Converters
             var writer = new StreamWriter(new MemoryStream());
             var converter = new StructuredDataConverter();
 
-            var exception = new ArgumentNullException();
+            var exception = new Exception("test exception message");
             ILoggerRepository logRepository = Substitute.For<ILoggerRepository>();
 
             var evt = new LoggingEvent(typeof(StructuredDataConverterTests), logRepository, "test logger", level, "test message", exception);
@@ -84,7 +84,7 @@ namespace syslog4net.Tests.Converters
 
             var result = TestUtilities.GetStringFromStream(writer.BaseStream);
 
-            Assert.AreEqual("[TEST@12345 EventSeverity=\"DEBUG\" ExceptionType=\"System.ArgumentNullException\" ExceptionMessage=\"Value cannot be null.\" EventLog=\"file://some-log-file/who/cares\"]", result);
+            Assert.AreEqual("[TEST@12345 EventSeverity=\"DEBUG\" ExceptionType=\"System.Exception\" ExceptionMessage=\"test exception message\" EventLog=\"file://some-log-file/who/cares\"]", result);
         }    
     }
 }
