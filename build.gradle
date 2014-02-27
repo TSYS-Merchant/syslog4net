@@ -1,16 +1,27 @@
 buildscript {
     repositories {
-        maven { url "http://artifactory.mw.inc/repo" }
+        mavenCentral()
     }
     dependencies {
         classpath 'com.ullink.gradle:gradle-msbuild-plugin:1.9'
-        classpath 'com.merchantwarehouse.releng:mwversion:1.0.0-SNAPSHOT'
     }
 }
 
 version = '0.1.0-SNAPSHOT'
-apply plugin: 'mwversion'
 apply plugin: 'msbuild'
+
+// You can't have non-digits in a DLL version number
+project.ext.set("baseVersion", project.version.minus('-SNAPSHOT'))
+
+def user = System.getProperty("user.name")
+if ((user == 'jenkins') || (user == 'buildservice')) {
+    project.ext.set("buildNumber", System.getenv("BUILD_NUMBER"))
+    project.ext.set("assemblyVersion", project.baseVersion + '.' + project.buildNumber)
+} else {
+    project.ext.set("buildNumber", user + '-' + new Date().format("yyyyMMdd'T'HHmmss'Z'", TimeZone.getTimeZone('UTC')))
+    project.ext.set("assemblyVersion", project.baseVersion + '.0')
+}
+
 
 msbuild {
     projectFile = 'src/main/dot-net/Build.proj'
