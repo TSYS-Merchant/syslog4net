@@ -356,13 +356,15 @@ namespace syslog4net.Appender
             {
                 loggingData.Client.EndConnect(asyncResult);
             }
-            catch
+            catch (Exception ex)
             {
                 Interlocked.Increment(ref _failedConnectionCount);
                 if (_failedConnectionCount >= 1)
                 {
-                    //We have failed to connect to all the IP Addresses
-                    //connection has failed overall.
+                    //We have failed to connect to all the IP Addresses. connection has failed overall.
+                    ErrorHandler.Error(
+                        "Unable to send logging event to remote host " + this.RemoteAddress.ToString() + " on port " +
+                        this.RemotePort + ".", ex, ErrorCode.FileOpenFailure);
                     return;
                 }
             }
@@ -374,9 +376,11 @@ namespace syslog4net.Appender
                     netStream.Write(buffer, 0, buffer.Length);
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO fallback default appender?
+                ErrorHandler.Error(
+                    "Unable to send logging event to remote host " + this.RemoteAddress.ToString() + " on port " +
+                    this.RemotePort + ".", ex, ErrorCode.WriteFailure);
             }
             finally
             {
