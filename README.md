@@ -1,6 +1,6 @@
 #Intro
 
-[Log4net](http://logging.apache.org/log4net/) is the defacto logging standard for the Microsoft .NET runtime. Logging frameworks like log4net enable developers to record events in their application, providing an audit trail that can be used to understand the system’s activity and diagnose problems.
+[Log4net](http://logging.apache.org/log4net/) is the defacto logging standard for the Microsoft .NET runtime. Logging frameworks like log4net enable developers to record events in their applications, providing an audit trail that can be used to understand the system’s activity and diagnose problems.
 
 [Syslog](http://en.wikipedia.org/wiki/Syslog), on the other hand, is an [IETF](http://www.ietf.org/) standard for message logging. Syslog can be used for computer system management and security auditing as well as generalized informational, analysis, and debugging messages.  With Syslog, software applications and physical devices like printers and routers can send logging information to a centralized logging server. Because of this, syslog can be used to integrate log data from many different types of systems into a central repository.
 
@@ -33,7 +33,7 @@ As a bonus feature, our adapter intelligently logs exceptions to syslog. Informa
 
 ## Configuration
 ```xml
-<!-- log to a remote syslog server, such as splunk -->
+<!-- log to a remote syslog server, such as splunk. use our Tcp appender or log4net's Udp appender -->
 <appender name="TcpAppender" type="syslog4net.Appender.TcpAppender, syslog4net">
       <remoteAddress value="10.233.114.35" />
       <remotePort value="8080" />
