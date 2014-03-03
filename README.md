@@ -114,7 +114,7 @@ We love contributions! Please send [pull requests](https://help.github.com/artic
 
 # Getting help
 
-We also love bug reports & feature requests. You can file bugs and feature requests in our Github Issue Tracker. Please consider including the following information when you file a ticket:
+We also love bug reports & feature requests. You can file bugs and feature requests in our [Github Issue Tracker](https://github.com/merchantwarehouse/syslog4net/issues). Please consider including the following information when you file a ticket:
 * What version you're using
 * What command or code you ran
 * What output you saw
