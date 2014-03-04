@@ -35,7 +35,7 @@ As a bonus feature, our adapter intelligently logs exceptions to syslog. Informa
 ```xml
 <!-- log to a remote syslog server, such as splunk. use our Tcp appender or log4net's Udp appender -->
 <appender name="TcpAppender" type="syslog4net.Appender.TcpAppender, syslog4net">
-      <remoteAddress value="10.233.114.35" />
+      <remoteAddress value="127.0.0.1" />
       <remotePort value="8080" />
       <filter type="syslog4net.Filter.LogExceptionToFileFilter, syslog4net">
             <exceptionLogFolder value="/var/log/application-logs/exceptions"/>
