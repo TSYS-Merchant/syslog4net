@@ -104,7 +104,7 @@ Below, we have defined an alert - if there are more than 30 failed login attempt
 
 #Supported platforms
 
-Syslog4net has been tested on versions 4.0 and 4.5 of Microsoft's CLR, as well as Mono 3.2 on CentOS 6.4.
+Syslog4net builds on versions 2.0 and later of Microsoft's CLR and been tested on versions 4.0 and 4.5. It has also been built and tested using Mono 3.2 on CentOS 6.4.
 
 #Downloading / Installation
 
