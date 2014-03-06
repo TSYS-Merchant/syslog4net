@@ -74,7 +74,7 @@ namespace syslog4net.Layout
         /// </summary>
         public override void ActivateOptions()
         {
-            if (string.IsNullOrWhiteSpace(this.StructuredDataPrefix))
+            if (string.IsNullOrEmpty(this.StructuredDataPrefix))
             {
                 throw new ArgumentNullException("StructuredDataPrefix");
             }

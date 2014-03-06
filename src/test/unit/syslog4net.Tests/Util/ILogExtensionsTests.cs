@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿#if NET_3_5 || NET_4_0
+
+using System.IO;
 using log4net;
 using log4net.Core;
 using log4net.Util;
@@ -34,3 +36,5 @@ namespace syslog4net.Tests.Util
         }
     }
 }
+
+#endif

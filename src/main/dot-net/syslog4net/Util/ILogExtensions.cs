@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if NET_3_5 || NET_4_0
+
+using System;
 using log4net;
 
 namespace syslog4net.Util
@@ -60,3 +62,5 @@ namespace syslog4net.Util
         }
     }
 }
+
+#endif

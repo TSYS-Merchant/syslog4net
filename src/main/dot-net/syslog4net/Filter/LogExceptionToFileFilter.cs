@@ -49,7 +49,7 @@ namespace syslog4net.Filter
         {
             base.ActivateOptions();
 
-            if (string.IsNullOrWhiteSpace(this.ExceptionLogFolder))
+            if (string.IsNullOrEmpty(this.ExceptionLogFolder))
             {
                 throw new ArgumentNullException("ExceptionLogFolder");
             }
