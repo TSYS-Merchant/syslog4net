@@ -10,7 +10,7 @@ And with our syslog4net adapter, you can do all that too.
 
 #How it works
 
-syslog4net works by creating a custom [log4net layout](https://logging.apache.org/log4net/release/sdk/log4net.Layout.PatternLayout.html) that writes messages in [Syslog’s RFC5424 standard format](http://tools.ietf.org/html/rfc5424). You can then hook that up to any [log4net appender](https://logging.apache.org/log4net/release/sdk/log4net.Appender.html). You can write to a Syslog daemon, splunk, or any machine data aggregator pretty easily by connecting our SyslogLayout class to [log4net’s UdpAppender](https://logging.apache.org/log4net/release/sdk/log4net.Appender.UdpAppender.html) or our custom [TcpAppender](src/main/dot-net/syslog4net/Appender/TcpAppender.cs).
+syslog4net works by creating a custom [log4net layout](https://logging.apache.org/log4net/release/sdk/log4net.Layout.PatternLayout.html) that writes messages in [Syslog’s RFC5424 standard format](http://tools.ietf.org/html/rfc5424). You can then hook that up to any [log4net appender](https://logging.apache.org/log4net/release/sdk/log4net.Appender.html). You can write to a Syslog daemon, Splunk, or any machine data aggregator pretty easily by connecting our SyslogLayout class to [log4net’s UdpAppender](https://logging.apache.org/log4net/release/sdk/log4net.Appender.UdpAppender.html) or our custom [TcpAppender](src/main/dot-net/syslog4net/Appender/TcpAppender.cs). You can also log to a local file, and use [Splunk's Universal Forwarder](http://docs.splunk.com/Documentation/Splunk/6.0.2/Forwarding/Introducingtheuniversalforwarder) to forward the logs to Splunk.
 
 Alternately, you can check out MySpace's https://code.google.com/p/splunk-log4net/ project, which provides Udp and Tcp appenders for Splunk.
 
@@ -104,7 +104,7 @@ Below, we have defined an alert - if there are more than 30 failed login attempt
 
 #Supported platforms
 
-Syslog4net builds on versions 2.0 and later of Microsoft's CLR and been tested on versions 4.0 and 4.5. It has also been built and tested using Mono 3.2 on CentOS 6.4.
+Syslog4net builds on versions 2.0 and later of Microsoft's CLR and has been tested on versions 4.0 and 4.5. It has also been built and tested using Mono 3.2 on CentOS 6.4.
 
 #Downloading / Installation
 
