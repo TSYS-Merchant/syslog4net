@@ -1,6 +1,6 @@
 Maintainers
 ====
-Copyright 2014, Merchant Warehouse, LLC.
+Copyright 2014, Merchant Warehouse, LLC. Released under the [Apache 2.0 license](LICENSE.txt).
 
 Find us on the [syslog4net Google Group](https://groups.google.com/forum/#!forum/syslog4net).
 
