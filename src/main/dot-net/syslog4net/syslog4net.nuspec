@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+    <metadata>
+    <id>syslog4net</id>
+    <version>1.0.0</version>
+    <authors>Merchant Warehouse</authors>
+    <licenseUrl>https://github.com/merchantwarehouse/syslog4net/blob/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/merchantwarehouse/syslog4net</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Extends log4net functionality to allow Syslog log forwarding.</description>
+    <copyright>Copyright 2014</copyright>
+    <tags>log4net syslog syslog4net</tags>
+    <dependencies>
+        <dependency id="log4net" version="1.2.13" />
+    </dependencies>
+    </metadata>
+</package>

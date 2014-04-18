@@ -35,3 +35,10 @@ msbuild {
 msbuild.outputs.upToDateWhen { false }
 task build
 build.dependsOn msbuild
+
+task packageNuget(type: Exec) {
+    workingDir 'src/main/dot-net/syslog4net'
+    commandLine 'cmd', '/c', 'NuGet.exe', 'pack', 'syslog4net.csproj', '-Prop', 'Configuration=Release'
+}
+packageNuget.dependsOn build
+packageNuget.outputs.upToDateWhen { false }
