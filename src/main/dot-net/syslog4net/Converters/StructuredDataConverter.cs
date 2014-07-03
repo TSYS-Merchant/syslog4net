@@ -89,7 +89,7 @@ namespace syslog4net.Converters
             var properties = loggingEvent.GetProperties();
             foreach (var key in properties.GetKeys())
             {
-                if (!key.StartsWith("log4net:")) // ignore built-in log4net diagnostics. keep the NDC stack in there.
+                if (!key.StartsWith("log4net:") && properties[key] != null) // ignore built-in log4net diagnostics. keep the NDC stack in there.
                 {
                     AddStructuredData(writer, key, properties[key].ToString());
                 }
