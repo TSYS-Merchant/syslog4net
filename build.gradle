@@ -7,7 +7,7 @@ buildscript {
     }
 }
 
-version = '0.1.0-SNAPSHOT'
+version = '1.0.1-SNAPSHOT'
 apply plugin: 'msbuild'
 
 // You can't have non-digits in a DLL version number
@@ -38,7 +38,7 @@ build.dependsOn msbuild
 
 task packageNuget(type: Exec) {
     workingDir 'src/main/dot-net/syslog4net'
-    commandLine 'cmd', '/c', 'NuGet.exe', 'pack', 'syslog4net.csproj', '-Prop', 'Configuration=Release'
+    commandLine 'cmd', '/c', 'NuGet.exe', 'pack', 'syslog4net.csproj', '-Prop', 'Configuration=Release', '-Version', project.baseVersion
 }
 packageNuget.dependsOn build
 packageNuget.outputs.upToDateWhen { false }
