@@ -55,9 +55,10 @@ namespace syslog4net.Layout
                 var utf8 = Encoding.UTF8;
 
                 byte[] utfBytes = utf8.GetBytes(message);
-                if (utfBytes.Length > SyslogMaxMessageLength)
+                int lMaxMessageLength = Convert.ToInt32(this.MaxMessageLength);
+                if (utfBytes.Length > lMaxMessageLength)
                 {
-                    message = utf8.GetString(utfBytes, 0, SyslogMaxMessageLength);
+                    message = utf8.GetString(utfBytes, 0, lMaxMessageLength);
                 }
 
                 writer.Write(message);
@@ -68,6 +69,7 @@ namespace syslog4net.Layout
         /// Sets the syslog structured data ID. See http://tools.ietf.org/html/rfc5424#section-6.3.2 for more details.
         /// </summary>
         public string StructuredDataPrefix { get; set; }
+        public string MaxMessageLength { get; set; }
 
         /// <summary>
         /// Activates the use of options for the converter allowing the underlying PatternLayout implmentation to behave correctly
@@ -77,6 +79,14 @@ namespace syslog4net.Layout
             if (string.IsNullOrEmpty(this.StructuredDataPrefix))
             {
                 throw new ArgumentNullException("StructuredDataPrefix");
+            }
+            if (string.IsNullOrEmpty(this.MaxMessageLength))
+            {
+                this.MaxMessageLength = Convert.ToString(SyslogMaxMessageLength);
+            }
+            else 
+            {
+                this.MaxMessageLength = Convert.ToInt32(this.MaxMessageLength).ToString();
             }
             this._layout.ActivateOptions();
         }

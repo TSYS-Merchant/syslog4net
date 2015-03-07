@@ -74,6 +74,31 @@ namespace syslog4net.Tests.Layout
             string result = writer.ToString();
 
             Assert.AreEqual(2048, result.Length);
-        }    
+        }
+        public void TestThatWeTruncateLongMessages5555()
+        {
+            SyslogLayout layout = new SyslogLayout();
+            layout.StructuredDataPrefix = "TEST@12345";
+            layout.MaxMessageLength = "5555";
+            layout.ActivateOptions();
+
+            StringBuilder longMessage = new StringBuilder();
+            for (int i = 0; i < 2048; i++)
+            {
+                longMessage.Append("test message");
+            }
+
+            var exception = new ArgumentNullException();
+            ILoggerRepository logRepository = Substitute.For<ILoggerRepository>();
+            var evt = new LoggingEvent(typeof(SyslogLayoutTests), logRepository, "test logger", Level.Debug, longMessage.ToString(), exception);
+
+            StringWriter writer = new StringWriter();
+
+            layout.Format(writer, evt);
+
+            string result = writer.ToString();
+
+            Assert.AreEqual(5555, result.Length);
+        }
     }
 }
