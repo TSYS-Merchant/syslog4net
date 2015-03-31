@@ -1,9 +1,10 @@
-﻿using System.IO;
+using System.IO;
 using log4net.Core;
 using log4net.Layout;
 using System.Text;
 using System;
 using System.Globalization;
+
 
 namespace syslog4net.Layout
 {
@@ -14,7 +15,7 @@ namespace syslog4net.Layout
     /// </summary>
     public class SyslogLayout : LayoutSkeleton
     {
-        private readonly PatternLayout _layout;
+        private PatternLayout _layout { get; set; }
 
         // http://tools.ietf.org/html/rfc5424#section-6.1
         private const int SyslogMaxMessageLength = 2048;
@@ -26,8 +27,8 @@ namespace syslog4net.Layout
         {
             IgnoresException = false;  //TODO deal with this. sealed?
 
-            this._layout = new PatternLayout("<%syslog-priority>1 %utcdate{yyyy-MM-ddTHH:mm:ss:FFZ} %syslog-hostname %appdomain"
-                + " %syslog-process-id %syslog-message-id %syslog-structured-data %message%newline");
+            this.ConversionPattern = "<%syslog-priority>1 %utcdate{yyyy-MM-ddTHH:mm:ss:FFZ} %syslog-hostname %appdomain"
+                + " %syslog-process-id %syslog-message-id %syslog-structured-data %message%newline";
 
             this._layout.AddConverter("syslog-priority", typeof(PriorityConverter));
             this._layout.AddConverter("syslog-hostname", typeof(HostnameConverter));
@@ -35,6 +36,30 @@ namespace syslog4net.Layout
             this._layout.AddConverter("syslog-message-id", typeof(MessageIdConverter));
             this._layout.AddConverter("syslog-structured-data", typeof(StructuredDataConverter));
         }
+
+        string _conversionPattern = string.Empty;
+        public string ConversionPattern
+        {
+            get
+            {
+                return _conversionPattern;
+            }
+            set
+            {
+                _conversionPattern = value;
+
+                this._layout = new PatternLayout(_conversionPattern);
+
+                this._layout.AddConverter("syslog-priority", typeof(PriorityConverter));
+                this._layout.AddConverter("syslog-hostname", typeof(HostnameConverter));
+                this._layout.AddConverter("syslog-process-id", typeof(ProcessIdConverter));
+                this._layout.AddConverter("syslog-message-id", typeof(MessageIdConverter));
+                this._layout.AddConverter("syslog-structured-data", typeof(StructuredDataConverter));
+
+
+            }
+        }
+
 
         /// <summary>
         /// Formats data within the event and writes the formatted data out to the provided writer instance
@@ -84,7 +109,7 @@ namespace syslog4net.Layout
             {
                 this.MaxMessageLength = Convert.ToString(SyslogMaxMessageLength);
             }
-            else 
+            else
             {
                 this.MaxMessageLength = Convert.ToInt32(this.MaxMessageLength).ToString();
             }
