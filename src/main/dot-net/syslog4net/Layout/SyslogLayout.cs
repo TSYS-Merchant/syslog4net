@@ -5,6 +5,7 @@ using System.Text;
 using System;
 using System.Globalization;
 
+
 namespace syslog4net.Layout
 {
     using syslog4net.Converters;
