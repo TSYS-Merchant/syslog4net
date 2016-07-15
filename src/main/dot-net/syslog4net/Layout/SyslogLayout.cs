@@ -34,8 +34,8 @@ namespace syslog4net.Layout
             this._layout.AddConverter("syslog-process-id", typeof(ProcessIdConverter));
             this._layout.AddConverter("syslog-message-id", typeof(MessageIdConverter));
             this._layout.AddConverter("syslog-structured-data", typeof(StructuredDataConverter));
-			this._layout.AddConverter("appdomain", typeof(ProcessNameConverter));
-		}
+            this._layout.AddConverter("appdomain", typeof(ProcessNameConverter));
+        }
 
         /// <summary>
         /// Formats data within the event and writes the formatted data out to the provided writer instance
