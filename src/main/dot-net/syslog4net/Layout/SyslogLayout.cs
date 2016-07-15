@@ -34,6 +34,7 @@ namespace syslog4net.Layout
             this._layout.AddConverter("syslog-process-id", typeof(ProcessIdConverter));
             this._layout.AddConverter("syslog-message-id", typeof(MessageIdConverter));
             this._layout.AddConverter("syslog-structured-data", typeof(StructuredDataConverter));
+            this._layout.AddConverter("appdomain", typeof(ProcessNameConverter));
         }
 
         /// <summary>
