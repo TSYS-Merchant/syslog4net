@@ -23,9 +23,8 @@ namespace syslog4net.Tests.Util
             var converter = new MessageIdConverter();
 
             var log = Substitute.For<ILog>();
-            using (log.StartThreadLogicialActivity("NDC", testId))
+            using (log.StartMessage(testId))
             {
-
                 converter.Format(writer, new LoggingEvent(new LoggingEventData()));
                 writer.Flush();
 
