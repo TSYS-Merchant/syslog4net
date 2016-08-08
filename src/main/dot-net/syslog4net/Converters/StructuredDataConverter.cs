@@ -1,4 +1,7 @@
 ﻿using System.IO;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
 using log4net.Core;
 using log4net.Layout.Pattern;
 using syslog4net.Util;
@@ -65,6 +68,27 @@ namespace syslog4net.Converters
                 AddStructuredData(writer, "ExceptionType", exceptionObject.GetType().FullName);
                 AddStructuredData(writer, "ExceptionMessage", exceptionObject.Message);
                 AddStructuredData(writer, "EventHelp", exceptionObject.HelpLink);
+
+				StackTrace trace = new StackTrace(exceptionObject, true);
+
+				if (trace.FrameCount > 0)
+				{
+					StackFrame frame = trace.GetFrame(0);
+
+					var method = frame.GetMethod();
+					string methodReturnType = "";
+
+					if (method is MethodInfo)
+					{
+						methodReturnType = (method as MethodInfo).ReturnType.Name;
+					}
+
+					var fullMethodName = string.Format("{0} {1}.{2}({3})", methodReturnType, method.ReflectedType.FullName, method.Name, string.Join(",", method.GetParameters().Select(o => string.Format("{0} {1}", o.ParameterType, o.Name)).ToArray()));
+
+					AddStructuredData(writer, "ExceptionMethodName", fullMethodName);
+					AddStructuredData(writer, "ExceptionFileName", frame.GetFileName());
+					AddStructuredData(writer, "ExceptionLineNumber", frame.GetFileLineNumber().ToString());
+				}
 
                 if (loggingEvent.Properties.Contains("log4net:syslog-exception-log"))
                 {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text.RegularExpressions;
 using log4net.Core;
 using log4net.Util;
 using log4net.Repository;
@@ -70,7 +71,16 @@ namespace syslog4net.Tests.Converters
             var writer = new StreamWriter(new MemoryStream());
             var converter = new StructuredDataConverter();
 
-            var exception = new Exception("test exception message");
+			Exception exception = null;
+			try
+			{
+				throw new Exception("test exception message");
+			}
+			catch (Exception ex)
+			{
+				exception = ex;
+			}
+
             ILoggerRepository logRepository = Substitute.For<ILoggerRepository>();
 
             var evt = new LoggingEvent(typeof(StructuredDataConverterTests), logRepository, "test logger", level, "test message", exception);
@@ -84,7 +94,7 @@ namespace syslog4net.Tests.Converters
 
             var result = TestUtilities.GetStringFromStream(writer.BaseStream);
 
-            Assert.AreEqual("[TEST@12345 EventSeverity=\"DEBUG\" ExceptionType=\"System.Exception\" ExceptionMessage=\"test exception message\" EventLog=\"file://some-log-file/who/cares\"]", result);
+			Assert.IsTrue(Regex.IsMatch(result, "\\[TEST@12345 EventSeverity=\"DEBUG\" ExceptionSource=\"syslog4net\\.Tests\" ExceptionType=\"System\\.Exception\" ExceptionMessage=\"test exception message\" ExceptionMethodName=\"Void syslog4net\\.Tests\\.Converters\\.StructuredDataConverterTests\\.ConvertTestWithExceptionObject\\(\\)\" ExceptionFileName=\".*?StructuredDataConverterTests\\.cs\" ExceptionLineNumber=\"\\d+\" EventLog=\"file://some-log-file/who/cares\"\\]"));
         }    
     }
 }

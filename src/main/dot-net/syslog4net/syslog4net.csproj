@@ -70,7 +70,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets" />
   <Target Name="BeforeBuild">
-    <MSBuild.Community.Tasks.AssemblyInfo AssemblyCompany="Merchant Warehouse" AssemblyCopyright="Copyright © 2014 Merchant Warehouse" AssemblyDescription="MW Standard Diagnostics Library" AssemblyProduct="Diagnostics" AssemblyTitle="syslog4net" AssemblyVersion="$(assemblyVersion)" AssemblyFileVersion="$(assemblyVersion)" CLSCompliant="false" CodeLanguage="CS" ComVisible="false" Guid="8df622ae-577e-4de1-a848-871113f42643" NeutralResourcesLanguage="en" OutputFile="_AssemblyInfo.cs" />
+    <MSBuild.Community.Tasks.AssemblyInfo AssemblyCompany="Cayan" AssemblyCopyright="Copyright © 2016 Cayan" AssemblyDescription="Syslog Standard Diagnostics Library" AssemblyProduct="Diagnostics" AssemblyTitle="syslog4net" AssemblyVersion="$(assemblyVersion)" AssemblyFileVersion="$(assemblyVersion)" CLSCompliant="false" CodeLanguage="CS" ComVisible="false" Guid="8df622ae-577e-4de1-a848-871113f42643" NeutralResourcesLanguage="en" OutputFile="_AssemblyInfo.cs" />
     <ItemGroup>
       <Compile Include="_AssemblyInfo.cs" />
     </ItemGroup>

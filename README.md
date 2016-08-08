@@ -4,7 +4,7 @@
 
 [Syslog](http://en.wikipedia.org/wiki/Syslog), on the other hand, is an [IETF](http://www.ietf.org/) standard for message logging. Syslog can be used for computer system management and security auditing as well as generalized informational, analysis, and debugging messages.  With Syslog, software applications and physical devices like printers and routers can send logging information to a centralized logging server. Because of this, syslog can be used to integrate log data from many different types of systems into a central repository.
 
-[Merchant Warehouse’s](http://www.merchantwarehouse.com/) syslog4net extension bridges that missing link between log4net and Syslog, allowing your .NET applications to send application-level telemetry into a centrally managed operational intelligence solution, such as Splunk. By monitoring and analyzing everything from customer clickstreams and transactions to network activity and call records, [Splunk](http://www.splunk.com/) helps Merchant Warehouse turn our machine data into valuable insights. With this data flowing into Splunk, we can troubleshoot problems and investigate security incidents in minutes, not hours or days. We monitor our end-to-end infrastructure to avoid service degradation or outages. And we gain real-time visibility into customer experience, transactions and behavior.
+[Cayan’s](http://www.cayan.com/) syslog4net extension bridges that missing link between log4net and Syslog, allowing your .NET applications to send application-level telemetry into a centrally managed operational intelligence solution, such as Splunk. By monitoring and analyzing everything from customer clickstreams and transactions to network activity and call records, [Splunk](http://www.splunk.com/) helps Cayan turn our machine data into valuable insights. With this data flowing into Splunk, we can troubleshoot problems and investigate security incidents in minutes, not hours or days. We monitor our end-to-end infrastructure to avoid service degradation or outages. And we gain real-time visibility into customer experience, transactions and behavior.
 
 And with our syslog4net adapter, you can do all that too.
 
@@ -25,7 +25,7 @@ Those of you familiar with log4net and syslog already know that you can send any
 
 Having access to the structured data really is the killer feature. Log4net’s contexts give you the ability to push any (key, value) pair onto a global or thread-based scope. This information will be appended to each log entry, automatically, for you by our adapter.
 
-For Merchant Warehouse, we use this to record various metadata about each of our transactions. An edge service (such as [Netflix Zuul](https://github.com/Netflix/zuul)) stamps a correlation ID onto each incoming request (eg: by injecting a HTTP header or SOAP header into the packet). Each component in our Service Oriented Architecture pulls down that correlation ID, and pushes it into a ThreadLogicalContext. We also push other metadata onto the context, such as a Merchant ID or Genius Device serial number. All this information gets emitted as part of each log message. When we make a call to another service in our SOA, we push that Correlation ID and other info into a message header. That way, we can tell that separate activities in disparate services are all related to a single originating transaction, and use Splunk to quickly search for (and cross reference) all of this information.
+For Cayan, we use this to record various metadata about each of our transactions. An edge service (such as [Netflix Zuul](https://github.com/Netflix/zuul)) stamps a correlation ID onto each incoming request (eg: by injecting a HTTP header or SOAP header into the packet). Each component in our Service Oriented Architecture pulls down that correlation ID, and pushes it into a ThreadLogicalContext. We also push other metadata onto the context, such as a Merchant ID or Genius Device serial number. All this information gets emitted as part of each log message. When we make a call to another service in our SOA, we push that Correlation ID and other info into a message header. That way, we can tell that separate activities in disparate services are all related to a single originating transaction, and use Splunk to quickly search for (and cross reference) all of this information.
 
 We do this by mapping log4net’s Context Properties (“MDC”) onto Syslog’s Structured Data section, and by mapping log4net’s Context Stack (“NDC”) onto Syslog’s Message Id field.
 
@@ -65,7 +65,7 @@ As a bonus feature, our adapter intelligently logs exceptions to syslog. Informa
 ```
 
 ## Example code
-Check out our simple [Hello World](https://github.com/merchantwarehouse/syslog4net/blob/master/src/example/syslog4net/LogTestApp/Program.cs) logging example and its corresponding [log4net XML config](https://github.com/merchantwarehouse/syslog4net/blob/master/src/example/syslog4net/LogTestApp/App.config).
+Check out our simple [Hello World](https://github.com/cayan-llc/syslog4net/blob/master/src/example/syslog4net/LogTestApp/Program.cs) logging example and its corresponding [log4net XML config](https://github.com/cayan-llc/syslog4net/blob/master/src/example/syslog4net/LogTestApp/App.config).
 
 ## Example output
 ```python
@@ -116,7 +116,7 @@ We love contributions! Please send [pull requests](https://help.github.com/artic
 
 # Getting help
 
-We also love bug reports & feature requests. You can file bugs and feature requests in our [Github Issue Tracker](https://github.com/merchantwarehouse/syslog4net/issues). Please consider including the following information when you file a ticket:
+We also love bug reports & feature requests. You can file bugs and feature requests in our [Github Issue Tracker](https://github.com/cayan-llc/syslog4net/issues). Please consider including the following information when you file a ticket:
 * What version you're using
 * What command or code you ran
 * What output you saw

@@ -3,12 +3,12 @@
     <metadata>
     <id>syslog4net</id>
     <version>$version$</version>
-    <authors>Merchant Warehouse</authors>
-    <licenseUrl>https://github.com/merchantwarehouse/syslog4net/blob/master/LICENSE.txt</licenseUrl>
-    <projectUrl>https://github.com/merchantwarehouse/syslog4net</projectUrl>
+    <authors>Cayan</authors>
+    <licenseUrl>https://github.com/cayan-llc/syslog4net/blob/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/cayan-llc/syslog4net</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Extends log4net functionality to allow Syslog log forwarding.</description>
-    <copyright>Copyright 2014</copyright>
+    <copyright>Copyright 2016</copyright>
     <tags>log4net syslog syslog4net</tags>
     <dependencies>
         <dependency id="log4net" version="2.0.3" />
