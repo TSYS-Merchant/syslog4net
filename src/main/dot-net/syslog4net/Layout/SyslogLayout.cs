@@ -53,6 +53,11 @@ namespace syslog4net.Layout
                 // truncate the message to SYSLOG_MAX_MESSAGE_LENGTH or fewer bytes
                 string message = stringWriter.ToString();
 
+                if (logEvent.ExceptionObject != null)
+                {
+                    message += Environment.NewLine + logEvent.ExceptionObject.ToString();
+                }
+
                 var utf8 = Encoding.UTF8;
 
                 byte[] utfBytes = utf8.GetBytes(message);
