@@ -3,8 +3,6 @@ using System.Text;
 using System.IO;
 using syslog4net.Layout;
 using log4net.Core;
-using log4net.Util;
-using log4net.Filter;
 using log4net.Repository;
 using NUnit.Framework;
 using NSubstitute;
@@ -47,7 +45,8 @@ namespace syslog4net.Tests.Layout
             // just test the message's invariant portions
             Assert.IsTrue(result.StartsWith("<135>1 "));
             Assert.IsTrue(result.Contains("[TEST@12345 EventSeverity=\"DEBUG\" ExceptionType=\"System.Exception\" ExceptionMessage=\"test exception message\"]"));
-            Assert.IsTrue(result.EndsWith("test message" + Environment.NewLine));
+            Assert.IsTrue(result.Contains("test message" + Environment.NewLine));
+            Assert.IsTrue(result.EndsWith("System.Exception: test exception message"));
         }
 
         [Test]
