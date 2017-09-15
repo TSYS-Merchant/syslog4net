@@ -1,4 +1,4 @@
-#Intro
+# Intro
 
 [Log4net](http://logging.apache.org/log4net/) is the defacto logging standard for the Microsoft .NET runtime. Logging frameworks like log4net enable developers to record events in their applications, providing an audit trail that can be used to understand the system’s activity and diagnose problems.
 
@@ -8,7 +8,7 @@
 
 And with our syslog4net adapter, you can do all that too.
 
-#How it works
+# How it works
 
 syslog4net works by creating a custom [log4net layout](https://logging.apache.org/log4net/release/sdk/log4net.Layout.PatternLayout.html) that writes messages in [Syslog’s RFC5424 standard format](http://tools.ietf.org/html/rfc5424). You can then hook that up to any [log4net appender](https://logging.apache.org/log4net/release/sdk/log4net.Appender.html). You can write to a Syslog daemon, Splunk, or any machine data aggregator pretty easily by connecting our SyslogLayout class to [log4net’s UdpAppender](https://logging.apache.org/log4net/release/sdk/log4net.Appender.UdpAppender.html) or our custom [TcpAppender](src/main/dot-net/syslog4net/Appender/TcpAppender.cs). You can also log to a local file, and use [Splunk's Universal Forwarder](http://docs.splunk.com/Documentation/Splunk/6.0.2/Forwarding/Introducingtheuniversalforwarder) to forward the logs to Splunk.
 
@@ -31,7 +31,7 @@ We do this by mapping log4net’s Context Properties (“MDC”) onto Syslog’s
 
 As a bonus feature, our adapter intelligently logs exceptions to syslog. Information about the exception’s source, .NET class type, message, and help link are logged to Syslog’s Structured Data section. The exception – including its message, stack trace and any inner exceptions – is logged locally, and a link to the exception’s URI is also included in the Structured Data. This allows you to have access to vital debugging information without cluttering your logs.
 
-#Documentation
+# Documentation
 
 ## Configuration
 ```xml
