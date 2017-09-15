@@ -123,6 +123,8 @@ namespace syslog4net.Tests.Layout
 
             Assert.AreEqual(2048, result.Length);
         }
+
+        [Test]
         public void TestThatWeTruncateLongMessages5555()
         {
             SyslogLayout layout = new SyslogLayout();
