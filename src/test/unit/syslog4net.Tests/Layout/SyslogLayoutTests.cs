@@ -3,14 +3,12 @@ using System.Text;
 using System.IO;
 using syslog4net.Layout;
 using log4net.Core;
-using log4net.Util;
-using log4net.Filter;
 using log4net.Repository;
 using NUnit.Framework;
-using NSubstitute;
 
 namespace syslog4net.Tests.Layout
 {
+
     [TestFixture]
     class SyslogLayoutTests
     {
@@ -34,7 +32,11 @@ namespace syslog4net.Tests.Layout
             layout.ActivateOptions();
 
             var exception = new Exception("test exception message");
-            ILoggerRepository logRepository = Substitute.For<ILoggerRepository>();
+            
+            // need a non-null ILoggerRepository to prevent NullReferenceException calling layout.Format on a LoggingEvent with an exception.
+            ILoggerRepository logRepository = log4net.LogManager
+                .GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType).Logger.Repository;  
+            
             var evt = new LoggingEvent(typeof(SyslogLayoutTests), logRepository, "test logger", Level.Debug, "test message", exception);
 
             StringWriter writer = new StringWriter();
@@ -47,7 +49,46 @@ namespace syslog4net.Tests.Layout
             // just test the message's invariant portions
             Assert.IsTrue(result.StartsWith("<135>1 "));
             Assert.IsTrue(result.Contains("[TEST@12345 EventSeverity=\"DEBUG\" ExceptionType=\"System.Exception\" ExceptionMessage=\"test exception message\"]"));
-            Assert.IsTrue(result.EndsWith("test message" + Environment.NewLine));
+            Assert.IsTrue(result.Contains("test message" + Environment.NewLine));
+        }
+
+        [Test]
+        public void TestThatStackTraceWritten()
+        {
+            // we would like a proper stack trace on both exceptions so using a double throw is the closest option to real world usage.
+            try
+            {
+                try
+                {
+                    throw new Exception("test inner exception");
+                }
+                catch (Exception ex)
+                {
+                    // allowing the outer exception to bubble up to higher code block will allow the test to check inner exception is written.
+                    throw new Exception("test outer exception", ex);
+                }
+            }
+            catch (Exception ex)
+            {
+                SyslogLayout layout = new SyslogLayout();
+                layout.StructuredDataPrefix = "TEST@12345";
+                layout.ActivateOptions();
+
+                // need a non-null ILoggerRepository to prevent NullReferenceException calling layout.Format on a LoggingEvent with an exception.
+                ILoggerRepository logRepository = log4net.LogManager
+                    .GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType).Logger.Repository;  
+
+                var evt = new LoggingEvent(typeof(SyslogLayoutTests), logRepository, "test logger", Level.Debug, "test message", ex);
+
+                StringWriter writer = new StringWriter();
+
+                layout.Format(writer, evt);
+
+                string result = writer.ToString();
+                Assert.IsTrue(result.Contains("System.Exception: test outer exception"));
+                Assert.IsTrue(result.Contains("System.Exception: test inner exception"));
+                Assert.IsTrue(result.Contains("End of inner exception stack trace"));
+            }
         }
 
         [Test]
@@ -64,7 +105,11 @@ namespace syslog4net.Tests.Layout
             }
 
             var exception = new ArgumentNullException();
-            ILoggerRepository logRepository = Substitute.For<ILoggerRepository>();
+
+            // need a non-null ILoggerRepository to prevent NullReferenceException calling layout.Format on a LoggingEvent with an exception.
+            ILoggerRepository logRepository = log4net.LogManager
+                .GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType).Logger.Repository;  
+
             var evt = new LoggingEvent(typeof(SyslogLayoutTests), logRepository, "test logger", Level.Debug, longMessage.ToString(), exception);
 
             StringWriter writer = new StringWriter();
@@ -75,6 +120,8 @@ namespace syslog4net.Tests.Layout
 
             Assert.AreEqual(2048, result.Length);
         }
+
+        [Test]
         public void TestThatWeTruncateLongMessages5555()
         {
             SyslogLayout layout = new SyslogLayout();
@@ -89,7 +136,11 @@ namespace syslog4net.Tests.Layout
             }
 
             var exception = new ArgumentNullException();
-            ILoggerRepository logRepository = Substitute.For<ILoggerRepository>();
+            
+            // need a non-null ILoggerRepository to prevent NullReferenceException calling layout.Format on a LoggingEvent with an exception.
+            ILoggerRepository logRepository = log4net.LogManager
+                .GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType).Logger.Repository; 
+            
             var evt = new LoggingEvent(typeof(SyslogLayoutTests), logRepository, "test logger", Level.Debug, longMessage.ToString(), exception);
 
             StringWriter writer = new StringWriter();
