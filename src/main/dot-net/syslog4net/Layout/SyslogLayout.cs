@@ -27,7 +27,7 @@ namespace syslog4net.Layout
             IgnoresException = false;  //TODO deal with this. sealed?
 
             this._layout = new PatternLayout("<%syslog-priority>1 %utcdate{yyyy-MM-ddTHH:mm:ss.FFZ} %syslog-hostname %appdomain"
-                + " %syslog-process-id %syslog-message-id %syslog-structured-data %message%newline");
+                + " %syslog-process-id %syslog-message-id %syslog-structured-data %message%newline%exception");
 
             this._layout.AddConverter("syslog-priority", typeof(PriorityConverter));
             this._layout.AddConverter("syslog-hostname", typeof(HostnameConverter));
