@@ -52,6 +52,7 @@ namespace syslog4net.Layout
 
                 // truncate the message to SYSLOG_MAX_MESSAGE_LENGTH or fewer bytes
                 string message = stringWriter.ToString();
+                message = message.Length.ToString() + " " + message;
 
                 var utf8 = Encoding.UTF8;
 
