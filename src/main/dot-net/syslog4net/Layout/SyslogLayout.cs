@@ -45,6 +45,7 @@ namespace syslog4net.Layout
         public override void Format(TextWriter writer, LoggingEvent logEvent)
         {
             logEvent.Properties["log4net:StructuredDataPrefix"] = StructuredDataPrefix;
+            logEvent.Properties["log4net:FacilityCode"] = FacilityCode;
 
             using (var stringWriter = new StringWriter(CultureInfo.InvariantCulture))
             {
@@ -72,6 +73,7 @@ namespace syslog4net.Layout
         /// </summary>
         public string StructuredDataPrefix { get; set; }
         public string MaxMessageLength { get; set; }
+        public string FacilityCode { get; set; }
 
         /// <summary>
         /// Activates the use of options for the converter allowing the underlying PatternLayout implmentation to behave correctly
