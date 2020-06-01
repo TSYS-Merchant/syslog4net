@@ -126,6 +126,7 @@ namespace syslog4net.Appender
         {
             internal TcpClient Client { get; set; }
             internal LoggingEvent LoggingEvent { get; set; }
+            internal string Message { get; set; }
         }
 
         #endregion Public Instance Constructors
@@ -323,6 +324,8 @@ namespace syslog4net.Appender
             {
                 TcpClient client = new TcpClient();
 
+                string message = RenderLoggingEvent(loggingEvent);
+
                 //Async Programming Model allows socket connection to happen on threadpool so app can continue.
                 client.BeginConnect(
                     this.RemoteAddress,
@@ -331,7 +334,8 @@ namespace syslog4net.Appender
                     new AsyncLoggingData()
                     {
                         Client = client,
-                        LoggingEvent = loggingEvent
+                        LoggingEvent = loggingEvent,
+                        Message = message
                     });
             }
             catch (Exception ex)
@@ -350,7 +354,6 @@ namespace syslog4net.Appender
             {
                 throw new ArgumentException("LoggingData is null", "loggingData");
             }
-            Byte[] buffer = this._encoding.GetBytes(RenderLoggingEvent(loggingData.LoggingEvent).ToCharArray());
 
             try
             {
@@ -371,6 +374,7 @@ namespace syslog4net.Appender
 
             try
             {
+                Byte[] buffer = this._encoding.GetBytes(loggingData.Message.ToCharArray());
                 using (var netStream = loggingData.Client.GetStream())
                 {
                     netStream.Write(buffer, 0, buffer.Length);
@@ -436,7 +440,7 @@ namespace syslog4net.Appender
         /// <summary>
         /// The encoding to use for the packet.
         /// </summary>
-        private Encoding _encoding = Encoding.Default;
+        private Encoding _encoding = Encoding.UTF8;
 
         #endregion Private Instance Fields
     }

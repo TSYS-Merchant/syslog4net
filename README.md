@@ -44,6 +44,7 @@ As a bonus feature, our adapter intelligently logs exceptions to syslog. Informa
       </filter>
       <layout type="syslog4net.Layout.SyslogLayout, syslog4net">
             <structuredDataPrefix value="MW@55555"/>
+            <facilityCode value="18"/>
       </layout>
 </appender>  
 
@@ -60,6 +61,7 @@ As a bonus feature, our adapter intelligently logs exceptions to syslog. Informa
       </filter>
       <layout type="syslog4net.Layout.SyslogLayout, syslog4net">
             <structuredDataPrefix value="MW@55555"/>
+            <facilityCode value="18"/>
       </layout>
 </appender>
 ```

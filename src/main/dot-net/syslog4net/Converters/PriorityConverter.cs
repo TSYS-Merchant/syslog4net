@@ -16,37 +16,31 @@ namespace syslog4net.Converters
         /// </summary>
         /// <param name="level"><see cref="Level"/> to convert to string</param>
         /// <returns>string representing the syslog priority code as defined in the TOPS Syslog standard</returns>
-        public static string ConvertLevelToPriority(Level level)
+        public static string ConvertLevelToPriority(LoggingEvent loggingEvent)
         {
-            if (level >= Level.Emergency)
-            {
-                return "128";
-            }
-            else if (level >= Level.Fatal)
-            {
-                return "130";
-            }
-            else if (level >= Level.Error)
-            {
-                return "131";
-            }
-            else if (level >= Level.Warn)
-            {
-                return "132";
-            }
-            else if (level >= Level.Info)
-            {
-                return "134";
-            }
-            else
-            {
-                return "135"; // debug
-            }
+            int facility = 16; // local0
+            if (loggingEvent.Properties["log4net:FacilityCode"] != null && !string.IsNullOrEmpty(loggingEvent.Properties["log4net:FacilityCode"].ToString()))
+                if (!int.TryParse(loggingEvent.Properties["log4net:FacilityCode"].ToString(), out facility))
+                    facility = 16;
+
+            int gravity = 7; // debugging;
+            if (loggingEvent.Level >= Level.Emergency)
+                gravity = 0;
+            else if (loggingEvent.Level >= Level.Fatal)
+                gravity = 2;
+            else if (loggingEvent.Level >= Level.Error)
+                gravity = 3;
+            else if (loggingEvent.Level >= Level.Warn)
+                gravity = 4;
+            else if (loggingEvent.Level >= Level.Info)
+                gravity = 6;
+
+            return (facility * 8 + gravity).ToString();
         }
 
         override protected void Convert(TextWriter writer, LoggingEvent loggingEvent)
         {
-            writer.Write(ConvertLevelToPriority(loggingEvent.Level));
+            writer.Write(ConvertLevelToPriority(loggingEvent));
         }
     }
 }

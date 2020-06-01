@@ -18,6 +18,7 @@ namespace syslog4net.Layout
 
         // http://tools.ietf.org/html/rfc5424#section-6.1
         private const int SyslogMaxMessageLength = 2048;
+        private const int SyslogFacilityCodeDefault = 16; // Local0
 
         /// <summary>
         /// Instantiates a new instance of <see cref="SyslogLayout"/>
@@ -45,6 +46,7 @@ namespace syslog4net.Layout
         public override void Format(TextWriter writer, LoggingEvent logEvent)
         {
             logEvent.Properties["log4net:StructuredDataPrefix"] = StructuredDataPrefix;
+            logEvent.Properties["log4net:FacilityCode"] = FacilityCode;
 
             using (var stringWriter = new StringWriter(CultureInfo.InvariantCulture))
             {
@@ -52,14 +54,13 @@ namespace syslog4net.Layout
 
                 // truncate the message to SYSLOG_MAX_MESSAGE_LENGTH or fewer bytes
                 string message = stringWriter.ToString();
-
-                var utf8 = Encoding.UTF8;
-
-                byte[] utfBytes = utf8.GetBytes(message);
+                if(bool.Parse(PrependMessageLength))
+                    message = message.Length.ToString() + " " + message;
+                
                 int lMaxMessageLength = Convert.ToInt32(this.MaxMessageLength);
-                if (utfBytes.Length > lMaxMessageLength)
+                if (message.Length > lMaxMessageLength)
                 {
-                    message = utf8.GetString(utfBytes, 0, lMaxMessageLength);
+                    message = message.Substring(0, lMaxMessageLength);
                 }
 
                 writer.Write(message);
@@ -71,6 +72,8 @@ namespace syslog4net.Layout
         /// </summary>
         public string StructuredDataPrefix { get; set; }
         public string MaxMessageLength { get; set; }
+        public string FacilityCode { get; set; }
+        public string PrependMessageLength { get; set; }
 
         /// <summary>
         /// Activates the use of options for the converter allowing the underlying PatternLayout implmentation to behave correctly
@@ -89,6 +92,17 @@ namespace syslog4net.Layout
             {
                 this.MaxMessageLength = Convert.ToInt32(this.MaxMessageLength).ToString();
             }
+
+            if (string.IsNullOrEmpty(this.FacilityCode))
+            {
+                this.FacilityCode = Convert.ToString(SyslogFacilityCodeDefault);
+            }
+
+            if (string.IsNullOrEmpty(this.PrependMessageLength))
+            {
+                this.PrependMessageLength = false.ToString();
+            }
+
             this._layout.ActivateOptions();
         }
     }
