@@ -7,7 +7,7 @@ buildscript {
     }
 }
 
-version = '1.0.13-SNAPSHOT'
+version = '1.0.14-SNAPSHOT'
 apply plugin: 'msbuild'
 
 // You can't have non-digits in a DLL version number
