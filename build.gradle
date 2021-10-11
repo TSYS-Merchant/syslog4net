@@ -34,7 +34,8 @@ msbuild {
     parameters.buildNumber = project.buildNumber
 }
 msbuild.outputs.upToDateWhen { false }
-task build
+//task build
+build
 build.dependsOn msbuild
 
 task packageNuget(type: Exec) {
