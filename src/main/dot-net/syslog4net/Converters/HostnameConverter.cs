@@ -12,10 +12,13 @@ namespace syslog4net.Converters
     /// </summary>
     public class HostnameConverter : PatternLayoutConverter
     {
+        public static string HostName = IPGlobalProperties.GetIPGlobalProperties().HostName;
+
+        public static string DomainName = IPGlobalProperties.GetIPGlobalProperties().DomainName;
+
         internal static string GetLocalhostFqdn()
         {
-            var ipProperties = IPGlobalProperties.GetIPGlobalProperties();
-            return string.Format(CultureInfo.InvariantCulture, "{0}.{1}", ipProperties.HostName, ipProperties.DomainName);
+            return string.Format(CultureInfo.InvariantCulture, "{0}.{1}", HostName, DomainName);
         }
 
         override protected void Convert(TextWriter writer, LoggingEvent loggingEvent)
