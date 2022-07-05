@@ -75,7 +75,8 @@ namespace syslog4net.Tests.Layout
             string result = writer.ToString();
 
             // it's hard to test the whole message, because it depends on your machine name, process id, time & date, etc.
-            Assert.IsTrue(result.StartsWith("242 <135>1 "));
+            int resultMessageLength = (result.Length - 4);
+            Assert.IsTrue(result.StartsWith(resultMessageLength + " <135>1 "));
         }
 
 
