@@ -1,89 +1,14 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <MSBuildCommunityTasksPath>$(MSBuildProjectDirectory)\..\.build</MSBuildCommunityTasksPath>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7137FA06-A1B8-4C9B-9639-9963330134BD}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>syslog4net</RootNamespace>
-    <AssemblyName>syslog4net</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NET_4_0</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;NET_4_0</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <Company>Cayan</Company>
+    <Product>Diagnostics</Product>
+    <Copyright>Copyright © 2016 Cayan</Copyright>
+    <Description>Syslog Standard Diagnostics Library</Description>
+    <Authors />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net, Version=2.0.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\log4net.2.0.12\lib\net40\log4net.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <PackageReference Include="log4net" Version="2.0.12" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Appender\TcpAppender.cs" />
-    <Compile Include="Filter\LogExceptionToFileFilter.cs" />
-    <Compile Include="Util\ILogExtensions.cs" />
-    <Compile Include="Util\PrintableAsciiSanitizer.cs" />
-    <Compile Include="Layout\SyslogLayout.cs" />
-    <Compile Include="Converters\CommandLineConverter.cs" />
-    <Compile Include="Converters\HostnameConverter.cs" />
-    <Compile Include="Converters\MessageIdConverter.cs" />
-    <Compile Include="Converters\PriorityConverter.cs" />
-    <Compile Include="Converters\ProcessIdConverter.cs" />
-    <Compile Include="Converters\ProcessNameConverter.cs" />
-    <Compile Include="Converters\StructuredDataConverter.cs" />
-    <Compile Include="Converters\ThreadIdConverter.cs" />
-    <Compile Include="Converters\ThreadNameConverter.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-    <None Include="syslog4net.nuspec" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets" />
-  <Target Name="BeforeBuild">
-    <MSBuild.Community.Tasks.AssemblyInfo AssemblyCompany="Cayan" AssemblyCopyright="Copyright © 2016 Cayan" AssemblyDescription="Syslog Standard Diagnostics Library" AssemblyProduct="Diagnostics" AssemblyTitle="syslog4net" AssemblyVersion="$(assemblyVersion)" AssemblyFileVersion="$(assemblyVersion)" CLSCompliant="false" CodeLanguage="CS" ComVisible="false" Guid="8df622ae-577e-4de1-a848-871113f42643" NeutralResourcesLanguage="en" OutputFile="_AssemblyInfo.cs" />
-    <ItemGroup>
-      <Compile Include="_AssemblyInfo.cs" />
-    </ItemGroup>
-  </Target>
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
+

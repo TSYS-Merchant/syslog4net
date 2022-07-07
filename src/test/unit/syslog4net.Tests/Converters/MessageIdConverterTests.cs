@@ -13,6 +13,7 @@ namespace syslog4net.Tests.Converters
     [TestFixture]
     public class MessageIdConverterTests
     {
+#if NET35 || NET40
         [Test]
         public void ConvertTestStackData()
         {
@@ -32,7 +33,7 @@ namespace syslog4net.Tests.Converters
                 Assert.AreEqual(testId, result);
             }
         }
-
+#endif
         [Test]
         public void ConvertTestNoStackData()
         {

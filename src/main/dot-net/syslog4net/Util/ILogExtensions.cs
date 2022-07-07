@@ -1,4 +1,4 @@
-﻿#if NET_3_5 || NET_4_0
+﻿#if NET35 || NET40
 
 using System;
 using log4net;
