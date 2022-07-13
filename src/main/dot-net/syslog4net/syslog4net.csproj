@@ -4,11 +4,20 @@
     <Company>Cayan</Company>
     <Product>Diagnostics</Product>
     <Copyright>Copyright © 2016 Cayan</Copyright>
-    <Description>Syslog Standard Diagnostics Library</Description>
-    <Authors />
+    <Description>Extends log4net functionality to allow Syslog log forwarding.</Description>
+    <Authors>Cayan</Authors>
+    <PackageProjectUrl>https://github.com/cayan-llc/syslog4net</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/cayan-llc/syslog4net</RepositoryUrl>
+    <PackageTags>log4net syslog syslog4net</PackageTags>
+    <PackageLicenseUrl>https://github.com/cayan-llc/syslog4net/blob/master/LICENSE.txt</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="log4net" Version="2.0.12" />
   </ItemGroup>
+  <Target Name="PostClean" AfterTargets="Clean">
+    <RemoveDir Directories="$(BaseIntermediateOutputPath)" /><!-- obj -->
+    <RemoveDir Directories="$(BaseOutputPath)" /><!-- bin -->
+  </Target>
 </Project>
 
