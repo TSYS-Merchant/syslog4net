@@ -1,45 +1,34 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.ullink.gradle:gradle-msbuild-plugin:2.11'
-    }
-}
-
 version = '2.0.0-SNAPSHOT'
-apply plugin: 'msbuild'
 
 // You can't have non-digits in a DLL version number
 project.ext.set("baseVersion", project.version.minus('-SNAPSHOT'))
 
-def user = System.getProperty("user.name")
-if ((user == 'jenkins') || (user == 'buildservice')) {
-    project.ext.set("buildNumber", System.getenv("BUILD_NUMBER"))
-    project.ext.set("assemblyVersion", project.baseVersion + '.' + project.buildNumber)
-} else {
-    project.ext.set("buildNumber", user + '-' + new Date().format("yyyyMMdd'T'HHmmss'Z'", TimeZone.getTimeZone('UTC')))
-    project.ext.set("assemblyVersion", project.baseVersion + '.0')
+task clean(type: Exec) {
+    workingDir 'src/main/dot-net'
+    commandLine 'cmd', '/c', 'dotnet.exe', 'clean', 'syslog4net.sln'
 }
 
-
-msbuild {
-    projectFile = 'src/main/dot-net/Build.proj'
-    projectName = project.name
-    targets = ['Clean', 'Build']
-    configuration = 'Release'
-    parameters.version = project.version
-    parameters.assemblyVersion = project.assemblyVersion
-    parameters.buildNumber = project.buildNumber
+task restore(type: Exec) {
+    workingDir 'src/main/dot-net'
+    commandLine 'cmd', '/c', 'dotnet.exe', 'restore', 'syslog4net.sln'
 }
-msbuild.outputs.upToDateWhen { false }
 
-build
-build.dependsOn msbuild
+task build(type: Exec) {
+    workingDir 'src/main/dot-net'
+    commandLine 'cmd', '/c', 'dotnet.exe', 'build', 'syslog4net.sln'
+}
+
+task test(type: Exec) {
+    workingDir 'src/main/dot-net'
+    commandLine 'cmd', '/c', 'dotnet.exe', 'test', 'syslog4net.sln'
+}
 
 task packageNuget(type: Exec) {
     workingDir 'src/main/dot-net/syslog4net'
-    commandLine 'cmd', '/c', 'NuGet.exe', 'pack', 'syslog4net.csproj', '-Prop', 'Configuration=Release', '-Version', project.baseVersion
+    commandLine 'cmd', '/c', 'dotnet.exe', 'pack', 'syslog4net.csproj', '--configuration', 'Release', '--output', workingDir , '-p:PackageVersion=' + project.baseVersion
 }
-packageNuget.dependsOn build
-packageNuget.outputs.upToDateWhen { false }
+
+restore.dependsOn clean
+build.dependsOn restore
+test.dependsOn build
+packageNuget.dependsOn test
