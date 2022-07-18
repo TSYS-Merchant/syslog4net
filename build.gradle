@@ -25,7 +25,7 @@ task test(type: Exec) {
 
 task packageNuget(type: Exec) {
     workingDir 'src/main/dot-net/syslog4net'
-    commandLine 'cmd', '/c', 'dotnet.exe', 'pack', 'syslog4net.csproj', '--configuration', 'Release', '-p:PackageVersion=' + project.baseVersion
+    commandLine 'cmd', '/c', 'dotnet.exe', 'pack', 'syslog4net.csproj', '--configuration', 'Release', '--output', workingDir , '-p:PackageVersion=' + project.baseVersion
 }
 
 restore.dependsOn clean
