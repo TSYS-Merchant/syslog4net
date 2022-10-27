@@ -1,12 +1,10 @@
-﻿using System.IO;
-using log4net.Core;
-using log4net.Layout;
-using System.Text;
-using System;
-using System.Globalization;
-
-namespace syslog4net.Layout
+﻿namespace syslog4net.Layout
 {
+    using System.IO;
+    using log4net.Core;
+    using log4net.Layout;
+    using System;
+    using System.Globalization;
     using syslog4net.Converters;
 
     /// <summary>
@@ -19,6 +17,7 @@ namespace syslog4net.Layout
         // http://tools.ietf.org/html/rfc5424#section-6.1
         private const int SyslogMaxMessageLength = 2048;
         private const int SyslogFacilityCodeDefault = 16; // Local0
+        private const string CrLf = "\r\n";
 
         /// <summary>
         /// Instantiates a new instance of <see cref="SyslogLayout"/>
@@ -58,9 +57,11 @@ namespace syslog4net.Layout
                     message = message.Length.ToString() + " " + message;
                 
                 int lMaxMessageLength = Convert.ToInt32(this.MaxMessageLength);
+
                 if (message.Length > lMaxMessageLength)
                 {
                     message = message.Substring(0, lMaxMessageLength);
+                    message = string.Concat(message, CrLf);
                 }
 
                 writer.Write(message);

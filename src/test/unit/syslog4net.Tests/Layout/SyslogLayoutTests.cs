@@ -173,7 +173,7 @@ namespace syslog4net.Tests.Layout
 
             string result = writer.ToString();
 
-            Assert.AreEqual(2048, result.Length);
+            Assert.AreEqual(2050, result.Length);
         }
 
         [Test]
@@ -204,7 +204,7 @@ namespace syslog4net.Tests.Layout
 
             string result = writer.ToString();
 
-            Assert.AreEqual(5555, result.Length);
+            Assert.AreEqual(5557, result.Length);
         }
     }
 }
