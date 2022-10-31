@@ -1,12 +1,10 @@
-﻿using System.IO;
-using log4net.Core;
-using log4net.Layout;
-using System.Text;
-using System;
-using System.Globalization;
-
-namespace syslog4net.Layout
+﻿namespace syslog4net.Layout
 {
+    using System.IO;
+    using log4net.Core;
+    using log4net.Layout;
+    using System;
+    using System.Globalization;
     using syslog4net.Converters;
 
     /// <summary>
@@ -58,9 +56,11 @@ namespace syslog4net.Layout
                     message = message.Length.ToString() + " " + message;
                 
                 int lMaxMessageLength = Convert.ToInt32(this.MaxMessageLength);
+
                 if (message.Length > lMaxMessageLength)
                 {
                     message = message.Substring(0, lMaxMessageLength);
+                    message = string.Concat(message, Environment.NewLine);
                 }
 
                 writer.Write(message);
