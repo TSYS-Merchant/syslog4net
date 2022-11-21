@@ -1,4 +1,4 @@
-version = '2.0.0-SNAPSHOT'
+version = '2.0.1-SNAPSHOT'
 
 // You can't have non-digits in a DLL version number
 project.ext.set("baseVersion", project.version.minus('-SNAPSHOT'))
